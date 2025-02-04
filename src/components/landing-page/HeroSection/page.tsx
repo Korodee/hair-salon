@@ -1,6 +1,5 @@
 "use client";
 import NavBar from "@/components/landing-page/NavBar/page";
-import Image from "next/image";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import { useEffect } from "react";
