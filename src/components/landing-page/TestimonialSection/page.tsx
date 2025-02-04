@@ -108,13 +108,13 @@ const TestimonialSection: React.FC = () => {
       <div className="flex justify-center items-center gap-4">
         <button
           onClick={handlePrev}
-          className="w-9 h-9 flex items-center justify-center bg-[#FB3CB2] rounded-full text-white text-xl"
+          className="w-9 h-9 flex items-center justify-center bg-[#FB3CB2] rounded-full text-white text-xl transition-all duration-300 ease-in-out hover:bg-[#e0329e] hover:scale-110 hover:shadow-md active:scale-95"
         >
           <FaChevronLeft />
         </button>
         <button
           onClick={handleNext}
-          className="w-9 h-9 flex items-center justify-center bg-[#1A2D61] rounded-full text-white text-xl"
+          className="w-9 h-9 flex items-center justify-center bg-[#1A2D61] rounded-full text-white text-xl transition-all duration-300 ease-in-out hover:bg-[#162652] hover:scale-110 hover:shadow-md active:scale-95"
         >
           <FaChevronRight />
         </button>

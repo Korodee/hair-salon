@@ -18,6 +18,7 @@ const GetInTouch: React.FC = () => {
       once: true,
     });
   }, []);
+
   return (
     <div
       id="contact"
@@ -41,7 +42,7 @@ const GetInTouch: React.FC = () => {
             <input
               type="text"
               placeholder="First name"
-              className="w-full p-4 pl-12 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              className="w-full p-4 pl-12 border border-gray-300 rounded-lg text-gray-900 focus:outline-none focus:ring-0 focus:border-indigo-500"
             />
             <span className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400">
               <FaUser size={20} />
@@ -53,7 +54,7 @@ const GetInTouch: React.FC = () => {
             <input
               type="email"
               placeholder="Email"
-              className="w-full p-4 pl-12 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              className="w-full p-4 pl-12 border border-gray-300 rounded-lg text-gray-900 focus:outline-none focus:ring-0 focus:border-indigo-500"
             />
             <span className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400">
               <FaEnvelope size={20} />
@@ -65,7 +66,7 @@ const GetInTouch: React.FC = () => {
             <input
               type="tel"
               placeholder="Phone"
-              className="w-full p-4 pl-12 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              className="w-full p-4 pl-12 border border-gray-300 rounded-lg text-gray-900 focus:outline-none focus:ring-0 focus:border-indigo-500"
             />
             <span className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400">
               <FaPhone size={20} />
@@ -77,7 +78,7 @@ const GetInTouch: React.FC = () => {
             <input
               type="text"
               placeholder="Service of your interest"
-              className="w-full p-4 pl-12 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              className="w-full p-4 pl-12 border border-gray-300 rounded-lg text-gray-900 focus:outline-none focus:ring-0 focus:border-indigo-500"
             />
             <span className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400">
               <FaClipboardList size={20} />
@@ -87,9 +88,9 @@ const GetInTouch: React.FC = () => {
           {/* Message Field */}
           <div className="relative">
             <textarea
-              placeholder="A message for Haus Salon"
+              placeholder="A message for korode Salon"
               rows={4}
-              className="w-full p-4 pl-12 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              className="w-full p-4 pl-12 border border-gray-300 rounded-lg text-gray-900 focus:outline-none focus:ring-0 focus:border-indigo-500"
             ></textarea>
             <span className="absolute left-4 top-4 text-gray-400">
               <FaCommentDots size={20} />
@@ -100,7 +101,7 @@ const GetInTouch: React.FC = () => {
         {/* Submit Button */}
         <button
           type="submit"
-          className="w-full py-4 text-white bg-gray-900 rounded-lg hover:bg-gray-700 transition"
+          className="w-full py-4 text-white bg-[#171A31] rounded-lg transition-all duration-300 ease-in-out hover:bg-gray-800 hover:scale-105 hover:shadow-lg"
         >
           Send message
         </button>

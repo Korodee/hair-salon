@@ -98,7 +98,7 @@ const PricingSection = () => {
                   </li>
                 ))}
               </ul>
-              <button className="mt-6 w-full bg-[#171A31] text-white py-2 rounded-lg font-medium hover:bg-blue-800 transition">
+              <button className="mt-6 w-full bg-[#171A31] text-white py-2 rounded-lg transition-all duration-300 ease-in-out hover:bg-gray-800 hover:scale-105 hover:shadow-lg">
                 Book an appointment
               </button>
             </div>
