@@ -5,11 +5,13 @@ import TestimonialSection from "@/components/landing-page/TestimonialSection/pag
 import AboutSection from "@/components/landing-page/AboutSection/page";
 import ContactUsSection from "@/components/landing-page/ContactUsSection/page";
 import FooterSection from "@/components/landing-page/FooterSection/page";
+import ServicesSection from "@/components/landing-page/ServicesSection/page";
 const LandingPage = () => {
   return (
     <main className="bg-white">
       <HeroSection />
       <AboutSection />
+      <ServicesSection />
       <StaffSection />
       <PricingSection />
       <TestimonialSection />

@@ -1,4 +1,14 @@
+"use client";
+import React, { useState } from "react";
+import { FaBars, FaTimes } from "react-icons/fa"; // Import hamburger and close icons
+
 const NavBar = () => {
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
+  const toggleMobileMenu = () => {
+    setIsMobileMenuOpen(!isMobileMenuOpen);
+  };
+
   return (
     <nav className="absolute top-0 left-0 w-full flex items-center justify-between px-8 md:px-16 py-6">
       {/* Logo */}
@@ -11,30 +21,65 @@ const NavBar = () => {
         </span>
       </div>
 
-      {/* Nav Links */}
-      <div className="hidden md:flex gap-8 text-gray-800 font-medium">
+      {/* Nav Links - Desktop */}
+      <div className="hidden md:flex gap-8 text-black font-medium">
         <a href="#" className="hover:text-gray-600">
           Home
         </a>
-        <a href="#" className="hover:text-gray-600">
+        <a href="#services" className="hover:text-gray-600">
           Services
         </a>
-        <a href="#" className="hover:text-gray-600">
-          Portfolio
+        <a href="#pricing" className="hover:text-gray-600">
+          Pricing
         </a>
-        <a href="#" className="hover:text-gray-600">
+        <a href="#contact" className="hover:text-gray-600">
           Contact
         </a>
       </div>
 
-      {/* CTA Button */}
-      <div className="flex gap-2 ">
-        {" "}
-        <button className="px-5 py-2 text-black"> Get Started</button>
-        <button className="px-5 py-2 pointer bg-black text-white rounded-lg">
+      {/* CTA Buttons - Desktop */}
+      <div className="hidden md:flex gap-2">
+        <button className="px-5 py-2 text-black">Get Started</button>
+        <button className="px-5 py-2 bg-black text-white rounded-lg">
           Log in
         </button>
       </div>
+
+      {/* Hamburger Icon - Mobile */}
+      <div className="md:hidden flex items-center">
+        <button
+          onClick={toggleMobileMenu}
+          className="text-gray-900 focus:outline-none"
+        >
+          {isMobileMenuOpen ? <FaTimes size={24} /> : <FaBars size={24} />}
+        </button>
+      </div>
+
+      {/* Mobile Menu */}
+      {isMobileMenuOpen && (
+        <div className="md:hidden absolute top-16 left-0 w-full bg-white shadow-lg py-4">
+          <div className="flex flex-col items-center gap-4 text-gray-800 font-medium">
+            <a href="#" className="hover:text-gray-600">
+              Home
+            </a>
+            <a href="#" className="hover:text-gray-600">
+              Services
+            </a>
+            <a href="#" className="hover:text-gray-600">
+              Portfolio
+            </a>
+            <a href="#" className="hover:text-gray-600">
+              Contact
+            </a>
+          </div>
+          <div className="flex flex-col items-center gap-4 mt-4">
+            <button className="px-5 py-2 text-black">Get Started</button>
+            <button className="px-5 py-2 bg-black text-white rounded-lg">
+              Log in
+            </button>
+          </div>
+        </div>
+      )}
     </nav>
   );
 };

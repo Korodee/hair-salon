@@ -1,7 +1,9 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
+import "aos/dist/aos.css";
+import AOS from "aos";
 
 interface Testimonial {
   id: number;
@@ -26,7 +28,7 @@ const testimonials: Testimonial[] = [
     location: "New York, USA",
     message:
       "Lorem Ipsum has been the industry's standard dummy text ever since the 1500s. It has survived not only five centuries, but also the leap into electronic typesetting.",
-    image: "/img/testimonialImage1.png",
+    image: "/img/about2.jpg",
   },
   {
     id: 3,
@@ -34,7 +36,7 @@ const testimonials: Testimonial[] = [
     location: "London, UK",
     message:
       "Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC.",
-    image: "/img/testimonialImage1.png",
+    image: "/img/about1.jpg",
   },
 ];
 
@@ -54,12 +56,21 @@ const TestimonialSection: React.FC = () => {
   };
 
   const { name, location, message, image } = testimonials[currentIndex];
+  useEffect(() => {
+    AOS.init({
+      duration: 500,
+      once: true,
+    });
+  }, []);
 
   return (
-    <div className="flex flex-col px-6 items-center gap-6">
+    <div
+      className="flex flex-col px-6 py-6 items-center gap-6"
+      data-aos="fade-right"
+    >
       {/* Testimonial Content */}
       <h3 className="text-3xl font-extrabold text-[#171A31]">Testimonials</h3>
-      <div className="bg-[#1E0536] z-0 py-12 text-white p-8 rounded-xl max-w-4xl w-full flex flex-col md:flex-row h-[600px] md:h-[320px]">
+      <div className="bg-[#1E0536] z-0 py-12 text-white p-8 rounded-xl max-w-4xl w-full flex flex-col md:flex-row h-[600px] md:h-[300px]">
         {/* Left: Image Section */}
         <div className="relative w-full md:w-1/3 flex items-center justify-center mb-6 md:mb-0">
           <div className="absolute z-[-1] bg-[#FB3CB2] w-8 h-[8rem] rounded-full left-[0rem] top-0 hidden md:block"></div>
