@@ -34,7 +34,10 @@ const HeroSection = () => {
       <NavBar />
 
       {/* Hero Content */}
-      <div className="relative z-10 flex flex-col items-center justify-center text-white text-center w-full max-w-2xl">
+      <div
+        data-aos="zoom-in"
+        className="relative z-10 flex flex-col items-center justify-center text-white text-center w-full max-w-2xl"
+      >
         <h1 className="text-4xl md:text-6xl font-extrabold leading-tight">
           Graceful Hair <br />
           <span>Truly, yours.</span>
