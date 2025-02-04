@@ -1,9 +1,7 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
-import "aos/dist/aos.css";
-import AOS from "aos";
 import Image from "next/image";
 
 interface Testimonial {
@@ -58,18 +56,8 @@ const TestimonialSection: React.FC = () => {
 
   const { name, location, message, image } = testimonials[currentIndex];
 
-  useEffect(() => {
-    AOS.init({
-      duration: 500,
-      once: true,
-    });
-  }, []);
-
   return (
-    <div
-      className="flex flex-col px-6 py-6 items-center gap-6"
-      data-aos="fade-right"
-    >
+    <div className="flex flex-col px-6 py-6 items-center gap-6">
       {/* Testimonial Content */}
       <h3 className="text-3xl font-extrabold text-[#171A31]">Testimonials</h3>
       <div className="bg-[#1E0536] z-0 py-12 text-white p-8 rounded-xl max-w-4xl w-full flex flex-col md:flex-row h-[600px] md:h-[300px]">
