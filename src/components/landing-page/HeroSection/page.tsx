@@ -13,11 +13,11 @@ const HeroSection = () => {
       once: true,
     });
   }, []);
+
   return (
-    <section className="relative flex flex-col items-center justify-center min-h-screen px-6 md:px-20 bg-gradient-to-r from-gray-100 to-[#8c38e7]">
+    <section className="relative flex flex-col items-center justify-center min-h-[90vh] md:min-h-screen px-6 md:px-20 bg-gradient-to-r from-gray-400 to-[#8c38e7]">
       {/* NavBar */}
       <NavBar />
-
       {/* Hero Content */}
       <div className="w-full flex flex-col-reverse md:flex-row items-center justify-between mt-10 md:mt-20">
         {/* Left Image (Hidden on Mobile) */}
@@ -42,7 +42,7 @@ const HeroSection = () => {
             Graceful Hair <br />
             <span className="text-gray-900">Truly, yours.</span>
           </h1>
-          <p className="text-gray-200 mt-4 text-base md:text-lg">
+          <p className="text-gray-100 mt-4 text-base md:text-lg">
             Good hair gets you anywhere. We are more than a salon, we are a
             creative space where we give you a whole new hair experience.
           </p>
