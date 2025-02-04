@@ -39,7 +39,7 @@ const AboutUsSection: React.FC = () => {
       {/* Right Section: Images */}
       <div
         className="lg:w-1/2 flex items-center justify-center gap-6"
-        data-aos="fade-left" // Add AOS animation to this section
+        data-aos="zoom-in" // Add AOS animation to this section
       >
         <div className="flex flex-col gap-6">
           <div className="relative w-40 h-60">
