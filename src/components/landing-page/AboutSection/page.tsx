@@ -49,7 +49,6 @@ const AboutUsSection: React.FC = () => {
               layout="fill"
               objectFit="cover"
               className="rounded-xl"
-              data-aos="zoom-in" // Add zoom-in effect for this image
             />
           </div>
           <div className="relative w-40 h-60">
@@ -59,7 +58,6 @@ const AboutUsSection: React.FC = () => {
               layout="fill"
               objectFit="cover"
               className="rounded-xl"
-              data-aos="zoom-in" // Add zoom-in effect for this image
             />
           </div>
         </div>
@@ -70,7 +68,6 @@ const AboutUsSection: React.FC = () => {
             layout="fill"
             objectFit="cover"
             className="rounded-xl"
-            data-aos="zoom-in" // Add zoom-in effect for this image
           />
         </div>
       </div>

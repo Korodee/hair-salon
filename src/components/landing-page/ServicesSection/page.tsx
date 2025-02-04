@@ -33,12 +33,8 @@ const ServicesSection = () => {
     });
   }, []);
   return (
-    <section
-      id="services"
-      className="py-20 text-center px-4 bg-[#1C0336] "
-      data-aos="zoom-in"
-    >
-      <div>
+    <section id="services" className="py-20 text-center px-4 bg-[#1C0336] ">
+      <div data-aos="zoom-in">
         <h2 className="text-3xl sm:text-4xl font-extrabold text-white mt-2">
           Services
         </h2>
