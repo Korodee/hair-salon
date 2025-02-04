@@ -1,5 +1,6 @@
 "use client";
 import NavBar from "@/components/landing-page/NavBar/page";
+import Image from "next/image";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import { useEffect } from "react";
@@ -16,10 +17,14 @@ const HeroSection = () => {
     <section className="relative flex flex-col items-center justify-center min-h-[90vh] md:min-h-screen px-6 md:px-20 text-center">
       {/* Background Image */}
       <div className="absolute inset-0 z-0">
-        <div
-          className="absolute inset-0 bg-cover bg-center"
-          style={{ backgroundImage: "url('/img/heroBg.jpg')" }}
-        ></div>
+        <Image
+          src="/img/heroBg.jpg" 
+          alt="Hero Background"
+          layout="fill"
+          objectFit="cover"
+          priority
+          className="object-center"
+        />
       </div>
 
       {/* Overlay (Optional, for contrast) */}
