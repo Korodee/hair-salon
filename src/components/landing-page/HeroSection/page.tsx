@@ -17,14 +17,10 @@ const HeroSection = () => {
     <section className="relative flex flex-col items-center justify-center min-h-[90vh] md:min-h-screen px-6 md:px-20 text-center">
       {/* Background Image */}
       <div className="absolute inset-0 z-0">
-        <Image
-          src="/img/heroBG.jpg" 
-          alt="Hero Background"
-          layout="fill"
-          objectFit="cover"
-          priority
-          className="object-center"
-        />
+        <div
+          className="absolute inset-0 bg-cover bg-center"
+          style={{ backgroundImage: "url('/img/heroBG.jpg')" }}
+        ></div>
       </div>
 
       {/* Overlay (Optional, for contrast) */}
