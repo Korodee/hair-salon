@@ -24,7 +24,7 @@ const Footer: React.FC = () => {
       <div className="relative z-10 max-w-7xl mx-auto px-8 py-20 flex flex-col lg:flex-row justify-between items-center space-y-10 lg:space-y-0">
         {/* Left Section */}
         <div className="text-center lg:text-left">
-          <h3 className="text-xl font-bold">Haus Salon</h3>
+          <h3 className="text-xl font-bold">Korode Salon</h3>
           <button className="mt-6 px-6 py-2 border-2 border-pink-500 text-pink-500 rounded-lg hover:bg-pink-500 hover:text-white transition">
             Contact Us
           </button>

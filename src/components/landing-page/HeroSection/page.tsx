@@ -38,9 +38,9 @@ const HeroSection = () => {
           className="w-full md:w-1/3 max-w-lg text-center md:text-left"
           data-aos="fade-left"
         >
-          <h1 className="text-4xl md:text-6xl font-extrabold text-gray-900 leading-tight">
+          <h1 className="text-4xl md:text-6xl font-extrabold text-black leading-tight">
             Graceful Hair <br />
-            <span className="text-gray-900">Truly, yours.</span>
+            <span className="text-black">Truly, yours.</span>
           </h1>
           <p className="text-gray-100 mt-4 text-base md:text-lg">
             Good hair gets you anywhere. We are more than a salon, we are a
