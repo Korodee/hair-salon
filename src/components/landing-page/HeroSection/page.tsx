@@ -1,7 +1,6 @@
 "use client";
 import NavBar from "@/components/landing-page/NavBar/page";
 import Image from "next/image";
-import heroBG from "../../../../public/img/heroBg.jpg";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import { useEffect } from "react";
@@ -19,11 +18,12 @@ const HeroSection = () => {
       {/* Background Image */}
       <div className="absolute inset-0 z-0">
         <Image
-          src={heroBG}
+          src="/img/heroBG.jpg" // Directly reference the image in the public folder
           alt="Hero Background"
           layout="fill"
           objectFit="cover"
           priority
+          className="object-center"
         />
       </div>
 
