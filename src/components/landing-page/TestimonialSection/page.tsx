@@ -1,0 +1,111 @@
+"use client";
+
+import React, { useState } from "react";
+import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
+
+interface Testimonial {
+  id: number;
+  name: string;
+  location: string;
+  message: string;
+  image: string;
+}
+
+const testimonials: Testimonial[] = [
+  {
+    id: 1,
+    name: "Leslie Alexander",
+    location: "Miami, El Salvador",
+    message:
+      "It is a long established fact that a reader will be distracted by the readable content of a page is when looking at its layout. The point of using Lorem of distribution it look like readable English.",
+    image: "/img/testimonialImage1.png",
+  },
+  {
+    id: 2,
+    name: "John Doe",
+    location: "New York, USA",
+    message:
+      "Lorem Ipsum has been the industry's standard dummy text ever since the 1500s. It has survived not only five centuries, but also the leap into electronic typesetting.",
+    image: "/img/testimonialImage1.png",
+  },
+  {
+    id: 3,
+    name: "Jane Smith",
+    location: "London, UK",
+    message:
+      "Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC.",
+    image: "/img/testimonialImage1.png",
+  },
+];
+
+const TestimonialSection: React.FC = () => {
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  const handlePrev = () => {
+    setCurrentIndex((prevIndex) =>
+      prevIndex === 0 ? testimonials.length - 1 : prevIndex - 1
+    );
+  };
+
+  const handleNext = () => {
+    setCurrentIndex((prevIndex) =>
+      prevIndex === testimonials.length - 1 ? 0 : prevIndex + 1
+    );
+  };
+
+  const { name, location, message, image } = testimonials[currentIndex];
+
+  return (
+    <div className="flex flex-col px-6 items-center gap-6">
+      {/* Testimonial Content */}
+      <h3 className="text-3xl font-extrabold text-[#171A31]">Testimonials</h3>
+      <div className="bg-[#1E0536] z-0 py-12 text-white p-8 rounded-xl max-w-4xl w-full flex flex-col md:flex-row h-[600px] md:h-[320px]">
+        {/* Left: Image Section */}
+        <div className="relative w-full md:w-1/3 flex items-center justify-center mb-6 md:mb-0">
+          <div className="absolute z-[-1] bg-[#FB3CB2] w-8 h-[8rem] rounded-full left-[0rem] top-0 hidden md:block"></div>
+          <div className="absolute z-[-1] bg-[#FB3CB2] w-8 h-[16rem] rounded-full left-[2.5rem] hidden md:block"></div>
+
+          <img
+            src={image}
+            alt={name}
+            className="w-40 h-40 rounded-full border-4 border-white"
+          />
+        </div>
+
+        {/* Right: Text Section */}
+        <div className="w-full md:w-2/3 pl-0 md:pl-8 flex flex-col justify-center">
+          <h4 className="text-lg font-semibold text-center md:text-left">
+            {name}
+          </h4>
+          <p className="text-sm text-gray-300 text-center md:text-left">
+            {location}
+          </p>
+          <h3 className="text-2xl font-semibold mt-3 text-center md:text-left">
+            {name} has been my home for hair for years
+          </h3>
+          <p className="text-gray-400 mt-2 text-center md:text-left">
+            “ {message} ”
+          </p>
+        </div>
+      </div>
+
+      {/* Navigation Buttons */}
+      <div className="flex justify-center items-center gap-4">
+        <button
+          onClick={handlePrev}
+          className="w-9 h-9 flex items-center justify-center bg-[#FB3CB2] rounded-full text-white text-xl"
+        >
+          <FaChevronLeft />
+        </button>
+        <button
+          onClick={handleNext}
+          className="w-9 h-9 flex items-center justify-center bg-[#1A2D61] rounded-full text-white text-xl"
+        >
+          <FaChevronRight />
+        </button>
+      </div>
+    </div>
+  );
+};
+
+export default TestimonialSection;
