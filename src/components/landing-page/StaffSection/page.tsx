@@ -34,13 +34,15 @@ const StaffSection = () => {
               <Image
                 src={staff.image}
                 alt={staff.name}
+                width={224} // Set width
+                height={224} // Set height
                 className="w-full h-full object-cover"
               />
             </div>
             <h4 className="text-lg text-[#000000] sm:text-xl font-bold mt-4">
               {staff.name}
             </h4>
-            <p className="text-[#171A31b3]  text-sm sm:text-base">
+            <p className="text-[#171A31b3] text-sm sm:text-base">
               {staff.experience}
             </p>
           </div>

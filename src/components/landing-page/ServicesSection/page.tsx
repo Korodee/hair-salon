@@ -2,6 +2,7 @@
 import React, { useEffect } from "react";
 import "aos/dist/aos.css";
 import AOS from "aos";
+import Image from "next/image"; // Import Image component
 
 const servicesData = [
   {
@@ -32,8 +33,12 @@ const ServicesSection = () => {
     });
   }, []);
   return (
-    <section id="services" className="py-20 text-center px-4 bg-[#1C0336]">
-      <div data-aos="zoom-in">
+    <section
+      id="services"
+      className="py-20 text-center px-4 bg-[#1C0336] "
+      data-aos="zoom-in"
+    >
+      <div>
         <h2 className="text-3xl sm:text-4xl font-extrabold text-white mt-2">
           Services
         </h2>
@@ -49,9 +54,11 @@ const ServicesSection = () => {
               className="bg-white rounded-2xl shadow-lg p-6 flex flex-col items-center"
             >
               <div className="w-20 h-20 bg-pink-100 flex items-center justify-center rounded-full overflow-hidden">
-                <img
+                <Image
                   src={service.icon}
                   alt={service.title}
+                  width={80} // Set the width of the image
+                  height={80} // Set the height of the image
                   className="w-full h-full object-cover rounded-full"
                 />
               </div>

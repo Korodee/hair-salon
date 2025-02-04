@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import "aos/dist/aos.css";
 import AOS from "aos";
+import Image from "next/image";
 
 interface Testimonial {
   id: number;
@@ -56,6 +57,7 @@ const TestimonialSection: React.FC = () => {
   };
 
   const { name, location, message, image } = testimonials[currentIndex];
+
   useEffect(() => {
     AOS.init({
       duration: 500,
@@ -76,9 +78,11 @@ const TestimonialSection: React.FC = () => {
           <div className="absolute z-[-1] bg-[#FB3CB2] w-8 h-[8rem] rounded-full left-[0rem] top-0 hidden md:block"></div>
           <div className="absolute z-[-1] bg-[#FB3CB2] w-8 h-[16rem] rounded-full left-[2.5rem] hidden md:block"></div>
 
-          <img
+          <Image
             src={image}
             alt={name}
+            width={160} // Set width for the image
+            height={160} // Set height for the image
             className="w-40 h-40 rounded-full border-4 border-white"
           />
         </div>

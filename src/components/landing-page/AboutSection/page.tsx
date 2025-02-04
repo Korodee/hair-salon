@@ -3,6 +3,7 @@ import React, { useEffect } from "react";
 import { FaStar } from "react-icons/fa";
 import AOS from "aos";
 import "aos/dist/aos.css";
+import Image from "next/image"; // Importing Image component
 
 const AboutUsSection: React.FC = () => {
   useEffect(() => {
@@ -41,25 +42,37 @@ const AboutUsSection: React.FC = () => {
         data-aos="fade-left" // Add AOS animation to this section
       >
         <div className="flex flex-col gap-6">
-          <img
-            src="/img/about1.jpg"
-            alt="Stylist 1"
-            className="rounded-xl w-40 h-60 object-cover"
-            data-aos="zoom-in" // Add zoom-in effect for this image
-          />
-          <img
-            src="/img/about2.jpg"
-            alt="Salon"
-            className="rounded-xl w-40 h-60 object-cover"
+          <div className="relative w-40 h-60">
+            <Image
+              src="/img/about1.jpg"
+              alt="Stylist 1"
+              layout="fill"
+              objectFit="cover"
+              className="rounded-xl"
+              data-aos="zoom-in" // Add zoom-in effect for this image
+            />
+          </div>
+          <div className="relative w-40 h-60">
+            <Image
+              src="/img/about2.jpg"
+              alt="Salon"
+              layout="fill"
+              objectFit="cover"
+              className="rounded-xl"
+              data-aos="zoom-in" // Add zoom-in effect for this image
+            />
+          </div>
+        </div>
+        <div className="relative w-40 h-60">
+          <Image
+            src="/img/about3.jpg"
+            alt="Stylist 2"
+            layout="fill"
+            objectFit="cover"
+            className="rounded-xl"
             data-aos="zoom-in" // Add zoom-in effect for this image
           />
         </div>
-        <img
-          src="/img/about3.jpg"
-          alt="Stylist 2"
-          className="rounded-xl w-40 h-60 object-cover"
-          data-aos="zoom-in" // Add zoom-in effect for this image
-        />
       </div>
     </div>
   );
