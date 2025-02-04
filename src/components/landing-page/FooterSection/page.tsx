@@ -35,12 +35,20 @@ const Footer: React.FC = () => {
 
         {/* Middle Section (Navigation Links) */}
         <div className="text-center lg:text-left space-y-2">
-          <ul className="text-sm space-y-2">
-            <li>HOME</li>
-            <li>WORK</li>
-            <li>BLOG</li>
-            <li>ABOUT</li>
-          </ul>
+          <div className="flex flex-col items-center font-bold text-sm space-y-2">
+            <a href="#" className="hover:text-gray-300">
+              HOME
+            </a>
+            <a href="#services" className="hover:text-gray-300">
+              SERVICES
+            </a>
+            <a href="#pricing" className="hover:text-gray-300">
+              PRICING
+            </a>
+            <a href="#contact" className="hover:text-gray-300">
+              CONTACT
+            </a>
+          </div>
         </div>
 
         {/* Divider */}
