@@ -8,23 +8,10 @@ import {
   FaClipboardList,
   FaCommentDots,
 } from "react-icons/fa";
-import AOS from "aos";
-import "aos/dist/aos.css";
 
 const GetInTouch: React.FC = () => {
-  useEffect(() => {
-    AOS.init({
-      duration: 1000,
-      once: true,
-    });
-  }, []);
-
   return (
-    <div
-      id="contact"
-      className="max-w-2xl mx-auto px-6 py-16"
-      data-aos="fade-down"
-    >
+    <div id="contact" className="max-w-2xl mx-auto px-6 py-16">
       {/* Heading Section */}
       <div className="text-center mb-12">
         <h2 className="text-4xl font-bold text-gray-900 mb-4">Get in touch</h2>
