@@ -1,7 +1,7 @@
 "use client";
 import NavBar from "@/components/landing-page/NavBar/page";
 import Image from "next/image";
-import heroBG from "../../../../public/img/heroBG.jpg"; // Import background image
+import heroBG from "../../../../public/img/heroBg.jpg";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import { useEffect } from "react";
