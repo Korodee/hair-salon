@@ -5,13 +5,13 @@ import AOS from "aos";
 
 const servicesData = [
   {
-    icon: "/img/service3.jpg",
+    icon: "/img/service1.jpg",
     title: "Makeup & Beauty",
     description:
       "Some example text is placed here to show what this component will look like fully built out.",
   },
   {
-    icon: "/img/service2.jpg",
+    icon: "/img/service1.jpg",
     title: "Haircuts & Styling",
     description:
       "Some example text is placed here to show what this component will look like fully built out.",
