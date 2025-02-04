@@ -4,8 +4,6 @@ import staff1 from "@/../../public/img/staff1.png";
 import staff2 from "@/../../public/img/staff2.png";
 import staff3 from "@/../../public/img/staff3.png";
 import "aos/dist/aos.css";
-import AOS from "aos";
-import { useEffect } from "react";
 
 const staffData = [
   { name: "Mara Olsen", experience: "10 years experience", image: staff1 },
@@ -14,14 +12,8 @@ const staffData = [
 ];
 
 const StaffSection = () => {
-  useEffect(() => {
-    AOS.init({
-      duration: 500,
-      once: true,
-    });
-  }, []);
   return (
-    <section className="text-center bg-white py-20 px-6" data-aos="zoom-out">
+    <section className="text-center bg-white py-20 px-6">
       <h3 className="text-3xl font-extrabold text-gray-900">
         Meet With Our Professional Staff
       </h3>
