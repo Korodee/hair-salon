@@ -6,14 +6,15 @@ export default function CheckInbox() {
     <div className="flex h-screen w-full items-center justify-center bg-gray">
       <div className="w-full h-full bg-gray-100 flex p-6 rounded-lg shadow-lg">
         {/* Left Section */}
-        <div className="w-1/2 flex flex-col justify-center px-16 relative">
-          {/* Logo */}
-          <div className="absolute top-6 left-6">
+        <div className="w-full md:w-1/2 flex flex-col justify-center px-16 relative">
+          {/* Korode Salon Logo */}
+          <div className="absolute top-8 left-1/2 md:left-6 transform md:-translate-x-1/2 md:transform-none">
+            {/* Logo */}
             <div className="flex items-center gap-2">
               <div className="w-8 h-8 bg-black rounded-full flex items-center justify-center">
                 <span className="text-white text-lg font-bold">K</span>
               </div>
-              <span className="text-lg font-semibold text-black">
+              <span className="hidden md:block text-lg font-semibold text-black">
                 Korode Salon
               </span>
             </div>
@@ -25,8 +26,8 @@ export default function CheckInbox() {
           </h2>
           <p className="text-[#313957] text-center mt-2">
             We’ve sent you a magic link at{" "}
-            <span className="text-[#103FC1]">example@gmail.com</span>. Make
-            sure to check your spam folder.
+            <span className="text-[#103FC1]">example@gmail.com</span>. Make sure
+            to check your spam folder.
           </p>
 
           {/* Button */}
@@ -52,8 +53,8 @@ export default function CheckInbox() {
         </div>
 
         {/* Right Side (Image) */}
-        <div className="w-1/2 flex items-center justify-center p-4">
-          <div className="relative w-full h-full rounded-xl overflow-hidden">
+        <div className="w-1/2 hidden md:block  items-center justify-center p-4">
+          <div className="relative  w-full h-full rounded-xl overflow-hidden">
             <Image
               src="/img/signup.png"
               alt="Barber shop"
