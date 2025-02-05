@@ -96,12 +96,16 @@ const NavBar = () => {
             Contact
           </a>
           <div className="flex flex-col items-center gap-4 mt-6">
-            <button className="px-5 py-2 border border-white rounded-lg">
-              Get Started
-            </button>
-            <button className="px-5 py-2 bg-white text-black rounded-lg">
-              Log in
-            </button>
+            <Link href="/auth/signup">
+              <button className="px-5 py-2 border border-white rounded-lg">
+                Get Started
+              </button>
+            </Link>
+            <Link href="/auth/login">
+              <button className="px-5 py-2 bg-white text-black rounded-lg">
+                Log in
+              </button>
+            </Link>
           </div>
         </div>
       )}
