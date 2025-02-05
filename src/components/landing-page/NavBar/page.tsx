@@ -1,5 +1,6 @@
 "use client";
 import React, { useState } from "react";
+import Link from "next/link";
 import { FaBars, FaTimes } from "react-icons/fa"; // Import hamburger and close icons
 
 const NavBar = () => {
@@ -41,10 +42,14 @@ const NavBar = () => {
 
       {/* CTA Buttons - Desktop */}
       <div className="hidden md:flex gap-2">
-        <button className="px-5 py-2 text-white ">Get Started</button>
-        <button className="px-5 py-2 bg-black text-white rounded-lg transition-all duration-300 ease-in-out hover:bg-gray-800 hover:scale-105 hover:shadow-lg">
-          Log in
-        </button>
+        <Link href="/auth/signup">
+          <button className="px-5 py-2 text-white ">Get Started</button>
+        </Link>
+        <Link href="/auth/login">
+          <button className="px-5 py-2 bg-black text-white rounded-lg transition-all duration-300 ease-in-out hover:bg-gray-800 hover:scale-105 hover:shadow-lg">
+            Log in
+          </button>
+        </Link>
       </div>
 
       {/* Hamburger Icon - Mobile */}

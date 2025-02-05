@@ -4,6 +4,7 @@ import Image from "next/image";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import { useEffect } from "react";
+import Link from "next/link";
 
 const HeroSection = () => {
   useEffect(() => {
@@ -46,9 +47,11 @@ const HeroSection = () => {
           Good hair gets you anywhere. We are more than a salon, we are a
           creative space where we give you a whole new hair experience.
         </p>
-        <button className="mt-6 px-6 py-3 bg-black text-white rounded-lg transition-all duration-300 ease-in-out hover:bg-gray-800 hover:scale-105 hover:shadow-lg">
-          Book an appointment
-        </button>
+        <Link href="/auth/login">
+          <button className="mt-6 px-6 py-3 bg-black text-white rounded-lg transition-all duration-300 ease-in-out hover:bg-gray-800 hover:scale-105 hover:shadow-lg">
+            Book an appointment
+          </button>
+        </Link>
       </div>
     </section>
   );
