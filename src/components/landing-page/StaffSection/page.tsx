@@ -22,7 +22,7 @@ const StaffSection = () => {
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-10 sm:gap-8 md:gap-4 mt-10 xl:w-[60rem] mx-auto place-items-center">
         {staffData.map((staff, index) => (
           <div key={index} className="text-center">
-            <div className="w-48 h-48 sm:w-56 sm:h-56 rounded-3xl overflow-hidden mx-auto">
+            <div className="w-48  sm:w-56  rounded-3xl overflow-hidden mx-auto">
               <Image
                 src={staff.image}
                 alt={staff.name}
