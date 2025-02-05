@@ -43,7 +43,7 @@ export default function SignUp() {
                 <input
                   type="text"
                   placeholder="John Doe"
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring focus:ring-blue-200"
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg text-black focus:outline-none"
                 />
               </div>
 
@@ -52,7 +52,7 @@ export default function SignUp() {
                 <input
                   type="email"
                   placeholder="example@gmail.com"
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring focus:ring-blue-200"
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg text-black focus:outline-none"
                 />
               </div>
 
@@ -61,7 +61,7 @@ export default function SignUp() {
                 <input
                   type="password"
                   placeholder="At least 8 characters"
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring focus:ring-blue-200"
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg text-black focus:outline-none"
                 />
               </div>
 

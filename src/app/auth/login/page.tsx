@@ -35,7 +35,7 @@ export default function LogIn() {
                 <input
                   type="email"
                   placeholder="example@gmail.com"
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring focus:ring-blue-200"
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg text-black focus:outline-none focus:ring-none"
                 />
               </div>
 
@@ -44,7 +44,7 @@ export default function LogIn() {
                 <input
                   type="password"
                   placeholder="At least 8 characters"
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring focus:ring-blue-200"
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg text-black focus:outline-none focus:ring-none"
                 />
               </div>
 

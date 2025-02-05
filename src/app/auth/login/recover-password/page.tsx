@@ -32,7 +32,7 @@ export default function RecoverPassword() {
                 <input
                   type="email"
                   placeholder="example@gmail.com"
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring focus:ring-blue-200"
+                  className="w-full px-4 py-3 border text-black border-gray-300 rounded-lg focus:outline-none"
                 />
               </div>
 
