@@ -26,7 +26,7 @@ export default function SignUp() {
               </span>
             </div>
           </div>
-          <div className="mt-[6rem]">
+          <div className="mt-[6rem] md:mt-0">
             <h2 className="text-3xl text-[#0C1421] font-bold">
               Create an account
             </h2>

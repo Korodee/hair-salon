@@ -1,11 +1,10 @@
-"use client";
 import Image from "next/image";
 
-export default function CheckInbox() {
+export default function RecoverPassword() {
   return (
     <div className="flex h-screen w-full items-center justify-center bg-gray">
       <div className="w-full h-full bg-gray-100 flex p-6 rounded-lg shadow-lg">
-        {/* Left Section */}
+        {/* Left Side (Form) */}
         <div className="w-full md:w-1/2 flex flex-col md:justify-center md:px-16 relative">
           {/* Korode Salon Logo */}
           <div className="absolute top-8 md:left-6 transform md:-translate-x-1/2 md:transform-none">
@@ -20,33 +19,43 @@ export default function CheckInbox() {
             </div>
           </div>
           <div className="mt-[6rem] md:mt-0">
-            {/* Main Content */}
-            <h2 className="text-3xl text-center text-[#0C1421] font-bold">
-              Check your inbox
+            <h2 className="text-3xl text-[#0C1421] font-bold">
+              Recover Password
             </h2>
-            <p className="text-[#313957] text-center mt-2">
-              We’ve sent you a magic link at{" "}
-              <span className="text-[#103FC1]">example@gmail.com</span>. Make
-              sure to check your spam folder.
+            <p className="text-[#313957] mt-2">
+              Enter your new password and confirm
             </p>
 
-            {/* Button */}
-            <button
-              type="button"
-              className="mt-8 w-full bg-black text-white py-3 rounded-lg hover:bg-gray-900 transition"
-              onClick={() => (window.location.href = "/auth/signup")}
-            >
-              Back to Sign Up
-            </button>
+            <form className="mt-8 space-y-5">
+              <div>
+                <label className="block text-[#0C1421]"> New password</label>
+                <input
+                  type="password"
+                  placeholder="At least 8 characters"
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg text-black focus:outline-none focus:ring-none"
+                />
+              </div>
 
-            {/* Resend Link */}
-            <p className="text-[#313957] mt-6 text-center text-sm">
-              Didn’t see any email?{" "}
-              <a
-                href="/auth/resend-link"
-                className="text-[#103FC1] font-medium"
+              <div>
+                <label className="block text-[#0C1421]">Confirm password</label>
+                <input
+                  type="password"
+                  placeholder="At least 8 characters"
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg text-black focus:outline-none focus:ring-none"
+                />
+              </div>
+              <button
+                type="submit"
+                className="w-full bg-black text-white py-3 rounded-lg hover:bg-gray-900 transition"
               >
-                Resend link
+                Reset Password
+              </button>
+            </form>
+
+            <p className="text-[#313957] mt-6 text-center text-sm">
+              Remember your password?{" "}
+              <a href="/auth/login" className="text-[#103FC1] font-medium">
+                Back to login
               </a>
             </p>
 
@@ -60,7 +69,7 @@ export default function CheckInbox() {
         <div className="w-1/2 hidden md:block  items-center justify-center p-4">
           <div className="relative  w-full h-full rounded-xl overflow-hidden">
             <Image
-              src="/img/signup.png"
+              src="/img/login.png"
               alt="Barber shop"
               layout="fill"
               objectFit="cover"

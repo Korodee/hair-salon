@@ -1,6 +1,11 @@
+"use client";
 import Image from "next/image";
 
 export default function RecoverPassword() {
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    window.location.href = "/auth/login/recover-password/reset";
+  };
   return (
     <div className="flex h-screen w-full items-center justify-center bg-gray">
       <div className="w-full h-full bg-gray-100 flex p-6 rounded-lg shadow-lg">
@@ -18,7 +23,7 @@ export default function RecoverPassword() {
               </span>
             </div>
           </div>
-          <div className="mt-[6rem]">
+          <div className="mt-[6rem] md:mt-0">
             <h2 className="text-3xl text-[#0C1421] font-bold">
               Recover Password
             </h2>
@@ -26,7 +31,7 @@ export default function RecoverPassword() {
               Enter the email address associated with your account.
             </p>
 
-            <form className="mt-8 space-y-5">
+            <form className="mt-8 space-y-5" onSubmit={handleSubmit}>
               <div>
                 <label className="block text-[#0C1421]">Email</label>
                 <input
