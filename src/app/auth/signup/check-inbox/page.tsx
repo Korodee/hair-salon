@@ -1,5 +1,6 @@
 "use client";
 import Image from "next/image";
+import Link from "next/link";
 
 export default function CheckInbox() {
   return (
@@ -10,14 +11,16 @@ export default function CheckInbox() {
           {/* Korode Salon Logo */}
           <div className="absolute top-8 md:left-6 transform md:-translate-x-1/2 md:transform-none">
             {/* Logo */}
-            <div className="flex items-center gap-2">
-              <div className="w-8 h-8 bg-black rounded-full flex items-center justify-center">
-                <span className="text-white text-lg font-bold">K</span>
+            <Link href="/">
+              <div className="flex items-center gap-2">
+                <div className="w-8 h-8 bg-black rounded-full flex items-center justify-center">
+                  <span className="text-white text-lg font-bold">K</span>
+                </div>
+                <span className="text-lg font-semibold text-black">
+                  Korode Salon
+                </span>
               </div>
-              <span className="text-lg font-semibold text-black">
-                Korode Salon
-              </span>
-            </div>
+            </Link>
           </div>
           <div className="mt-[6rem] md:mt-0">
             {/* Main Content */}
