@@ -5,7 +5,7 @@ import Link from "next/link";
 export default function CheckInbox() {
   return (
     <div className="flex h-screen w-full items-center justify-center bg-gray">
-      <div className="w-full h-full bg-gray-100 flex p-6 rounded-lg shadow-lg">
+     <div className="w-full h-full bg-gray-100 flex py-2 px-6 md:py-6 md:px-6 rounded-lg shadow-lg">
         {/* Left Section */}
         <div className="w-full md:w-1/2 flex flex-col md:justify-center md:px-16 relative">
           {/* Korode Salon Logo */}
