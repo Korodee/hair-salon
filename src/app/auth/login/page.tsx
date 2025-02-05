@@ -23,7 +23,7 @@ export default function LogIn() {
 
           <h2 className="text-3xl text-[#0C1421] font-bold">Welcome Back 👋</h2>
           <p className="text-[#313957] mt-2">
-            Today is a new day. It's your day. Sign in to managing your
+            Today is a new day. It&apos;s your day. Sign in to managing your
             Schedule.
           </p>
 
@@ -77,7 +77,7 @@ export default function LogIn() {
           </button>
 
           <p className="text-[#313957] mt-6 text-center text-sm">
-            Don't have an account?{" "}
+            Don&apos;t have an account?{" "}
             <a href="/auth/signup" className="text-[#103FC1] font-medium">
               Sign up
             </a>

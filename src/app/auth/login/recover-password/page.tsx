@@ -44,7 +44,7 @@ export default function RecoverPassword() {
           </form>
 
           <p className="text-[#313957] mt-6 text-center text-sm">
-            Didn't see any email?{" "}
+            Didn&apos;t see any email?{" "}
             <a href="/auth/resend-link" className="text-[#103FC1] font-medium">
               Resend link
             </a>
