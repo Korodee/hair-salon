@@ -29,7 +29,7 @@ export default function SignUp() {
               </div>
             </Link>
           </div>
-          <div className="mt-[6rem] md:mt-0">
+          <div className="mt-[6rem] md:mt-[6rem]">
             <h2 className="text-3xl text-[#0C1421] font-bold">
               Create an account
             </h2>
@@ -40,7 +40,7 @@ export default function SignUp() {
               </a>
             </p>
 
-            <form className="mt-8 space-y-5" onSubmit={handleSubmit}>
+            <form className="mt-7 space-y-4" onSubmit={handleSubmit}>
               <div>
                 <label className="block text-[#0C1421]">User Name</label>
                 <input
@@ -61,6 +61,14 @@ export default function SignUp() {
 
               <div>
                 <label className="block text-[#0C1421]">Password</label>
+                <input
+                  type="password"
+                  placeholder="At least 8 characters"
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg text-black focus:outline-none"
+                />
+              </div>
+              <div>
+                <label className="block text-[#0C1421]">Confirm password</label>
                 <input
                   type="password"
                   placeholder="At least 8 characters"

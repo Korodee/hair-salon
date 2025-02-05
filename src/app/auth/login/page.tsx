@@ -1,8 +1,23 @@
+"use client";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
 import { FcGoogle } from "react-icons/fc";
+import { AiOutlineLoading3Quarters } from "react-icons/ai";
 
 export default function LogIn() {
+  const router = useRouter();
+  const [loading, setLoading] = useState(false);
+
+  const handleLogin = (e: React.FormEvent) => {
+    e.preventDefault();
+    setLoading(true);
+
+    setTimeout(() => {
+      router.push("/dashboard");
+    }, 1000);
+  };
   return (
     <div className="flex h-screen w-full items-center justify-center bg-gray">
       <div className="w-full h-full bg-gray-100 flex py-2 px-6 md:py-6 md:px-6 rounded-lg shadow-lg">
@@ -31,7 +46,7 @@ export default function LogIn() {
               Schedule.
             </p>
 
-            <form className="mt-8 space-y-5">
+            <form onSubmit={handleLogin} className="mt-8 space-y-5">
               <div>
                 <label className="block text-[#0C1421]">Email</label>
                 <input
@@ -61,9 +76,14 @@ export default function LogIn() {
 
               <button
                 type="submit"
-                className="w-full bg-black text-white py-3 rounded-lg hover:bg-gray-900 transition"
+                disabled={loading}
+                className="w-full bg-black text-white py-3 rounded-lg hover:bg-gray-900 transition flex items-center justify-center"
               >
-                Sign In
+                {loading ? (
+                  <AiOutlineLoading3Quarters className="animate-spin text-xl" />
+                ) : (
+                  "Sign In"
+                )}
               </button>
             </form>
 
