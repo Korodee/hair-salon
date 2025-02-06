@@ -5,7 +5,7 @@ import { Info } from "lucide-react"; // Importing the Info icon
 export default function Rewards({ points }: { points: number }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isTooltipVisible, setIsTooltipVisible] = useState(false);
-  const progress = Math.min((points / 200) * 100, 100); // Assuming 200 points is the goal
+
 
   return (
     <div className="relative md:h-[200px] bg-gradient-to-r from-[#1c0336df] to-[#1c0336df] p-6 rounded-3xl shadow-lg w-full mx-auto text-white space-y-4">
@@ -33,7 +33,7 @@ export default function Rewards({ points }: { points: number }) {
         </div>
 
         {/* Title */}
-        <h3 className="text-lg font-semibold tracking-wide text-[#FB3CB2]">
+        <h3 className="text-2xl font-semibold tracking-wide text-[#FB3CB2]">
           Your Rewards
         </h3>
         {/* Points Display */}
