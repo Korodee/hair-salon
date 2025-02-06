@@ -3,30 +3,34 @@ import { BsBell } from "react-icons/bs";
 
 const LatestNewsCard: FC = () => {
   return (
-    <div className=" bg-green-900 h-[200px] text-white rounded-3xl p-6 space-y-2 shadow-lg">
+    <div className="bg-gradient-to-br from-[#3d5d8f] via-[#27374D] to-[#275eac] text-white rounded-3xl p-6 shadow-xl md:h-[200px] space-y-4 border border-[#334155] backdrop-blur-lg">
       {/* Header */}
-
       <div className="relative flex items-center">
-        {/* Notification icon */}
-        <BsBell className="absolute left-0 " size={24} fill="yellow" />
+        {/* Notification Icon */}
+        <div className="flex items-center justify-center bg-[#6366F1] p-2 rounded-full shadow-lg">
+          <BsBell size={20} fill="white" />
+        </div>
 
-        {/* Latest News text */}
-        <span className="text-lg text-green-400 font-bold pl-8">
+        {/* Latest News Text */}
+        <span className="text-lg font-semibold ml-4 text-[#E0E7FF] tracking-wide">
           Latest News
         </span>
       </div>
+
       {/* Main Content */}
-      <h3 className="text-md font-medium">
-        There’s going to be <span className="text-green-300">$200</span> of
-        discount on the Lorem ipsum dolor sit amet, discount on the Lorem ipsum,
-        discount on the Lorem dolor sit amet, consectetur adipiscing elit.
-        <span className="text-green-300">12th of Feb</span> from{" "}
-        <span className="text-green-300">10:00am</span> to{" "}
-        <span className="text-green-300">2:00pm</span>.
-      </h3>
-      {/* Link */}
-      {/* <button className="text-sm text-green-300 underline hover:text-green-400 transition">
-        See Details &rarr;
+      <p className="text-sm leading-6 text-[#CBD5E1]">
+        There’s going to be{" "}
+        <span className="text-[#4ADE80] font-semibold">$200</span> off the Lorem
+        ipsum dolor sit amet. Enjoy discounts on selected items. Event will take
+        place on t amet. Enjoy discounts on selected items. Event will take{" "}
+        <span className="text-[#4ADE80] font-semibold">12th of Feb</span> from{" "}
+        <span className="text-[#4ADE80] font-semibold">10:00am</span> to{" "}
+        <span className="text-[#4ADE80] font-semibold">2:00pm</span>.
+      </p>
+
+      {/* Button (Optional) */}
+      {/* <button className="text-sm font-medium text-[#fff] underline hover:text-[#818CF8] transition duration-200">
+        Book Appointment Now &rarr;
       </button> */}
     </div>
   );

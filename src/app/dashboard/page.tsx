@@ -13,9 +13,13 @@ export default function Dashboard() {
   const [menuOpen, setMenuOpen] = useState(false);
 
   return (
-    <div className="min-h-screen bg-gray-200">
+    <div
+      className="min-h-screen bg-gradient-to-br from-[#E2E8F0] to-[#CBD5E1]
+    backdrop-blur-lg bg-white/30
+    "
+    >
       {/* Header Section with Logo and Dashboard Text */}
-      <div className="bg-white p-6 shadow-md mb-4 flex items-center justify-between">
+      <div className="bg-white p-6 shadow-md flex items-center justify-between">
         <div className="flex items-center gap-4">
           <Link href="/">
             <div className="flex items-center gap-2">
@@ -59,37 +63,38 @@ export default function Dashboard() {
       </div>
 
       {/* Dashboard Content */}
-      <div className="px-6">
-        {/* Dashboard Text */}
-        <div className="text-2xl font-bold mb-4 text-black">Dashboard</div>
-        <div className="bg-white p-6 rounded-lg shadow-md mb-4">
-          <div className="flex space-x-6 justify-between">
+      <div className="px-4 md:px-6">
+        {/* Dashboard Text */}´
+        <div className="text-3xl font-bold mb-4 text-black">Dashboard</div>
+        <div className="mb-4">
+          <div className="md:flex md:space-x-2 space-y-4 md:space-y-0 justify-between">
             {/* Card 1: Welcome */}
-            <div className="p-4 w-1/3">
-              <h2 className="text-3xl text-gray-800 font-extrabold tracking-tight">
+            <div className="p-6 md:w-1/3 md:h-[200px] bg-gradient-to-r from-purple-800 to-pink-500 text-white rounded-3xl shadow-lg">
+              <h2 className="text-3xl font-extrabold tracking-tight">
                 Welcome, {user.name} 🎉
               </h2>
-              <p className="text-gray-700 mt-2 text-md font-medium">
+              <p className="text-sm leading-6 mt-2 text-white opacity-90">
                 We’re excited to have you with us. Whether you need a fresh
                 haircut or a rejuvenating facial, we’re here to help you look
                 and feel your best!
               </p>
 
-              <Booking />
+              <div>
+                <Booking />
+              </div>
             </div>
 
             {/* Card 2: Latest News */}
-            <div className="w-1/3">
+            <div className="md:w-1/3">
               <Rewards points={user.points} />
             </div>
 
             {/* Card 3: Rewards */}
-            <div className="w-1/3">
+            <div className="md:w-1/3">
               <Update />
             </div>
           </div>
         </div>
-
         <div className="">
           <div className=""></div>
           <div className="">

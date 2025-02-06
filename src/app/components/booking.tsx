@@ -41,12 +41,13 @@ export default function Booking() {
   };
 
   return (
-    <div className="flex items-center mt-6">
+    <div className="flex justify-center md:justify-normal items-center mt-2">
       <button
         onClick={() => setIsModalOpen(true)}
-        className="px-6 py-2 bg-black text-white rounded-lg transition-all duration-300 ease-in-out hover:bg-gray-800 hover:scale-105 hover:shadow-lg"
+        className="px-4 py-1 text-md bg-gradient-to-r from-pink-600 to-purple-500 text-gray-200 font-semibold rounded-lg shadow-md transition-all duration-300 ease-in-out 
+             hover:scale-105 hover:shadow-xl hover:from-purple-700 hover:to-pink-600 focus:ring-2 focus:ring-purple-400 focus:ring-offset-2"
       >
-        Book an appointment
+        Book an Appointment
       </button>
 
       {isModalOpen && (
@@ -56,7 +57,7 @@ export default function Booking() {
             className="fixed inset-0 bg-black bg-opacity-50 backdrop-blur-sm z-10"
           ></div>
           <div className="fixed inset-0 flex justify-center items-center z-20">
-            <div className="bg-white p-6 rounded-[16px] shadow-lg w-full max-w-md relative">
+            <div className="bg-white p-6 rounded-[16px] shadow-lg w-full md:max-w-md relative">
               <button
                 onClick={() => setIsModalOpen(false)}
                 className="absolute top-4 right-4 text-black text-3xl font-semibold opacity-75 hover:opacity-100 focus:outline-none"
@@ -73,7 +74,7 @@ export default function Booking() {
                 onSelect={handleDateSelect}
                 fromDate={today}
                 fromMonth={today}
-                className="rounded-lg bg-white p-4 shadow-md w-full flex justify-center"
+                className="rounded-lg  bg-white p-4 shadow-md w-full flex justify-center"
                 modifiersClassNames={{
                   selected: "bg-blue-600 text-white rounded-full font-bold",
                   today:
