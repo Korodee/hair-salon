@@ -12,13 +12,13 @@ const servicesData = [
       "Some example text is placed here to show what this component will look like fully built out.",
   },
   {
-    icon: "/img/service1.jpg",
+    icon: "/img/service2.jpg",
     title: "Haircuts & Styling",
     description:
       "Some example text is placed here to show what this component will look like fully built out.",
   },
   {
-    icon: "/img/service1.jpg",
+    icon: "/img/service3.jpg",
     title: "Massage & Spa",
     description:
       "Some example text is placed here to show what this component will look like fully built out.",
