@@ -44,7 +44,7 @@ export default function Booking() {
     <div className="flex items-center mt-6">
       <button
         onClick={() => setIsModalOpen(true)}
-        className="px-6 py-3 bg-black text-white rounded-lg transition-all duration-300 ease-in-out hover:bg-gray-800 hover:scale-105 hover:shadow-lg"
+        className="px-6 py-2 bg-black text-white rounded-lg transition-all duration-300 ease-in-out hover:bg-gray-800 hover:scale-105 hover:shadow-lg"
       >
         Book an appointment
       </button>
@@ -56,7 +56,7 @@ export default function Booking() {
             className="fixed inset-0 bg-black bg-opacity-50 backdrop-blur-sm z-10"
           ></div>
           <div className="fixed inset-0 flex justify-center items-center z-20">
-            <div className="bg-white p-6 rounded-lg shadow-lg w-full max-w-md relative">
+            <div className="bg-white p-6 rounded-[16px] shadow-lg w-full max-w-md relative">
               <button
                 onClick={() => setIsModalOpen(false)}
                 className="absolute top-4 right-4 text-black text-3xl font-semibold opacity-75 hover:opacity-100 focus:outline-none"
@@ -71,25 +71,41 @@ export default function Booking() {
                 mode="single"
                 selected={selectedDate}
                 onSelect={handleDateSelect}
-                fromDate={today} // Now it strictly prevents selecting past days
-                fromMonth={today} // Prevents navigating to past months
-                className="rounded-lg bg-gray-100 p-4 shadow-md"
+                fromDate={today}
+                fromMonth={today}
+                className="rounded-lg bg-white p-4 shadow-md w-full flex justify-center"
+                modifiersClassNames={{
+                  selected: "bg-blue-600 text-white rounded-full font-bold",
+                  today:
+                    "border border-blue-600 text-blue-700 font-bold rounded-full",
+                  disabled: "text-gray-400 opacity-50",
+                }}
                 styles={{
-                  caption: { color: "red", fontWeight: "mediu" },
-                  nav: { color: "black" },
-                  day: { color: "black", fontWeight: "bold" },
-                  day_disabled: { color: "gray", pointerEvents: "none" },
+                  caption: {
+                    color: "#1D4ED8",
+                    fontWeight: "bold",
+                    textAlign: "center",
+                  },
+                  nav: { display: "flex", justifyContent: "space-between" },
+                  head_cell: { color: "#374151", fontWeight: "bold" },
+                  day: { color: "#111827", fontSize: "16px", padding: "5px" },
                   day_selected: {
                     backgroundColor: "#1D4ED8",
                     color: "white",
+                    borderRadius: "8px",
+                  },
+                  day_today: {
+                    backgroundColor: "#E5E7EB",
+                    color: "#1D4ED8",
                     fontWeight: "bold",
+                    borderRadius: "100%",
                   },
                 }}
               />
 
               {selectedDate && (
                 <div>
-                  <h4 className="mt-4 text-black">
+                  <h4 className="mt-4 font-medium text-black">
                     Available Time Slots for {format(selectedDate, "PP")}
                   </h4>
                   <div className="grid grid-cols-2 gap-4 mt-4">
@@ -100,8 +116,8 @@ export default function Booking() {
                         className={`${
                           selectedTime === slot
                             ? "bg-blue-600 text-white"
-                            : "bg-gray-200 text-black"
-                        } px-4 py-2 rounded-md transition-all duration-300 hover:bg-blue-500`}
+                            : "bg-gray-200 text-[#0e0e0e]"
+                        } px-4 py-2 rounded-md transition-all duration-300 hover:bg-blue-600`}
                       >
                         {slot}
                       </button>

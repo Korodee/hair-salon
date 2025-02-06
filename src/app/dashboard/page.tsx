@@ -4,6 +4,7 @@ import { useState } from "react";
 import Rewards from "../components/rewards";
 import Booking from "../components/booking";
 import Gallery from "../components/gallery";
+import Update from "../components/update";
 import { FiUser, FiLogOut, FiSettings } from "react-icons/fi";
 import Link from "next/link";
 
@@ -12,7 +13,7 @@ export default function Dashboard() {
   const [menuOpen, setMenuOpen] = useState(false);
 
   return (
-    <div className="min-h-screen bg-gray-100">
+    <div className="min-h-screen bg-gray-200">
       {/* Header Section with Logo and Dashboard Text */}
       <div className="bg-white p-6 shadow-md mb-4 flex items-center justify-between">
         <div className="flex items-center gap-4">
@@ -62,22 +63,33 @@ export default function Dashboard() {
         {/* Dashboard Text */}
         <div className="text-2xl font-bold mb-4 text-black">Dashboard</div>
         <div className="bg-white p-6 rounded-lg shadow-md mb-4">
-          <div className="flex items-center justify-between p-6 bg-gradient-to-r from-blue-100 to-blue-300 rounded-lg shadow-lg">
-            <div>
+          <div className="flex space-x-6 justify-between">
+            {/* Card 1: Welcome */}
+            <div className="p-4 w-1/3">
               <h2 className="text-3xl text-gray-800 font-extrabold tracking-tight">
                 Welcome, {user.name} 🎉
               </h2>
-              <p className="text-gray-700 mt-2 text-lg font-semibold">
-                Enjoy exclusive benefits, discounts, and birthday perks!
+              <p className="text-gray-700 mt-2 text-md font-medium">
+                We’re excited to have you with us. Whether you need a fresh
+                haircut or a rejuvenating facial, we’re here to help you look
+                and feel your best!
               </p>
 
               <Booking />
             </div>
-            <div className="">
+
+            {/* Card 2: Latest News */}
+            <div className="w-1/3">
               <Rewards points={user.points} />
+            </div>
+
+            {/* Card 3: Rewards */}
+            <div className="w-1/3">
+              <Update />
             </div>
           </div>
         </div>
+
         <div className="">
           <div className=""></div>
           <div className="">
