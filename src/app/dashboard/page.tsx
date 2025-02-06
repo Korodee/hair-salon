@@ -69,7 +69,7 @@ export default function Dashboard() {
         <div className="mb-2">
           <div className="md:flex md:space-x-2 space-y-4 md:space-y-0 justify-between">
             {/* Card 1: Welcome */}
-            <div className="p-6 md:w-2/3 md:h-[200px] bg-gradient-to-r from-purple-800 to-pink-500 text-white rounded-3xl shadow-lg">
+            <div className="p-6 md:w-2/3 md:h-[200px] bg-gradient-to-r from-purple-800 to-purple-500 text-white rounded-3xl shadow-lg">
               <h2 className="text-3xl font-extrabold tracking-tight">
                 Welcome, {user.name} 🎉
               </h2>
