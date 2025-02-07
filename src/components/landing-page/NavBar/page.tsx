@@ -17,7 +17,7 @@ const NavBar = () => {
         <div className="w-8 h-8 bg-black rounded-full flex items-center justify-center">
           <span className="text-white text-lg font-bold">B</span>
         </div>
-        <span className="text-lg font-semibold text-white">braidzworld</span>
+        <span className="text-lg font-semibold text-white">Braidzworld</span>
       </div>
 
       {/* Nav Links - Desktop */}

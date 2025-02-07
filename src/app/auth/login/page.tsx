@@ -32,7 +32,7 @@ export default function LogIn() {
                   <span className="text-white text-lg font-bold">B</span>
                 </div>
                 <span className="text-lg font-semibold text-black">
-                  braidzworld
+                  Braidzworld
                 </span>
               </div>
             </Link>

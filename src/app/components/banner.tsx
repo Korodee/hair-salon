@@ -37,7 +37,7 @@ export default function Banner() {
       {/* Content */}
       <div className="relative">
         <h2 className="text-3xl font-semibold mt-1">Welcome, {userName}</h2>
-        <p className="mt-1 text-md text-white/90">
+        <p className="mt-1 text-md text-white/80">
           Experience the luxury, embrace the glow, radiate confidence, redefine
           beauty, feel the elegance, and let your charm shine!
         </p>
