@@ -4,6 +4,7 @@ import { useState } from "react";
 import { format } from "date-fns";
 import { DayPicker } from "react-day-picker";
 import "react-day-picker/dist/style.css";
+import { ArrowRight } from "lucide-react";
 
 export default function Booking() {
   const [selectedDate, setSelectedDate] = useState<Date | undefined>();
@@ -44,10 +45,12 @@ export default function Booking() {
     <div className="flex justify-center md:justify-normal items-center mt-2">
       <button
         onClick={() => setIsModalOpen(true)}
-        className="px-4 py-1 text-md bg-gradient-to-r from-pink-600 to-purple-500 text-gray-200 font-semibold rounded-lg shadow-md transition-all duration-300 ease-in-out 
-             hover:scale-105 hover:shadow-xl hover:from-purple-700 hover:to-pink-600 focus:ring-2 focus:ring-purple-400 focus:ring-offset-2"
+        className="mt-3 flex w-fit items-center gap-2 px-5 py-2 bg-black text-white rounded-full text-sm font-medium transition-all duration-300 transform hover:bg-white hover:text-black hover:scale-105 group"
       >
         Book an Appointment
+        <span className="w-6 h-6 flex items-center justify-center bg-white text-black rounded-full transition-all duration-300 transform group-hover:bg-black group-hover:text-white">
+          <ArrowRight size={14} />
+        </span>
       </button>
 
       {isModalOpen && (

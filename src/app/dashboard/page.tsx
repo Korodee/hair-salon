@@ -2,9 +2,9 @@
 
 import { useState } from "react";
 import Rewards from "../components/rewards";
-import Booking from "../components/booking";
 import Gallery from "../components/gallery";
 import News from "../components/news";
+import Banner from "../components/banner";
 import { FiUser, FiLogOut, FiSettings } from "react-icons/fi";
 import Link from "next/link";
 
@@ -69,32 +69,13 @@ export default function Dashboard() {
         <div className="mb-2">
           <div className="md:flex md:space-x-2 space-y-4 md:space-y-0 justify-between">
             {/* Card 1: Welcome */}
-            <div className="p-6 md:w-2/3 md:h-[200px] bg-gradient-to-r from-purple-800 to-purple-500 text-white rounded-3xl shadow-lg">
-              <h2 className="text-3xl font-extrabold tracking-tight">
-                Welcome, {user.name} 🎉
-              </h2>
-              <p className="text-sm leading-6 mt-2 text-white opacity-90">
-                We’re excited to have you with us. Whether you need a fresh
-                haircut or a We’re excited to have you with us. Whether you need
-                a fresh haircut or a rejuvenating facial, we’re here to help you
-                look and feel your best! rejuvenating facial, we’re here to help
-                you look and feel your best!
-              </p>
-
-              <div>
-                <Booking />
-              </div>
+            <div className="md:w-1/2">
+              <Banner />
             </div>
-
             {/* Card 2: Latest News */}
-            <div className="md:w-1/3">
+            <div className="md:w-1/2">
               <Rewards points={user.points} />
             </div>
-
-            {/* Card 3: Rewards */}
-            {/* <div className="md:w-1/3">
-              <Update />
-            </div> */}
           </div>
         </div>
         <div className="md:flex md:space-x-2 space-y-4 md:space-y-0 justify-between">

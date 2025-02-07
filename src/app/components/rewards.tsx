@@ -6,7 +6,6 @@ export default function Rewards({ points }: { points: number }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isTooltipVisible, setIsTooltipVisible] = useState(false);
 
-
   return (
     <div className="relative md:h-[200px] bg-gradient-to-r from-[#1c0336df] to-[#1c0336df] p-6 rounded-3xl shadow-lg w-full mx-auto text-white space-y-4">
       <div className="relative z-10 text-center space-y-2 h-full flex flex-col justify-center mt-0">
