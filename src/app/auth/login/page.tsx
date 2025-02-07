@@ -23,16 +23,16 @@ export default function LogIn() {
       <div className="w-full h-full bg-gray-100 flex py-2 px-6 md:py-6 md:px-6 rounded-lg shadow-lg">
         {/* Left Side (Form) */}
         <div className="w-full md:w-1/2 flex flex-col md:justify-center md:px-16 relative">
-          {/* Korode Salon Logo */}
+          {/* Braidz World Logo */}
           <div className="absolute top-8 md:left-6 transform md:-translate-x-1/2 md:transform-none">
             {/* Logo */}
             <Link href="/">
               <div className="flex items-center gap-2">
                 <div className="w-8 h-8 bg-black rounded-full flex items-center justify-center">
-                  <span className="text-white text-lg font-bold">K</span>
+                  <span className="text-white text-lg font-bold">B</span>
                 </div>
                 <span className="text-lg font-semibold text-black">
-                  Korode Salon
+                  braidzworld
                 </span>
               </div>
             </Link>

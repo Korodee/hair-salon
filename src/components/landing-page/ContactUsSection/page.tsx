@@ -75,7 +75,7 @@ const GetInTouch: React.FC = () => {
           {/* Message Field */}
           <div className="relative">
             <textarea
-              placeholder="A message for korode Salon"
+              placeholder="A message for braidzworld"
               rows={4}
               className="w-full p-4 pl-12 border border-gray-300 rounded-lg text-gray-900 focus:outline-none focus:ring-0 focus:border-indigo-500"
             ></textarea>

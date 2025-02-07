@@ -24,10 +24,10 @@ export default function Dashboard() {
           <Link href="/">
             <div className="flex items-center gap-2">
               <div className="w-8 h-8 bg-black rounded-full flex items-center justify-center">
-                <span className="text-white text-lg font-bold">K</span>
+                <span className="text-white text-lg font-bold">B</span>
               </div>
               <span className="text-lg font-semibold text-black">
-                Korode Salon
+                braidzworld
               </span>
             </div>
           </Link>
