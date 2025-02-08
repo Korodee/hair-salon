@@ -1,42 +1,47 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { Info } from "lucide-react"; // Importing the Info icon
 
 export default function Rewards({ points }: { points: number }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isTooltipVisible, setIsTooltipVisible] = useState(false);
+
+  const maxPoints = 200; // Set the max points threshold
+  const percentage = (points / maxPoints) * 100;
 
   return (
-    <div className="relative md:h-[200px] bg-gradient-to-r from-[#1c0336df] to-[#1c0336df] p-6 rounded-3xl shadow-lg w-full mx-auto text-white space-y-4">
-      <div className="relative z-10 text-center space-y-2 h-full flex flex-col justify-center mt-0">
-        {/* Info Icon with Tooltip */}
-        <div
-          className="absolute top-2 right-2 text-white cursor-pointer text-xl"
-          onMouseEnter={() => setIsTooltipVisible(true)}
-          onMouseLeave={() => setIsTooltipVisible(false)}
-        >
-          <Info className="w-6 h-6" />
-          {/* Tooltip with animation */}
-          {isTooltipVisible && (
-            <motion.div
-              className="absolute top-[-60px] right-0 bg-black text-white text-xs p-2 rounded-md shadow-lg w-48"
-              initial={{ opacity: 0, y: -20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -20 }}
-              transition={{ duration: 0.3 }}
-            >
-              Earn points by booking appointments and enjoying salon services.
-              Redeem your points for exclusive rewards and discounts!
-            </motion.div>
-          )}
-        </div>
+    <div className="relative bg-gradient-to-r from-[#1c0336df] to-[#1c0336df] p-6 rounded-3xl shadow-lg w-full mx-auto text-white flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-6 md:max-h-[200px]">
+      {/* Left Section - Balance Info */}
+      <div className="relative z-10 p-3 text-center md:text-left flex-1 rounded-2xl overflow-hidden">
+        <h3 className="text-xl text-center font-semibold text-[#FB3CB2]">
+          Point Balance
+        </h3>
 
-        {/* Title */}
+        <div className="w-full max-w-xs mx-auto">
+          <div className="text-center mb-2">
+            <p className="text-lg text-white/70 font-bold">{points} pts</p>
+          </div>
+
+          <div className="relative w-full h-3 bg-[#3b2072] rounded-full overflow-hidden">
+            <div
+              className="absolute top-0 left-0 h-full bg-[#FB3CB2] rounded-full transition-all"
+              style={{ width: `${percentage}%` }}
+            />
+          </div>
+          <p className="text-sm text-gray-300 mt-2">
+            {points < 200
+              ? `You're almost there! Earn ${
+                  200 - points
+                } more points to get 10% off your next appointment.`
+              : "Congratulations! You can now redeem your points."}
+          </p>
+        </div>
+      </div>
+
+      {/* Right Section - Rewards */}
+      <div className="relative z-10 text-center flex-1 bg-[#3b2072] p-6 rounded-2xl shadow-md flex flex-col justify-center  overflow-hidden">
         <h3 className="text-2xl font-semibold tracking-wide text-[#FB3CB2]">
           Your Rewards
         </h3>
-        {/* Points Display */}
-        <div className="relative inline-block">
+        <div className="relative inline-block mt-">
           <motion.div
             initial={{ scale: 1 }}
             animate={{ scale: [1, 1.1, 1] }}
@@ -44,19 +49,12 @@ export default function Rewards({ points }: { points: number }) {
             className="absolute -inset-0.5 bg-gradient-to-r from-[#3f283650] to-[#E02A9F] blur-xl rounded-full"
           />
           <span className="relative inline-block px-6 py-2 bg-[#1c0336a8] text-[#FB3CB2] font-bold text-md rounded-full shadow-inner">
-            {points} points
+            10% OFF
           </span>
         </div>
-        <p className="text-sm text-gray-300 mt-1">
-          {points < 200
-            ? `You're almost there! Earn ${200 - points} more points to redeem.`
-            : "Congratulations! You can now redeem your points."}
-        </p>
-        {/* Button */}
         <button
-          onClick={() => setIsModalOpen(true)}
-          className="px-4 py-1 md:w-[200px] mx-auto text-md bg-gradient-to-r from-pink-600 to-purple-500 text-gray-200 font-semibold rounded-lg shadow-md transition-all duration-300 ease-in-out 
-          hover:scale-105 hover:shadow-xl hover:from-purple-700 hover:to-pink-600 focus:ring-2 focus:ring-purple-400 focus:ring-offset-2"
+          disabled
+          className="mt-2 px-4 py-1 md:w-[200px] mx-auto text-md bg-gray-400 text-gray-300 font-semibold rounded-full shadow-md opacity-50 cursor-not-allowed"
         >
           Redeem Points
         </button>
@@ -64,7 +62,7 @@ export default function Rewards({ points }: { points: number }) {
 
       {/* Modal */}
       {isModalOpen && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black backdrop-blur-sm bg-opacity-50 z-50 ">
+        <div className="fixed inset-0 flex items-center justify-center bg-black backdrop-blur-sm bg-opacity-50 z-50">
           <motion.div
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}

@@ -1,5 +1,4 @@
 "use client";
-import Booking from "../components/booking";
 
 export default function Banner() {
   const userName = "Jane Doe"; // Can be dynamically replaced
@@ -44,7 +43,11 @@ export default function Banner() {
       </div>
 
       {/* Call to Action */}
-      <Booking />
+      <div className="flex justify-center md:justify-normal items-center mt-2">
+        <div className="mt-3 w-fit hidden md:flex items-center gap-2 px-5 py-2 bg-black text-white rounded-full text-sm font-medium ">
+          Book an Appointment Below
+        </div>
+      </div>
     </div>
   );
 }

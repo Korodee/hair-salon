@@ -7,6 +7,7 @@ import News from "../components/news";
 import Banner from "../components/banner";
 import { FiUser, FiLogOut, FiSettings } from "react-icons/fi";
 import Link from "next/link";
+import Calendar from "../components/calendar";
 
 export default function Dashboard() {
   const [user] = useState({ name: "Jane Doe", points: 120 });
@@ -61,7 +62,6 @@ export default function Dashboard() {
           )}
         </div>
       </div>
-
       {/* Dashboard Content */}
       <div className="px-4 md:px-6">
         {/* Dashboard Text */}´
@@ -78,7 +78,10 @@ export default function Dashboard() {
             </div>
           </div>
         </div>
-        <div className="md:flex md:space-x-2 space-y-4 md:space-y-0 justify-between">
+        <div>
+          <Calendar />
+        </div>
+        <div className="md:flex md:space-x-2 my-3 space-y-4 md:space-y-0 justify-between">
           <div className="md:w-1/3">
             <News />
           </div>{" "}
