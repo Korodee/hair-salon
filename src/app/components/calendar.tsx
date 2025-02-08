@@ -14,12 +14,17 @@ import {
   isToday,
 } from "date-fns";
 import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
-import StripeCheckout from "react-stripe-checkout"; 
+import StripeCheckout from "react-stripe-checkout";
 
 const adminAvailability: Record<string, string[]> = {
   "2025-02-10": ["10:00 AM", "1:00 PM", "3:00 PM"],
-  "2025-02-12": ["9:30 AM", "11:30 AM"],
+  "2025-02-12": ["9:30 AM", "11:30 AM", "9:30 AM", "11:30 AM"],
   "2025-02-15": ["12:00 PM", "2:00 PM", "4:00 PM"],
+  "2025-02-22": ["10:00 AM", "1:00 PM", "3:00 PM"],
+  "2025-02-17": ["9:30 AM", "11:30 AM"],
+  "2025-02-26": ["12:00 PM", "2:00 PM", "4:00 PM"],
+  "2025-02-25": ["10:00 AM", "1:00 PM", "3:00 PM"],
+  "2025-02-20": ["9:30 AM", "11:30 AM"],
 };
 
 export default function CalendarView() {
@@ -51,7 +56,7 @@ export default function CalendarView() {
   return (
     <div className="px-6 py-3 rounded-2xl shadow-lg">
       {/* Calendar Header */}
-      <div className="text-2xl text-center font-bold mt-3 text-black">
+      <div className="text-2xl text-center font-bold my-3 text-black">
         Calendar and Bookings
       </div>
       <div className="flex justify-between items-center mb-4">
@@ -151,7 +156,7 @@ export default function CalendarView() {
             </p>
             <div className="flex justify-center mb-4">
               <StripeCheckout
-                stripeKey="your-public-key" 
+                stripeKey="your-public-key"
                 token={handlePaymentSuccess}
                 amount={2500} // $25 deposit (in cents)
                 currency="USD"

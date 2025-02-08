@@ -1,25 +1,46 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
+import { FiInfo } from "react-icons/fi";
 
 export default function Rewards({ points }: { points: number }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [showTooltip, setShowTooltip] = useState(false);
 
-  const maxPoints = 200; // Set the max points threshold
+  const maxPoints = 200;
   const percentage = (points / maxPoints) * 100;
 
   return (
     <div className="relative bg-gradient-to-r from-[#1c0336df] to-[#1c0336df] p-6 rounded-3xl shadow-lg w-full mx-auto text-white flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-6 md:max-h-[200px]">
       {/* Left Section - Balance Info */}
       <div className="relative z-10 p-3 text-center md:text-left flex-1 rounded-2xl overflow-hidden">
+        {/* Info Icon */}
+        <div
+          className="absolute top-4 left-4 z-20 cursor-pointer text-gray-300 hover:text-white transition-all duration-200 ease-in-out"
+          onMouseEnter={() => setShowTooltip(true)}
+          onMouseLeave={() => setShowTooltip(false)}
+        >
+          <FiInfo size={20} />
+          {showTooltip && (
+            <motion.div
+              initial={{ opacity: 0, scale: 0.8, y: 5 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.8, y: 5 }}
+              transition={{ duration: 0.3, ease: "easeInOut" }}
+              className="absolute top-6 left-0 bg-gradient-to-br from-[#5F0A87] to-[#A4508B] text-white text-[13px] p-3 rounded-lg shadow-lg w-[16rem]"
+            >
+              "Earn points by engaging, booking, and more! Redeem for rewards
+              plus **10% off** your next service. Confirmation email sent
+              instantly!"
+            </motion.div>
+          )}
+        </div>
         <h3 className="text-xl text-center font-semibold text-[#FB3CB2]">
           Point Balance
         </h3>
-
         <div className="w-full max-w-xs mx-auto">
           <div className="text-center mb-2">
             <p className="text-lg text-white/70 font-bold">{points} pts</p>
           </div>
-
           <div className="relative w-full h-3 bg-[#3b2072] rounded-full overflow-hidden">
             <div
               className="absolute top-0 left-0 h-full bg-[#FB3CB2] rounded-full transition-all"
@@ -37,11 +58,11 @@ export default function Rewards({ points }: { points: number }) {
       </div>
 
       {/* Right Section - Rewards */}
-      <div className="relative z-10 text-center flex-1 bg-[#3b2072] p-6 rounded-2xl shadow-md flex flex-col justify-center  overflow-hidden">
+      <div className="relative z-10 text-center flex-1 bg-[#3b2072] p-6 rounded-2xl shadow-md flex flex-col justify-center overflow-hidden">
         <h3 className="text-2xl font-semibold tracking-wide text-[#FB3CB2]">
           Your Rewards
         </h3>
-        <div className="relative inline-block mt-">
+        <div className="relative inline-block">
           <motion.div
             initial={{ scale: 1 }}
             animate={{ scale: [1, 1.1, 1] }}
@@ -59,33 +80,6 @@ export default function Rewards({ points }: { points: number }) {
           Redeem Points
         </button>
       </div>
-
-      {/* Modal */}
-      {isModalOpen && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black backdrop-blur-sm bg-opacity-50 z-50">
-          <motion.div
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0.8 }}
-            className="bg-white text-[#1C0336] p-6 rounded-lg shadow-xl max-w-xs w-full text-center relative"
-          >
-            <button
-              onClick={() => setIsModalOpen(false)}
-              className="absolute top-3 right-3 text-[#1C0336] text-2xl font-bold hover:text-[#FB3CB2]"
-            >
-              &times;
-            </button>
-            <h3 className="text-lg font-bold">Redeem Your Points</h3>
-            <p className="text-gray-700 mt-2 text-sm">
-              Your points can be redeemed for exclusive rewards, discounts, and
-              special offers. Make the most of your loyalty!
-            </p>
-            <button className="mt-4 bg-[#FB3CB2] text-white px-4 py-2 rounded-full transition-all duration-300 hover:bg-[#E02A9F] focus:ring-4 focus:ring-[#FB3CB2]/50">
-              Redeem Now
-            </button>
-          </motion.div>
-        </div>
-      )}
     </div>
   );
 }
