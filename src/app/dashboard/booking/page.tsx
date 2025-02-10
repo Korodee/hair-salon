@@ -54,15 +54,15 @@ export default function CalendarView() {
   };
 
   return (
-    <div className="px-6 py-3 rounded-2xl shadow-lg">
+    <div className="rounded-2xl">
       {/* Calendar Header */}
       <div className="text-2xl text-center font-bold my-3 text-black">
-        Calendar and Bookings
+        Calendar and Bookings sdsd
       </div>
       <div className="flex justify-between items-center mb-4">
         <button
           onClick={handlePrevMonth}
-          className="p-2 bg-gray-200 rounded-full hover:bg-gray-300"
+          className="p-2 bg-gray-100 rounded-full hover:bg-gray-300"
         >
           <FiChevronLeft size={20} color="black" />
         </button>
@@ -71,7 +71,7 @@ export default function CalendarView() {
         </h2>
         <button
           onClick={handleNextMonth}
-          className="p-2 bg-gray-200 rounded-full hover:bg-gray-300"
+          className="p-2 bg-gray-100 rounded-full hover:bg-gray-300"
         >
           <FiChevronRight size={20} color="black" />
         </button>

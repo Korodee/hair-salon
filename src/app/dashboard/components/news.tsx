@@ -17,17 +17,10 @@ const newsList = [
     highlight: false,
   },
   {
-    title: "Holiday Season Offer Ended",
+    title: "New Hair Treatment Available",
     description:
-      "Thank you for participating in our holiday discount! Stay tuned for more promotions.",
-    date: "Dec 26, 2024",
-    highlight: false,
-  },
-  {
-    title: "Holiday Season Offer Ended",
-    description:
-      "Thank you for participating in our holiday discount! Stay tuned for more promotions.",
-    date: "Dec 26, 2024",
+      "Introducing our latest deep-conditioning hair treatment. Book your appointment today!",
+    date: "Jan 28, 2025",
     highlight: false,
   },
 ];

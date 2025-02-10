@@ -3,7 +3,6 @@ import { motion } from "framer-motion";
 import { FiInfo } from "react-icons/fi";
 
 export default function Rewards({ points }: { points: number }) {
-  const [isModalOpen, setIsModalOpen] = useState(false);
   const [showTooltip, setShowTooltip] = useState(false);
 
   const maxPoints = 200;
@@ -15,7 +14,7 @@ export default function Rewards({ points }: { points: number }) {
       <div className="relative z-10 p-3 text-center md:text-left flex-1 rounded-2xl overflow-hidden">
         {/* Info Icon */}
         <div
-          className="absolute top-4 left-4 z-20 cursor-pointer text-gray-300 hover:text-white transition-all duration-200 ease-in-out"
+          className="absolute top-0 left-1 z-20 cursor-pointer text-gray-300 hover:text-white transition-all duration-200 ease-in-out"
           onMouseEnter={() => setShowTooltip(true)}
           onMouseLeave={() => setShowTooltip(false)}
         >
@@ -26,11 +25,11 @@ export default function Rewards({ points }: { points: number }) {
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.8, y: 5 }}
               transition={{ duration: 0.3, ease: "easeInOut" }}
-              className="absolute top-6 left-0 bg-gradient-to-br from-[#5F0A87] to-[#A4508B] text-white text-[13px] p-3 rounded-lg shadow-lg w-[16rem]"
+              className="absolute top-6 left-0 bg-gradient-to-br from-[#5F0A87] to-[#A4508B] text-white text-[13px] p-3 rounded-lg shadow-lg w-[14.5rem]"
             >
-              "Earn points by engaging, booking, and more! Redeem for rewards
-              plus **10% off** your next service. Confirmation email sent
-              instantly!"
+              Earn points by engaging, booking, and more! Redeem for rewards
+              plus 10% off your next service. Confirmation email sent
+              instantly!
             </motion.div>
           )}
         </div>
@@ -47,7 +46,7 @@ export default function Rewards({ points }: { points: number }) {
               style={{ width: `${percentage}%` }}
             />
           </div>
-          <p className="text-sm text-gray-300 mt-2">
+          <p className="text-[12px] text-gray-300 mt-2">
             {points < 200
               ? `You're almost there! Earn ${
                   200 - points
