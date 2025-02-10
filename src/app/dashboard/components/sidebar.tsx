@@ -16,7 +16,7 @@ export default function Sidebar() {
   ];
 
   return (
-    <aside className="md:w-64 h-screen hidden md:flex bg-white shadow-lg flex-col">
+    <aside className="md:w-64 h-screen hidden md:flex bg-white/50 backdrop-blur-xl shadow-lg flex-col">
       {/* Logo */}
       <div className="flex items-center gap-4 p-4 border-b border-gray-200">
         <Link href="/">
@@ -40,7 +40,7 @@ export default function Sidebar() {
                 ${
                   pathname === item.href
                     ? "bg-black text-white shadow-md"
-                    : "text-gray-700 hover:bg-gray-100"
+                    : "text-gray-700 hover:bg-gray-200"
                 }
               `}
             >
