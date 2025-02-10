@@ -16,7 +16,7 @@ export default function Sidebar() {
   ];
 
   return (
-    <aside className="md:w-64 h-screen bg-white shadow-lg flex flex-col">
+    <aside className="md:w-64 h-screen hidden md:flex bg-white shadow-lg flex-col">
       {/* Logo */}
       <div className="flex items-center gap-4 p-4 border-b border-gray-200">
         <Link href="/">
@@ -32,7 +32,7 @@ export default function Sidebar() {
       </div>
 
       {/* Navigation */}
-      <nav className="flex-1 p-4 space-y-2">
+      <nav className=" flex-1 p-4 space-y-2">
         {navItems.map((item) => (
           <Link key={item.href} href={item.href}>
             <div
