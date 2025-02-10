@@ -34,10 +34,10 @@ export default function CalendarView() {
   return (
     <div className="px-2 rounded-2xl">
       <h1 className="text-2xl font-bold pt-3 text-black">Calendar</h1>
-      <p className="text-gray-600 pb-2">
+      <p className="text-gray-500 pb-2">
         This calendar shows available dates and times for appointments.
       </p>
-      <div className="flex justify-between items-center mb-4">
+      <div className="flex py-2 justify-between items-center mb-4">
         <button
           onClick={handlePrevMonth}
           className="p-2 bg-gray-100 rounded-full hover:bg-gray-300"
@@ -97,7 +97,7 @@ export default function CalendarView() {
         onClose={() => setSelectedDate(null)}
         className="fixed inset-0 flex items-center justify-center p-4"
       >
-        <div className="bg-white p-5 rounded-lg shadow-lg w-80">
+        <div className="bg-white p-5 rounded-3xl shadow-lg w-80">
           <h2 className="text-lg font-semibold text-gray-800 border-b pb-2">
             Available Times
           </h2>

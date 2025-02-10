@@ -5,7 +5,7 @@ import { FiUser } from "react-icons/fi";
 
 export default function Navbar({ activePage }: { activePage: string }) {
   return (
-    <div className="bg-white p-6 shadow-md flex items-center justify-between">
+    <div className="bg-white p-4 shadow-md flex items-center justify-between">
       <h1 className="text-2xl text-black font-semibold">{activePage}</h1>
 
       <Link

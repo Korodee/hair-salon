@@ -55,10 +55,10 @@ export default function CalendarView() {
 
   return (
     <div className="rounded-2xl">
-      {/* Calendar Header */}
+      {/* Calendar Header
       <div className="text-2xl text-center font-bold my-3 text-black">
-        Calendar and Bookings sdsd
-      </div>
+        Calendar and Bookings
+      </div> */}
       <div className="flex justify-between items-center mb-4">
         <button
           onClick={handlePrevMonth}

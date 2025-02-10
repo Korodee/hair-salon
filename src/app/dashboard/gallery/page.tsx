@@ -10,7 +10,7 @@ const images = [
 
 export default function Gallery() {
   return (
-    <div className="p-6 rounded-2xl shadow-md bg-[#bcd0f853]">
+    <div className="rounded-2xl shadow-md">
       <h3 className="text-2xl text-black font-bold mb-1">Photo Gallery</h3>
       <p className="text-gray-700 text-sm md:w-[60%] mb-4">
         Discover stunning hairstyles and salon transformations. Get inspired by

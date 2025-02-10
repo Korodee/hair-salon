@@ -16,15 +16,15 @@ export default function Sidebar() {
   ];
 
   return (
-    <aside className="w-64 h-screen bg-white shadow-lg flex flex-col">
+    <aside className="md:w-64 h-screen bg-white shadow-lg flex flex-col">
       {/* Logo */}
-      <div className="flex items-center gap-4 p-6 border-b border-gray-200">
+      <div className="flex items-center gap-4 p-4 border-b border-gray-200">
         <Link href="/">
           <div className="flex items-center gap-2 cursor-pointer">
             <div className="w-10 h-10 bg-black rounded-full flex items-center justify-center">
               <span className="text-white text-lg font-bold">B</span>
             </div>
-            <span className="text-lg font-semibold text-black">
+            <span className="text-lg font-semibold text-black hidden sm:block">
               Braidzworld
             </span>
           </div>
@@ -45,7 +45,7 @@ export default function Sidebar() {
               `}
             >
               {item.icon}
-              <span className="font-medium">{item.name}</span>
+              <span className="font-medium hidden sm:block">{item.name}</span>
             </div>
           </Link>
         ))}
@@ -53,9 +53,9 @@ export default function Sidebar() {
 
       {/* Logout Button */}
       <div className="p-4 border-t border-gray-200">
-        <button className="flex items-center gap-3 w-full px-4 py-3 text-red-500 rounded-lg hover:bg-red-50 transition">
+        <button className="flex items-center gap-3 w-full px-4 py-2 text-red-500 rounded-lg hover:bg-red-50 transition">
           <FiLogOut />
-          <span className="font-medium">Logout</span>
+          <span className="font-medium hidden sm:block">Logout</span>
         </button>
       </div>
     </aside>

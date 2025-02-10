@@ -9,7 +9,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 
   const navItems = [
     { name: "Dashboard", href: "/dashboard" },
-    { name: "Calendar", href: "/dashboard/calendar" },
+    { name: "Bookings", href: "/dashboard/booking" },
     { name: "Gallery", href: "/dashboard/gallery" },
     { name: "Rewards", href: "/dashboard/rewards" },
   ];
@@ -19,7 +19,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 
   return (
     <div className="flex h-screen bg-white">
-      <div className="w-64">
+      <div className="md:w-64">
         <Sidebar />
       </div>
 
