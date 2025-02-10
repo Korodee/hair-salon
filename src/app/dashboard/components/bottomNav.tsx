@@ -3,12 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { MdDashboard } from "react-icons/md";
-import {
-  FiCalendar,
-  FiImage,
-  FiGift,
-  FiLogOut,
-} from "react-icons/fi";
+import { FiCalendar, FiImage, FiGift, FiLogOut } from "react-icons/fi";
 
 const navItems = [
   { name: "Dashboard", href: "/dashboard", icon: <MdDashboard size={20} /> },
@@ -30,7 +25,7 @@ export default function BottomNav() {
   const pathname = usePathname();
 
   return (
-    <nav className="fixed md:hidden bottom-4 left-6 right-6 rounded-lg bg-black text-white flex justify-around py-3 shadow-lg">
+    <nav className="fixed md:hidden bottom-4 left-8 right-8 rounded-2xl bg-black text-white flex justify-around py-3 shadow-lg">
       {navItems.map(({ name, href, icon }) => {
         const isActive = pathname === href;
 
