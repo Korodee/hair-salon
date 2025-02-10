@@ -15,6 +15,7 @@ import {
 } from "date-fns";
 import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
 import StripeCheckout from "react-stripe-checkout";
+import { Dialog } from "@headlessui/react";
 
 const adminAvailability: Record<string, string[]> = {
   "2025-02-10": ["10:00 AM", "1:00 PM", "3:00 PM"],
@@ -160,39 +161,40 @@ export default function CalendarView() {
           )}
 
           {/* Payment Modal */}
-          {isPaymentModalOpen && selectedTime && (
-            <div className="fixed inset-0 bg-gray-500 bg-opacity-50 flex justify-center items-center z-50">
-              <div className="bg-white p-8 rounded-lg shadow-lg w-full sm:w-96 max-w-lg">
-                <h3 className="text-xl font-semibold text-gray-800 mb-4 text-center">
-                  Confirm Booking for {selectedTime} on{" "}
-                  {selectedDate
-                    ? format(new Date(selectedDate), "MMMM d, yyyy")
-                    : ""}
-                </h3>
-                <p className="text-gray-700 mb-6 text-center">
-                  A $25 deposit is required to confirm your appointment.
-                </p>
-                <div className="flex justify-center mb-4">
-                  <StripeCheckout
-                    stripeKey="your-public-key"
-                    token={handlePaymentSuccess}
-                    amount={2500} // $25 deposit (in cents)
-                    currency="USD"
-                    name="Appointment Booking"
-                    description="Deposit for your appointment"
-                  />
-                </div>
-                <div className="flex justify-center">
-                  <button
-                    onClick={() => setIsPaymentModalOpen(false)}
-                    className=" p-2 bg-red-500 text-white rounded-lg w-full sm:w-auto"
-                  >
-                    Cancel
-                  </button>
-                </div>
+          <Dialog
+            open={isPaymentModalOpen}
+            onClose={() => setIsPaymentModalOpen(false)}
+            className="fixed inset-0 z-50 flex items-center justify-center"
+          >
+            <div className="fixed inset-0 bg-gray-500 opacity-50" />
+            <div className="relative bg-white p-8 rounded-lg shadow-lg w-96">
+              <Dialog.Title className="text-xl font-semibold text-gray-800 mb-4 text-center">
+                Confirm Booking for {selectedTime} on{" "}
+                {selectedDate && format(new Date(selectedDate), "MMMM d, yyyy")}
+              </Dialog.Title>
+              <p className="text-gray-700 mb-6 text-center">
+                A $25 deposit is required to confirm your appointment.
+              </p>
+              <div className="flex justify-center mb-4">
+                <StripeCheckout
+                  stripeKey="your-public-key"
+                  token={handlePaymentSuccess}
+                  amount={2500}
+                  currency="USD"
+                  name="Appointment Booking"
+                  description="Deposit for your appointment"
+                />
+              </div>
+              <div className="flex justify-center">
+                <button
+                  onClick={() => setIsPaymentModalOpen(false)}
+                  className="p-2 bg-red-500 text-white rounded-lg w-full"
+                >
+                  Cancel
+                </button>
               </div>
             </div>
-          )}
+          </Dialog>
         </div>
       </div>
     </div>
