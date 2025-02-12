@@ -75,7 +75,7 @@ export default function Gallery() {
           onClose={() => setSelectedImage(null)}
           className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-75"
         >
-          <div className="relative max-w-2xl w-full p-4">
+          <div className="relative max-w-2xl w-full p-6 md:p-4">
             <Image
               src={selectedImage.src}
               width={700}
@@ -88,7 +88,7 @@ export default function Gallery() {
             </p>
             <button
               onClick={() => setSelectedImage(null)}
-              className="absolute -top-2 right-0 text-white text-2xl"
+              className="absolute top-0 md:-top-2 right-2 md:right-0 text-white text-2xl"
             >
               &times;
             </button>
