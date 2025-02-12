@@ -4,6 +4,7 @@ import { usePathname } from "next/navigation";
 import Link from "next/link";
 import { FiCalendar, FiImage, FiGift, FiLogOut } from "react-icons/fi";
 import { MdDashboard } from "react-icons/md";
+import { RiFileHistoryLine } from "react-icons/ri";
 
 export default function Sidebar() {
   const pathname = usePathname(); // Get the current route
@@ -11,7 +12,13 @@ export default function Sidebar() {
   const navItems = [
     { name: "Dashboard", href: "/dashboard", icon: <MdDashboard /> },
     { name: "Bookings", href: "/dashboard/booking", icon: <FiCalendar /> },
+
     { name: "Gallery", href: "/dashboard/gallery", icon: <FiImage /> },
+    {
+      name: "History",
+      href: "/dashboard/booking-history",
+      icon: <RiFileHistoryLine />,
+    },
     { name: "Rewards", href: "/dashboard/rewards", icon: <FiGift /> },
   ];
 

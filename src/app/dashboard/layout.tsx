@@ -11,6 +11,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   const navItems = [
     { name: "Dashboard", href: "/dashboard" },
     { name: "Bookings", href: "/dashboard/booking" },
+    { name: "Bookings History", href: "/dashboard/booking-history" },
     { name: "Photo Gallery", href: "/dashboard/gallery" },
     { name: "Rewards", href: "/dashboard/rewards" },
   ];
