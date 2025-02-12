@@ -30,10 +30,10 @@ const NavBar = () => {
           Services
           <span className="absolute left-0 bottom-0 w-0 h-[2px] bg-white transition-all duration-300 group-hover:w-full"></span>
         </a>
-        <a href="#pricing" className="relative group">
+        {/* <a href="#pricing" className="relative group">
           Pricing
           <span className="absolute left-0 bottom-0 w-0 h-[2px] bg-white transition-all duration-300 group-hover:w-full"></span>
-        </a>
+        </a> */}
         <a href="#contact" className="relative group">
           Contact
           <span className="absolute left-0 bottom-0 w-0 h-[2px] bg-white transition-all duration-300 group-hover:w-full"></span>

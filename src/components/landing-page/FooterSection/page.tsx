@@ -42,9 +42,9 @@ const Footer: React.FC = () => {
             <a href="#services" className="hover:text-gray-300">
               SERVICES
             </a>
-            <a href="#pricing" className="hover:text-gray-300">
+            {/* <a href="#pricing" className="hover:text-gray-300">
               PRICING
-            </a>
+            </a> */}
             <a href="#contact" className="hover:text-gray-300">
               CONTACT
             </a>

@@ -1,6 +1,6 @@
 import HeroSection from "@/components/landing-page/HeroSection/page";
 import StaffSection from "@/components/landing-page/StaffSection/page";
-import PricingSection from "@/components/landing-page/PricingSection/page";
+// import PricingSection from "@/components/landing-page/PricingSection/page";
 import TestimonialSection from "@/components/landing-page/TestimonialSection/page";
 import AboutSection from "@/components/landing-page/AboutSection/page";
 import ContactUsSection from "@/components/landing-page/ContactUsSection/page";
@@ -13,7 +13,7 @@ const LandingPage = () => {
       <AboutSection />
       <ServicesSection />
       <StaffSection />
-      <PricingSection />
+      {/* <PricingSection /> */}
       <TestimonialSection />
       <ContactUsSection />
       <FooterSection />
