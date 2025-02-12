@@ -4,11 +4,13 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { FcGoogle } from "react-icons/fc";
+import { EyeIcon, EyeOffIcon } from "lucide-react";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 
 export default function LogIn() {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
@@ -56,13 +58,26 @@ export default function LogIn() {
                 />
               </div>
 
-              <div>
-                <label className="block text-[#0C1421]">Password</label>
-                <input
-                  type="password"
-                  placeholder="At least 8 characters"
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg text-black focus:outline-none focus:ring-none"
-                />
+              <div className="relative">
+                <label className="block text-[#0C1421] mb-1">Password</label>
+                <div className="relative">
+                  <input
+                    type={showPassword ? "text" : "password"}
+                    placeholder="Enter your password"
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg text-black focus:outline-none focus:ring-none pr-10"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowPassword(!showPassword)}
+                    className="absolute inset-y-0 right-3 flex items-center text-gray-500 hover:text-gray-700"
+                  >
+                    {showPassword ? (
+                      <EyeOffIcon size={20} />
+                    ) : (
+                      <EyeIcon size={20} />
+                    )}
+                  </button>
+                </div>
               </div>
 
               <div className="flex justify-between items-center">

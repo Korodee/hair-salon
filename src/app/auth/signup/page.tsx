@@ -1,10 +1,14 @@
 "use client"; // This makes the component a client-side component
 
+import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { FcGoogle } from "react-icons/fc";
+import { EyeIcon, EyeOffIcon } from "lucide-react";
 
 export default function SignUp() {
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     window.location.href = "/auth/signup/check-inbox";
@@ -20,7 +24,7 @@ export default function SignUp() {
             {/* Logo */}
             <Link href="/">
               <div className="flex items-center gap-2">
-              <div className="w-8 h-8 bg-black rounded-full flex items-center justify-center">
+                <div className="w-8 h-8 bg-black rounded-full flex items-center justify-center">
                   <span className="text-white text-lg font-bold">B</span>
                 </div>
                 <span className="text-lg font-semibold text-black">
@@ -59,21 +63,48 @@ export default function SignUp() {
                 />
               </div>
 
-              <div>
-                <label className="block text-[#0C1421]">Password</label>
-                <input
-                  type="password"
-                  placeholder="At least 8 characters"
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg text-black focus:outline-none"
-                />
+              <div className="relative">
+                <label className="block text-[#0C1421] mb-1">Password</label>
+                <div className="relative">
+                  <input
+                    type={showPassword ? "text" : "password"}
+                    placeholder="Enter your password"
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg text-black focus:outline-none focus:ring-none pr-10"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowPassword(!showPassword)}
+                    className="absolute inset-y-0 right-3 flex items-center text-gray-500 hover:text-gray-700"
+                  >
+                    {showPassword ? (
+                      <EyeOffIcon size={20} />
+                    ) : (
+                      <EyeIcon size={20} />
+                    )}
+                  </button>
+                </div>
               </div>
+
               <div>
                 <label className="block text-[#0C1421]">Confirm password</label>
-                <input
-                  type="password"
-                  placeholder="At least 8 characters"
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg text-black focus:outline-none"
-                />
+                <div className="relative">
+                  <input
+                    type={showConfirmPassword ? "text" : "password"}
+                    placeholder="Confirm your password"
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg text-black focus:outline-none focus:ring-none pr-10"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                    className="absolute inset-y-0 right-3 flex items-center text-gray-500 hover:text-gray-700"
+                  >
+                    {showConfirmPassword ? (
+                      <EyeOffIcon size={20} />
+                    ) : (
+                      <EyeIcon size={20} />
+                    )}
+                  </button>
+                </div>
               </div>
 
               <button
