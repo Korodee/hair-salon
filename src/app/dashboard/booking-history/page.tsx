@@ -66,37 +66,32 @@ const bookingData = [
 
 export default function BookingHistory() {
   return (
-    <div className=" rounded-lg">
-      {/* <div className="flex justify-between items-center mb-1">
-        <h2 className="text-xl font-semibold text-gray-900">
-          See history of your Booking invoice
-        </h2>
-      </div> */}
-      {/* <p className="text-gray-600 mb-4">See history of your Booking invoice</p> */}
-
+    <div className="rounded-lg overflow-hidden">
       <div className="overflow-x-auto">
-        <table className="w-full border-collapse">
+        <table className="w-full border-collapse min-w-[600px] md:min-w-full">
           <thead>
-            <tr className=" text-gray-700">
-              <th className="p-3 text-left">Booking Invoice</th>
-              <th className="p-3 text-left">Amount</th>
-              <th className="p-3 text-left">Date</th>
-              <th className="p-3 text-left">Time</th>
-              <th className="p-3 text-left">Status</th>
-              {/* <th className="p-3 text-left">Action</th> */}
+            <tr className="text-gray-700 ">
+              <th className="p-3 text-left text-sm md:text-base">
+                Booking Invoice
+              </th>
+              <th className="p-3 text-left text-sm md:text-base">Amount</th>
+              <th className="p-3 text-left text-sm md:text-base">Date</th>
+              <th className="p-3 text-left text-sm md:text-base">Time</th>
+              <th className="p-3 text-left text-sm md:text-base">Status</th>
             </tr>
           </thead>
           <tbody className="text-gray-500">
             {bookingData.map((invoice, index) => (
               <tr key={index} className="border-t border-gray-400">
-                <td className="p-3">Invoice#{invoice.id}</td>
-                <td className="p-3">{invoice.amount}</td>
-                <td className="p-3">{invoice.date}</td>
-                <td className="p-3">{invoice.time}</td>
-
+                <td className="p-3 text-sm md:text-base">
+                  Invoice#{invoice.id}
+                </td>
+                <td className="p-3 text-sm md:text-base">{invoice.amount}</td>
+                <td className="p-3 text-sm md:text-base">{invoice.date}</td>
+                <td className="p-3 text-sm md:text-base">{invoice.time}</td>
                 <td className="p-3">
                   <span
-                    className={`px-2 py-1 rounded-full text-xs font-semibold 
+                    className={`px-2 py-1 rounded-full text-xs md:text-sm font-semibold 
                       ${
                         invoice.status === "Success"
                           ? "bg-green-100 text-green-600"

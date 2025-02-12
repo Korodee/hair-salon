@@ -4,6 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { MdDashboard } from "react-icons/md";
 import { FiCalendar, FiImage, FiGift, FiLogOut } from "react-icons/fi";
+import { RiFileHistoryLine } from "react-icons/ri";
 
 const navItems = [
   { name: "Dashboard", href: "/dashboard", icon: <MdDashboard size={20} /> },
@@ -13,6 +14,11 @@ const navItems = [
     icon: <FiCalendar size={20} />,
   },
   { name: "Gallery", href: "/dashboard/gallery", icon: <FiImage size={20} /> },
+  {
+    name: "History",
+    href: "/dashboard/booking-history",
+    icon: <RiFileHistoryLine size={20} />,
+  },
   { name: "Rewards", href: "/dashboard/rewards", icon: <FiGift size={20} /> },
   {
     name: "Logout",
