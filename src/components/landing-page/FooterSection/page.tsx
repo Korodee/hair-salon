@@ -5,21 +5,7 @@ import { FaInstagram, FaTwitter, FaFacebook } from "react-icons/fa";
 
 const Footer: React.FC = () => {
   return (
-    <footer className="relative bg-[#1C0336] text-white overflow-hidden">
-      {/* Background Curves */}
-      <div className="absolute top-0 left-0 w-full overflow-hidden leading-none">
-        <svg
-          className="relative block w-full h-[150px]"
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 1440 320"
-        >
-          <path
-            fill="#1C0336"
-            d="M0,192L60,176C120,160,240,128,360,112C480,96,600,96,720,112C840,128,960,160,1080,181.3C1200,203,1320,213,1380,218.7L1440,224L1440,320L1380,320C1320,320,1200,320,1080,320C960,320,840,320,720,320C600,320,480,320,360,320C240,320,120,320,60,320L0,320Z"
-          ></path>
-        </svg>
-      </div>
-
+    <footer className="relative bg-black/90 text-white overflow-hidden">
       {/* Content */}
       <div className="relative z-10 max-w-7xl mx-auto px-8 py-20 flex flex-col lg:flex-row justify-between items-center space-y-10 lg:space-y-0">
         {/* Left Section */}

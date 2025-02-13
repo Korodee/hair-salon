@@ -88,7 +88,7 @@ const GetInTouch: React.FC = () => {
         {/* Submit Button */}
         <button
           type="submit"
-          className="w-full py-4 text-white bg-[#171A31] rounded-lg transition-all duration-300 ease-in-out hover:bg-gray-800 hover:scale-105 hover:shadow-lg"
+          className="w-full py-4 text-white bg-black rounded-lg transition-all duration-300 ease-in-out hover:bg-gray-800 hover:scale-105 hover:shadow-lg"
         >
           Send message
         </button>

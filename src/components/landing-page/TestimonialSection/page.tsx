@@ -72,7 +72,7 @@ const TestimonialSection: React.FC = () => {
     >
       {/* Testimonial Content */}
       <h3 className="text-3xl font-extrabold text-[#171A31]">Testimonials</h3>
-      <div className="bg-[#1E0536] z-0 py-12 text-white p-8 rounded-xl max-w-4xl w-full flex flex-col md:flex-row h-[600px] md:h-[300px]">
+      <div className="bg-black/90 z-0 py-12 text-white p-8 rounded-xl max-w-4xl w-full flex flex-col md:flex-row h-[600px] md:h-[300px]">
         {/* Left: Image Section */}
         <div className="relative w-full md:w-1/3 flex items-center justify-center mb-6 md:mb-0">
           <div className="absolute z-[-1] bg-[#FB3CB2] w-8 h-[8rem] rounded-full left-[0rem] top-0 hidden md:block"></div>
@@ -114,7 +114,7 @@ const TestimonialSection: React.FC = () => {
         </button>
         <button
           onClick={handleNext}
-          className="w-9 h-9 flex items-center justify-center bg-[#1A2D61] rounded-full text-white text-xl transition-all duration-300 ease-in-out hover:bg-[#162652] hover:scale-110 hover:shadow-md active:scale-95"
+          className="w-9 h-9 flex items-center justify-center bg-black/90 rounded-full text-white text-xl transition-all duration-300 ease-in-out hover:bg-[#162652] hover:scale-110 hover:shadow-md active:scale-95"
         >
           <FaChevronRight />
         </button>
