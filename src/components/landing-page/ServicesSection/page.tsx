@@ -33,12 +33,12 @@ const ServicesSection = () => {
     });
   }, []);
   return (
-    <section id="services" className="py-20 text-center px-4 bg-[#1C0336] ">
+    <section id="services" className="py-20 text-center px-4">
       <div data-aos="zoom-in">
-        <h2 className="text-3xl sm:text-4xl font-extrabold text-white mt-2">
+        <h2 className="text-3xl sm:text-4xl font-extrabold text-black mt-2">
           Services
         </h2>
-        <p className="text-gray-200 mt-3 max-w-xl mx-auto">
+        <p className="text-gray-700 mt-3 max-w-xl mx-auto">
           We believe great hair should be accessible to everyone, no matter the
           budget.
         </p>
