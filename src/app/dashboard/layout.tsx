@@ -30,8 +30,8 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       <div className="flex-1  flex flex-col overflow-hidden">
         <Navbar activePage={activePage} />
         <main
-          className="flex-1 bg-gradient-to-br pb-20 md:pb-4 from-[#E2E8F0] to-[#CBD5E1]
-    backdrop-blur-lg bg-white/30 p-4 overflow-y-auto"
+          className="flex-1 bg-[#E2E8F0] pb-20 md:pb-4 
+    p-4 overflow-y-auto"
         >
           {children}
         </main>

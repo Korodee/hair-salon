@@ -17,7 +17,6 @@ import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
 import StripeCheckout from "react-stripe-checkout";
 import { Dialog } from "@headlessui/react";
 
-
 const adminAvailability: Record<string, string[]> = {
   "2025-02-10": ["10:00 AM", "1:00 PM", "3:00 PM"],
   "2025-02-12": ["9:30 AM", "11:30 AM", "9:30 AM", "11:30 AM"],
@@ -123,7 +122,7 @@ export default function CalendarView() {
                       ? "bg-blue-500 text-white"
                       : isAvailable
                       ? "bg-green-300 text-green-900 hover:bg-green-200"
-                      : "bg-gray-100 text-gray-500 hover:bg-gray-200"
+                      : "bg-white text-gray-500 hover:bg-gray-200"
                   }`}
                 >
                   {format(day, "d")}

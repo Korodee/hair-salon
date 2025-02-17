@@ -82,7 +82,7 @@ export default function CalendarView() {
                     ? "bg-blue-500 text-white"
                     : isAvailable
                     ? "bg-green-300 text-green-900 hover:bg-green-200"
-                    : "bg-gray-100 text-gray-500 hover:bg-gray-200"
+                    : "bg-white text-gray-500 hover:bg-gray-200"
                 }`}
               >
                 {format(day, "d")}
