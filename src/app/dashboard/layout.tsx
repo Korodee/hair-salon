@@ -14,6 +14,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     { name: "Bookings History", href: "/dashboard/booking-history" },
     { name: "Photo Gallery", href: "/dashboard/gallery" },
     { name: "Rewards", href: "/dashboard/rewards" },
+    { name: "Profile", href: "/dashboard/profile" },
   ];
 
   const activePage =
