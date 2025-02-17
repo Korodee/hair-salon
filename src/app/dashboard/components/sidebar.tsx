@@ -19,7 +19,7 @@ export default function Sidebar() {
       href: "/dashboard/booking-history",
       icon: <RiFileHistoryLine />,
     },
-    { name: "Rewards", href: "/dashboard/rewards", icon: <FiGift /> },
+    // { name: "Rewards", href: "/dashboard/rewards", icon: <FiGift /> },
   ];
 
   return (
