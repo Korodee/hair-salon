@@ -1,5 +1,6 @@
 "use client";
 import Image from "next/image";
+import axios from "axios";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -11,23 +12,44 @@ export default function LogIn() {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
 
-  const handleLogin = (e: React.FormEvent) => {
+  const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
+    setErrorMessage(""); // Reset error message on each attempt
 
-    setTimeout(() => {
-      router.push("/dashboard");
-    }, 1000);
+    try {
+      const response = await axios.post(
+        "https://booking-site-backend.onrender.com/api/auth/login",
+        {
+          email,
+          password,
+        }
+      );
+
+      if (response.data.success) {
+        // Store the token in localStorage/sessionStorage or use a global state
+        localStorage.setItem("authToken", response.data.token.token);
+        router.push("/dashboard");
+      } else {
+        setErrorMessage(response.data.message);
+      }
+    } catch (error) {
+      console.error("Login error:", error);
+      setErrorMessage("Something went wrong. Please try again.");
+    } finally {
+      setLoading(false);
+    }
   };
+
   return (
     <div className="flex h-screen w-full items-center justify-center bg-gray">
       <div className="w-full h-full bg-gray-100 flex py-2 px-6 md:py-6 md:px-6 rounded-lg shadow-lg">
-        {/* Left Side (Form) */}
         <div className="w-full md:w-1/2 flex flex-col md:justify-center md:px-16 relative">
-          {/* Braidz World Logo */}
           <div className="absolute top-8 md:left-6 transform md:-translate-x-1/2 md:transform-none">
-            {/* Logo */}
             <Link href="/">
               <div className="flex items-center gap-2">
                 <div className="w-8 h-8 bg-black rounded-full flex items-center justify-center">
@@ -39,12 +61,13 @@ export default function LogIn() {
               </div>
             </Link>
           </div>
+
           <div className="mt-[6rem] md:mt-0">
             <h2 className="text-3xl text-[#0C1421] font-bold">
               Welcome Back 👋
             </h2>
             <p className="text-[#313957] mt-2">
-              Today is a new day. It&apos;s your day. Sign in to managing your
+              Today is a new day. It&apos;s your day. Sign in to manage your
               Schedule.
             </p>
 
@@ -53,6 +76,8 @@ export default function LogIn() {
                 <label className="block text-[#0C1421]">Email</label>
                 <input
                   type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
                   placeholder="example@gmail.com"
                   className="w-full px-4 py-3 border border-gray-300 rounded-lg text-black focus:outline-none focus:ring-none"
                 />
@@ -63,6 +88,8 @@ export default function LogIn() {
                 <div className="relative">
                   <input
                     type={showPassword ? "text" : "password"}
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
                     placeholder="Enter your password"
                     className="w-full px-4 py-3 border border-gray-300 rounded-lg text-black focus:outline-none focus:ring-none pr-10"
                   />
@@ -79,6 +106,10 @@ export default function LogIn() {
                   </button>
                 </div>
               </div>
+
+              {errorMessage && (
+                <p className="text-red-500 text-sm">{errorMessage}</p>
+              )}
 
               <div className="flex justify-between items-center">
                 <Link
@@ -128,9 +159,8 @@ export default function LogIn() {
           </div>
         </div>
 
-        {/* Right Side (Image) */}
-        <div className="w-1/2 hidden md:block  items-center justify-center p-4">
-          <div className="relative  w-full h-full rounded-xl overflow-hidden">
+        <div className="w-1/2 hidden md:block items-center justify-center p-4">
+          <div className="relative w-full h-full rounded-xl overflow-hidden">
             <Image
               src="/img/login.png"
               alt="Barber shop"
