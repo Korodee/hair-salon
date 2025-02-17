@@ -19,7 +19,7 @@ const navItems = [
     href: "/dashboard/booking-history",
     icon: <RiFileHistoryLine size={20} />,
   },
-  { name: "Rewards", href: "/dashboard/rewards", icon: <FiGift size={20} /> },
+  // { name: "Rewards", href: "/dashboard/rewards", icon: <FiGift size={20} /> },
   {
     name: "Logout",
     href: "/dashboard/settings",
