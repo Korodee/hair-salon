@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { MdDashboard } from "react-icons/md";
-import { FiCalendar, FiImage, FiGift, FiLogOut } from "react-icons/fi";
+import { FiCalendar, FiImage, FiLogOut } from "react-icons/fi";
 import { RiFileHistoryLine } from "react-icons/ri";
 
 const navItems = [

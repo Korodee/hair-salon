@@ -2,7 +2,7 @@
 
 import { usePathname } from "next/navigation";
 import Link from "next/link";
-import { FiCalendar, FiImage, FiGift, FiLogOut } from "react-icons/fi";
+import { FiCalendar, FiImage, FiLogOut } from "react-icons/fi";
 import { MdDashboard } from "react-icons/md";
 import { RiFileHistoryLine } from "react-icons/ri";
 
