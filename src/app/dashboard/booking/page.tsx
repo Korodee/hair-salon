@@ -42,7 +42,7 @@ export default function CalendarView() {
 
   const handleSelectTime = (time: string) => {
     setSelectedTime(time);
-    setIsPaymentModalOpen(true); // Show payment modal after selecting time
+    setIsPaymentModalOpen(true);
   };
 
   const handlePaymentSuccess = (token: { id: string; email: string }) => {

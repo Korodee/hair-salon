@@ -4,7 +4,7 @@ import { ArrowRight } from "lucide-react";
 import Link from "next/link";
 
 export default function Banner() {
-  const userName = "Jane Doe"; // Can be dynamically replaced
+  const userName = "Jane Doe";
 
   // Predefined positions for consistent SSR rendering
   const starPositions = [
