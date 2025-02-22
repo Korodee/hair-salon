@@ -23,7 +23,7 @@ export default function LogIn() {
 
     try {
       const response = await axios.post(
-        "https://booking-site-backend.onrender.com/api/auth/login",
+        "https://booking-site-backend-production.up.railway.app/api/auth/login",
         {
           email,
           password,

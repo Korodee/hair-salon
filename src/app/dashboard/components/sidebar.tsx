@@ -1,25 +1,52 @@
-"use client";
-
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import Link from "next/link";
 import { FiCalendar, FiImage, FiLogOut } from "react-icons/fi";
 import { MdDashboard } from "react-icons/md";
 import { RiFileHistoryLine } from "react-icons/ri";
 
 export default function Sidebar() {
-  const pathname = usePathname(); // Get the current route
+  const pathname = usePathname();
+  const router = useRouter();
+
+  const handleLogout = async () => {
+    try {
+      const response = await fetch(
+        "https://booking-site-backend-production.up.railway.app/api/auth/logout",
+        {
+          method: "POST",
+          credentials: "include",
+        }
+      );
+
+      const data = await response.json();
+
+      if (!response.ok || !data.success) {
+        throw new Error(data.message || "Failed to log out");
+      }
+
+      localStorage.clear();
+      sessionStorage.clear();
+
+      router.push("/login");
+    } catch (error) {
+      const errorMessage =
+        error instanceof Error
+          ? error.message
+          : "Error logging out. Please try again.";
+      console.error("Logout error:", errorMessage);
+      alert(errorMessage);
+    }
+  };
 
   const navItems = [
     { name: "Dashboard", href: "/dashboard", icon: <MdDashboard /> },
     { name: "Bookings", href: "/dashboard/booking", icon: <FiCalendar /> },
-
     { name: "Gallery", href: "/dashboard/gallery", icon: <FiImage /> },
     {
       name: "History",
       href: "/dashboard/booking-history",
       icon: <RiFileHistoryLine />,
     },
-    // { name: "Rewards", href: "/dashboard/rewards", icon: <FiGift /> },
   ];
 
   return (
@@ -39,7 +66,7 @@ export default function Sidebar() {
       </div>
 
       {/* Navigation */}
-      <nav className=" flex-1 p-4 space-y-2">
+      <nav className="flex-1 p-4 space-y-2">
         {navItems.map((item) => (
           <Link key={item.href} href={item.href}>
             <div
@@ -60,7 +87,10 @@ export default function Sidebar() {
 
       {/* Logout Button */}
       <div className="p-4 border-t border-gray-200">
-        <button className="flex items-center gap-3 w-full px-4 py-2 text-red-500 rounded-lg hover:bg-red-50 transition">
+        <button
+          onClick={handleLogout}
+          className="flex items-center gap-3 w-full px-4 py-2 text-red-500 rounded-lg hover:bg-red-50 transition"
+        >
           <FiLogOut />
           <span className="font-medium hidden sm:block">Logout</span>
         </button>

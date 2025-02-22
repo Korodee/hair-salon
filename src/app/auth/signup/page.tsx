@@ -53,7 +53,7 @@ export default function SignUp() {
 
     try {
       const response = await fetch(
-        "https://booking-site-backend.onrender.com/api/auth/register",
+        "https://booking-site-backend-production.up.railway.app/api/auth/register",
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
