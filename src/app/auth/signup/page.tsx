@@ -6,22 +6,23 @@ import Image from "next/image";
 import Link from "next/link";
 import { FcGoogle } from "react-icons/fc";
 import { EyeIcon, EyeOffIcon } from "lucide-react";
+import { useRegister } from "@/queries/authQuery";
+import { ErrorResponse } from "@/services/authService";
+import { toast } from "react-toastify";
 
 export default function SignUp() {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
-  const [loading, setLoading] = useState(false);
   const router = useRouter();
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const { mutate: register, isLoading } = useRegister();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-
-    const formData = new FormData(e.target as HTMLFormElement);
-    const name = formData.get("name")?.toString().trim();
-    const email = formData.get("email")?.toString().trim();
-    const password = formData.get("password")?.toString();
-    const confirmPassword = formData.get("confirmPassword")?.toString();
 
     if (!name || !email || !password || !confirmPassword) {
       setErrorMessage("All fields are required.");
@@ -49,31 +50,26 @@ export default function SignUp() {
     }
 
     setErrorMessage("");
-    setLoading(true);
 
-    try {
-      const response = await fetch(
-        "https://booking-site-backend-production.up.railway.app/api/auth/register",
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ name, email, password }),
-        }
-      );
-
-      const data = await response.json();
-
-      if (!response.ok) {
-        setErrorMessage(data.message || "Something went wrong.");
-      } else {
-        router.push("/auth/signup/check-inbox");
+    register(
+      { name, email, password },
+      {
+        onSuccess: (response) => {
+          if (response.user && response.message) {
+            router.push(`/auth/signup/check-inbox?email=${email}`);
+          } else {
+            setErrorMessage(response.message || "Something went wrong.");
+          }
+        },
+        onError: (error: ErrorResponse) => {
+          if (error.response?.data?.message === "Please verify your email first") {
+            toast.error("User already exists. Please verify your email first.");
+            router.push(`/auth/signup/check-inbox?email=${email}`);
+          } 
+          setErrorMessage(error.response?.data?.message || "An error occurred");
+        },
       }
-    } catch (error) {
-      console.error("Login error:", error);
-      setErrorMessage("Something went wrong. Please try again.");
-    } finally {
-      setLoading(false);
-    }
+    );
   };
 
   return (
@@ -114,6 +110,8 @@ export default function SignUp() {
                   type="text"
                   placeholder="John Doe"
                   className="w-full px-4 py-3 border border-gray-300 rounded-lg text-black focus:outline-none"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
                 />
               </div>
 
@@ -124,6 +122,8 @@ export default function SignUp() {
                   type="email"
                   placeholder="example@gmail.com"
                   className="w-full px-4 py-3 border border-gray-300 rounded-lg text-black focus:outline-none"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
                 />
               </div>
 
@@ -135,6 +135,8 @@ export default function SignUp() {
                     type={showPassword ? "text" : "password"}
                     placeholder="Enter your password"
                     className="w-full px-4 py-3 border border-gray-300 rounded-lg text-black focus:outline-none pr-10"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
                   />
                   <button
                     type="button"
@@ -158,6 +160,8 @@ export default function SignUp() {
                     type={showConfirmPassword ? "text" : "password"}
                     placeholder="Confirm your password"
                     className="w-full px-4 py-3 border border-gray-300 rounded-lg text-black focus:outline-none pr-10"
+                    value={confirmPassword}
+                    onChange={(e) => setConfirmPassword(e.target.value)}
                   />
                   <button
                     type="button"
@@ -176,9 +180,9 @@ export default function SignUp() {
               <button
                 type="submit"
                 className="w-full bg-black text-white py-3 rounded-lg hover:bg-gray-900 transition disabled:bg-gray-400"
-                disabled={loading}
+                disabled={isLoading}
               >
-                {loading ? "Signing Up..." : "Sign Up"}
+                {isLoading ? "Signing Up..." : "Sign Up"}
               </button>
             </form>
 

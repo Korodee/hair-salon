@@ -1,48 +1,52 @@
 "use client";
 import Image from "next/image";
-import axios from "axios";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { FcGoogle } from "react-icons/fc";
 import { EyeIcon, EyeOffIcon } from "lucide-react";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
+import { useLogin } from "@/queries/authQuery";
+import { ErrorResponse } from "@/services/authService";
+import { toast } from "react-toastify";
 
 export default function LogIn() {
   const router = useRouter();
-  const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
+  const { mutate: login, isLoading } = useLogin();
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    setLoading(true);
     setErrorMessage(""); // Reset error message on each attempt
 
     try {
-      const response = await axios.post(
-        "https://booking-site-backend-production.up.railway.app/api/auth/login",
+      login({ email, password },
         {
-          email,
-          password,
+          onSuccess: (response) => {
+            if (response.user && response.token) {
+              localStorage.setItem("authToken", response.token);
+              router.push("/dashboard");
+            }
+          },
+          onError: (error: ErrorResponse) => {
+            if (error.response?.data?.message === "Invalid email or password") {
+              setErrorMessage("Invalid email or password");
+            } else if (error.response?.data?.message === "Please verify your email before logging in") {
+              toast.error("Please verify your email first");
+              router.push(`/auth/signup/check-inbox?email=${email}`);
+            }
+            setErrorMessage(error.response?.data?.message || "An error occurred");
+          },
         }
       );
 
-      if (response.data.success) {
-        // Store the token in localStorage/sessionStorage or use a global state
-        localStorage.setItem("authToken", response.data.token.token);
-        router.push("/dashboard");
-      } else {
-        setErrorMessage(response.data.message);
-      }
     } catch (error) {
       console.error("Login error:", error);
       setErrorMessage("Something went wrong. Please try again.");
-    } finally {
-      setLoading(false);
-    }
+    } 
   };
 
   return (
@@ -122,10 +126,10 @@ export default function LogIn() {
 
               <button
                 type="submit"
-                disabled={loading}
+                disabled={isLoading}
                 className="w-full bg-black text-white py-3 rounded-lg hover:bg-gray-900 transition flex items-center justify-center"
               >
-                {loading ? (
+                {isLoading ? (
                   <AiOutlineLoading3Quarters className="animate-spin text-xl" />
                 ) : (
                   "Sign In"
