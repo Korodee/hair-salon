@@ -3,10 +3,47 @@ import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { EyeIcon, EyeOffIcon } from "lucide-react";
+import { useRouter, useSearchParams } from "next/navigation";
+import { useResetPassword } from "@/queries/authQuery";
+import { toast } from "react-toastify";
+import { ErrorResponse } from "@/services/authService";
+import { AiOutlineLoading3Quarters } from "react-icons/ai";
 
 export default function RecoverPassword() {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const router = useRouter();
+
+  const searchParams = useSearchParams();
+  const token = searchParams.get("token");
+
+  const { mutate: resetPassword, isLoading } = useResetPassword();
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!token) {
+      toast.error("Invalid token");
+      return;
+    }
+
+    if (password !== confirmPassword) {
+      toast.error("Passwords do not match");
+      return;
+    }
+
+    resetPassword({ token, password }, {
+      onSuccess: () => {
+        toast.success("Password reset successfully");
+        router.push("/auth/login");
+      },
+      onError: (error: ErrorResponse) => {
+        toast.error(error.response?.data?.message || "An error occurred");
+      },
+    });
+  };
+
   return (
     <div className="flex h-screen w-full items-center justify-center bg-gray">
       <div className="w-full h-full bg-gray-100 flex py-2 px-6 md:py-6 md:px-6 rounded-lg shadow-lg">
@@ -44,6 +81,8 @@ export default function RecoverPassword() {
                     type={showPassword ? "text" : "password"}
                     placeholder="Enter your new password"
                     className="w-full px-4 py-3 border border-gray-300 rounded-lg text-black focus:outline-none focus:ring-none pr-10"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
                   />
                   <button
                     type="button"
@@ -66,6 +105,8 @@ export default function RecoverPassword() {
                     type={showConfirmPassword ? "text" : "password"}
                     placeholder="Confirm your new password"
                     className="w-full px-4 py-3 border border-gray-300 rounded-lg text-black focus:outline-none focus:ring-none pr-10"
+                    value={confirmPassword}
+                    onChange={(e) => setConfirmPassword(e.target.value)}
                   />
                   <button
                     type="button"
@@ -82,8 +123,13 @@ export default function RecoverPassword() {
               </div>
               <button
                 type="submit"
-                className="w-full bg-black text-white py-3 rounded-lg hover:bg-gray-900 transition"
+                className="w-full bg-black text-white py-3 rounded-lg hover:bg-gray-900 transition flex items-center justify-center space-x-5"
+                disabled={isLoading}
+                onClick={handleSubmit}
               >
+                {isLoading && (
+                  <AiOutlineLoading3Quarters className="animate-spin text-xl" />
+                )}
                 Reset Password
               </button>
             </form>
