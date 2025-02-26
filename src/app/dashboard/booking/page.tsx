@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   format,
   addMonths,
@@ -16,26 +16,28 @@ import {
 import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
 import StripeCheckout from "react-stripe-checkout";
 import { Dialog } from "@headlessui/react";
-
-const adminAvailability: Record<string, string[]> = {
-  "2025-02-10": ["10:00 AM", "1:00 PM", "3:00 PM"],
-  "2025-02-12": ["9:30 AM", "11:30 AM", "9:30 AM", "11:30 AM"],
-  "2025-02-15": ["12:00 PM", "2:00 PM", "4:00 PM"],
-  "2025-02-22": ["10:00 AM", "1:00 PM", "3:00 PM"],
-  "2025-02-17": ["9:30 AM", "11:30 AM"],
-  "2025-02-26": ["12:00 PM", "2:00 PM", "4:00 PM"],
-  "2025-02-25": ["10:00 AM", "1:00 PM", "3:00 PM"],
-  "2025-02-20": ["9:30 AM", "11:30 AM"],
-};
+import { toast } from "react-toastify";
+import {
+  createBooking,
+  getAvailableSlots,
+  getAllBookedDates,
+} from "@/services/bookingServices";
+import { getCurrentUser } from "@/services/authService";
+import { useApplicationContext } from "@/context/appContext";
 
 export default function CalendarView() {
   const [currentMonth, setCurrentMonth] = useState(new Date());
   const [selectedDate, setSelectedDate] = useState<string | null>(null);
   const [selectedTime, setSelectedTime] = useState<string | null>(null);
   const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false);
-
+  const [availableSlots, setAvailableSlots] = useState<string[]>([]);
+  const [bookedSlots, setBookedSlots] = useState<
+    { date: string; time: string }[]
+  >([]);
+  const [allBookedDates, setAllBookedDates] = useState<string[]>([]);
   const startDate = startOfWeek(startOfMonth(currentMonth));
   const endDate = endOfWeek(endOfMonth(currentMonth));
+  const { setUser } = useApplicationContext();
 
   const handlePrevMonth = () => setCurrentMonth(subMonths(currentMonth, 1));
   const handleNextMonth = () => setCurrentMonth(addMonths(currentMonth, 1));
@@ -45,14 +47,72 @@ export default function CalendarView() {
     setIsPaymentModalOpen(true);
   };
 
-  const handlePaymentSuccess = (token: { id: string; email: string }) => {
-    // Handle the successful payment logic here
-    alert("Payment successful! Your appointment is confirmed.");
-    // Optionally log the token details or process it
-    console.log("Payment token received:", token);
-    // Add logic to store booking info
-    setIsPaymentModalOpen(false); // Close payment modal
+  const fetchAvailableSlots = async (date: string) => {
+    try {
+      const response = await getAvailableSlots(date);
+      setAvailableSlots(response.availableSlots);
+      setBookedSlots(response.bookedSlots || []);
+    } catch (error) {
+      console.error("Failed to fetch available slots:", error);
+    }
   };
+
+  const handleDateSelect = (dateKey: string) => {
+    const selectedDate = new Date(dateKey);
+    const today = new Date();
+    // Clear time part for accurate date comparison
+    today.setHours(0, 0, 0, 0);
+
+    // Only proceed if the selected date is today or in the future
+    if (selectedDate >= today) {
+      setSelectedDate(dateKey);
+      fetchAvailableSlots(dateKey);
+    }
+  };
+
+  const handlePaymentSuccess = async () => {
+    try {
+      if (!selectedDate || !selectedTime) {
+        toast.error("Please select a date and time.");
+        return;
+      }
+      const response = await createBooking({
+        date: selectedDate,
+        time: selectedTime,
+      });
+
+      if (response.booking) {
+        toast.success("Booking confirmed successfully!");
+        setIsPaymentModalOpen(false);
+        fetchAllBookedDates();
+
+        const response = await getCurrentUser();
+        if (response) {
+          setUser(response);
+        }
+
+        // Refresh available slots
+        //fetchAvailableSlots(date);
+      } else {
+        toast.error("Failed to confirm booking. Please try again.");
+      }
+    } catch (error) {
+      console.error("Booking creation failed:", error);
+      toast.error("Failed to confirm booking. Please try again.");
+    }
+  };
+  const fetchAllBookedDates = async () => {
+    try {
+      const response = await getAllBookedDates();
+      setAllBookedDates(response.bookedDates);
+    } catch (error) {
+      console.error("Failed to fetch booked dates:", error);
+    }
+  };
+  // Add useEffect to fetch all booked dates on component mount
+  useEffect(() => {
+    fetchAllBookedDates();
+  }, []);
 
   return (
     <div className="rounded-2xl">
@@ -109,20 +169,31 @@ export default function CalendarView() {
             }).map((_, index) => {
               const day = addDays(startDate, index);
               const dateKey = format(day, "yyyy-MM-dd");
-              const isAvailable = adminAvailability[dateKey];
+              const isAvailable = availableSlots.includes(dateKey);
+              const today = new Date();
+              today.setHours(0, 0, 0, 0);
+
+              const isBookedDate = allBookedDates.includes(dateKey);
 
               return (
                 <button
                   key={dateKey}
-                  onClick={() => setSelectedDate(dateKey)}
+                  onClick={() => handleDateSelect(dateKey)}
+                  disabled={day < today}
                   className={`p-3 rounded-lg transition ${
                     !isSameMonth(day, currentMonth)
                       ? "text-gray-400"
                       : isToday(day)
                       ? "bg-blue-500 text-white"
+                      : isBookedDate
+                      ? "bg-green-500 text-white"
                       : isAvailable
                       ? "bg-green-300 text-green-900 hover:bg-green-200"
                       : "bg-white text-gray-500 hover:bg-gray-200"
+                  } ${
+                    day < today
+                      ? "cursor-not-allowed opacity-50"
+                      : "cursor-pointer"
                   }`}
                 >
                   {format(day, "d")}
@@ -140,23 +211,40 @@ export default function CalendarView() {
                   ? format(new Date(selectedDate), "MMMM d, yyyy")
                   : ""}
               </h3>
-              {adminAvailability[selectedDate] ? (
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-                  {adminAvailability[selectedDate].map((slot, idx) => (
-                    <button
-                      key={idx}
-                      onClick={() => handleSelectTime(slot)}
-                      className="transition-all duration-200 transform bg-gradient-to-r from-green-200 to-green-300 text-black py-3 px-6 rounded-lg shadow-lg text-lg font-medium hover:scale-105 hover:shadow-xl hover:from-green-500 hover:to-green-600 focus:outline-none focus:ring-2 focus:ring-green-600 focus:ring-opacity-50"
-                    >
-                      {slot}
-                    </button>
-                  ))}
-                </div>
-              ) : (
-                <p className="text-red-500 text-center font-semibold">
-                  No available slots.
-                </p>
-              )}
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+                {availableSlots
+                  .concat(
+                    bookedSlots
+                      .filter((booking) => booking.date === selectedDate)
+                      .map((booking) => booking.time)
+                  )
+                  .map((slot, idx) => {
+                    const isBookedTime = bookedSlots.some(
+                      (booking) =>
+                        booking.date === selectedDate && booking.time === slot
+                    );
+
+                    return (
+                      <button
+                        key={idx}
+                        onClick={() =>
+                          isBookedTime ? null : handleSelectTime(slot)
+                        }
+                        className={`transition-all duration-200 transform ${
+                          isBookedTime
+                            ? "bg-blue-500 text-white cursor-not-allowed"
+                            : "bg-gradient-to-r from-green-200 to-green-300 text-black"
+                        } py-3 px-6 rounded-lg shadow-lg text-lg font-medium ${
+                          isBookedTime
+                            ? ""
+                            : "hover:scale-105 hover:shadow-xl hover:from-green-500 hover:to-green-600"
+                        } focus:outline-none focus:ring-2 focus:ring-green-600 focus:ring-opacity-50`}
+                      >
+                        {slot} {isBookedTime && "(Booked)"}
+                      </button>
+                    );
+                  })}
+              </div>
             </div>
           )}
 
@@ -185,12 +273,25 @@ export default function CalendarView() {
                   description="Deposit for your appointment"
                 />
               </div>
-              <div className="flex justify-center">
+              <div className="flex justify-center flex-col gap-4">
                 <button
-                  onClick={() => setIsPaymentModalOpen(false)}
+                  onClick={() => {
+                    setIsPaymentModalOpen(false);
+                  }}
                   className="p-2 bg-red-500 text-white rounded-lg w-full"
                 >
                   Cancel
+                </button>
+                <button
+                  onClick={() => {
+                    setIsPaymentModalOpen(false);
+                    handlePaymentSuccess();
+                    setSelectedDate(null);
+                    setSelectedTime(null);
+                  }}
+                  className="p-2 bg-green-500 text-white rounded-lg w-full"
+                >
+                  Pay
                 </button>
               </div>
             </div>

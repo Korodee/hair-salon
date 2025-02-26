@@ -8,11 +8,12 @@ import { toast } from "react-toastify";
 import { Loader2 } from "lucide-react";
 
 export default function Profile() {
+  const { user } = useApplicationContext();
   const totalPoints = 200;
-  const pointsLeft = 80;
+  const pointsLeft = totalPoints - user?.rewardPoints;
   const totalPointsEarned = totalPoints - pointsLeft;
   const progress = ((totalPoints - pointsLeft) / totalPoints) * 100;
-  const { user } = useApplicationContext();
+  
   const router = useRouter();
   const { mutate: updateUser, isLoading } = useUpdateUser();
   const [name, setName] = useState(user?.name);
@@ -46,7 +47,7 @@ export default function Profile() {
               <h1 className="text-3xl text-left text-white font-semibold">
                 {user?.name}
               </h1>
-              <p className="text-gray-300">{user?.email}</p>
+              <p className="text-gray-300 text-left">{user?.email}</p>
             </div>
           </div>
         </div>

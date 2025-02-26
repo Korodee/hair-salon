@@ -7,8 +7,10 @@ import { FcGoogle } from "react-icons/fc";
 import { EyeIcon, EyeOffIcon } from "lucide-react";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import { useLogin } from "@/queries/authQuery";
-import { ErrorResponse } from "@/services/authService";
+import { ErrorResponse, loginWithGmail } from "@/services/authService";
 import { toast } from "react-toastify";
+import { useGoogleLogin } from "@react-oauth/google";
+import axios from "axios";
 
 export default function LogIn() {
   const router = useRouter();
@@ -48,6 +50,34 @@ export default function LogIn() {
       setErrorMessage("Something went wrong. Please try again.");
     } 
   };
+
+  const googleLogin = useGoogleLogin({
+    onSuccess: async (response) => {
+      try {
+        const res = await axios.get(
+          "https://www.googleapis.com/oauth2/v3/userinfo",
+          {
+            headers: {
+              Authorization: `Bearer ${response.access_token}`,
+            },
+          }
+        );
+        if (res.data.email) {
+          const response = await loginWithGmail({ email: res.data.email, name: res.data.name });
+          if (response.token) {
+            toast.success("Login successful");
+          
+              localStorage.setItem("authToken", response.token);
+              router.push("/dashboard");
+          
+           
+          }
+        }
+      } catch (err) {
+        toast.error(err instanceof Error ? err.message : "An unknown error occurred");
+      }
+    },
+  });
 
   return (
     <div className="flex h-screen w-full items-center justify-center bg-gray">
@@ -145,7 +175,7 @@ export default function LogIn() {
             </div>
 
             {/* Google Sign In */}
-            <button className="w-full flex items-center justify-center border border-gray-300 py-2 rounded-lg hover:bg-gray-50 transition">
+            <button className="w-full flex items-center justify-center border border-gray-300 py-2 rounded-lg hover:bg-gray-50 transition" onClick={() => googleLogin()}>
               <FcGoogle size={25} />
               <span className="ml-2 text-gray-600">Sign in with Google</span>
             </button>
