@@ -107,3 +107,20 @@ export const resendVerificationToken = async (email: string) => {
     }
 }
 
+export const loginWithGmail = async (data: object) => {
+    try {
+        const response = await api.post("/auth/login-gmail", data);
+        return response.data;
+    } catch (error) {
+        throw error as ErrorResponse;
+    }
+}
+
+export const signupWithGmail = async (data: object) => {
+    try {
+        const response = await api.post("/api/signup-gmail", data);
+        return response.data;
+    } catch (error) {
+        throw error as ErrorResponse;
+    }
+}

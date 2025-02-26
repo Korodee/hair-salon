@@ -73,10 +73,14 @@ export default function Rewards({ points }: { points: number }) {
           </span>
         </div>
         <button
-          disabled
-          className="mt-2 px-4 py-1 md:w-[200px] mx-auto text-md bg-gray-400 text-gray-300 font-semibold rounded-full shadow-md opacity-50 cursor-not-allowed"
+          disabled={points < 200}
+          className={`mt-2 px-4 py-1 md:w-[180px] mx-auto text-md font-semibold rounded-full shadow-md ${
+            points < 200
+              ? "opacity-50 cursor-not-allowed bg-gray-400 text-gray-300 "
+              : "opacity-100 cursor-pointer bg-gradient-to-r from-[#FB3CB2] to-[#A4508B]"
+          }`}
         >
-          Redeem Points
+          {points < 200 ? "Earn more points" : "Redeem Points"}
         </button>
       </div>
     </div>

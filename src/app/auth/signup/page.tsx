@@ -7,8 +7,10 @@ import Link from "next/link";
 import { FcGoogle } from "react-icons/fc";
 import { EyeIcon, EyeOffIcon } from "lucide-react";
 import { useRegister } from "@/queries/authQuery";
-import { ErrorResponse } from "@/services/authService";
+import { ErrorResponse, signupWithGmail } from "@/services/authService";
 import { toast } from "react-toastify";
+import { useGoogleLogin } from "@react-oauth/google";
+import axios from "axios";
 
 export default function SignUp() {
   const [showPassword, setShowPassword] = useState(false);
@@ -20,6 +22,33 @@ export default function SignUp() {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const { mutate: register, isLoading } = useRegister();
+
+  const googleSignup = useGoogleLogin({
+    onSuccess: async (response) => {
+        try {
+            const res = await axios.get(
+                "https://www.googleapis.com/oauth2/v3/userinfo",
+                {
+                    headers: {
+                        Authorization: `Bearer ${response.access_token}`,
+                    },
+                }
+            );
+            if (res.data.email) {
+                const response = await signupWithGmail({ email: res.data.email, name: res.data.name });
+                if (response.token) {
+                    toast.success("Signup successful");
+                   
+                      localStorage.setItem("authToken", response.token);
+                      router.push("/dashboard");
+                    
+                }
+            }
+        } catch (err) {
+            toast.error(err instanceof Error ? err.message : "An unknown error occurred");
+        }
+    },
+});
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -192,7 +221,7 @@ export default function SignUp() {
               <div className="flex-1 border-t border-gray-300"></div>
             </div>
 
-            <button className="w-full flex items-center justify-center border border-gray-300 py-2 rounded-lg hover:bg-gray-50 transition">
+            <button className="w-full flex items-center justify-center border border-gray-300 py-2 rounded-lg hover:bg-gray-50 transition" onClick={() => googleSignup()}>
               <FcGoogle size={25} />
               <span className="ml-2 text-gray-600">Continue with Google</span>
             </button>

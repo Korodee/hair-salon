@@ -18,6 +18,10 @@ export const ApplicationProvider = ({ children, initialState = {} }) => {
   };
 
   useEffect(() => {
+    fetchUser();
+  }, []);
+
+  useEffect(() => {
     const authPaths = [
       "/auth/login",
       "/auth/signup",
@@ -25,6 +29,7 @@ export const ApplicationProvider = ({ children, initialState = {} }) => {
       "/auth/signup/check-inbox",
       "/auth/login/recover-password",
       "/auth/login/recover-password/reset",
+      "/"
     ];
 
     if (!authPaths.some((path) => pathname.startsWith(path))) {

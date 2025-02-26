@@ -5,6 +5,7 @@ import QueryProvider from "@/utils/QueryProvider";
 import { ToastContainer } from "react-toastify";
 import { ApplicationProvider } from "@/context/appContext";
 import { Suspense } from "react";
+import { GoogleOAuthProvider } from "@react-oauth/google";
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -32,9 +33,11 @@ export default function RootLayout({
       >
         <QueryProvider>
           <ApplicationProvider>
-            <main>
-              <Suspense fallback={<div>Loading...</div>}>{children}</Suspense>
-            </main>
+            <GoogleOAuthProvider clientId="244491495870-o0rkkfvvco9psnq167ukvlfqromj9id5">
+              <main>
+                <Suspense fallback={<div>Loading...</div>}>{children}</Suspense>
+              </main>
+            </GoogleOAuthProvider>
           </ApplicationProvider>
         </QueryProvider>
         <ToastContainer />

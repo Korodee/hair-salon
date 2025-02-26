@@ -1,10 +1,11 @@
 "use client";
 
+import { useApplicationContext } from "@/context/appContext";
 import { ArrowRight } from "lucide-react";
 import Link from "next/link";
 
 export default function Banner() {
-  const userName = "Jane Doe"; // Can be dynamically replaced
+  const { user } = useApplicationContext();
 
   // Predefined positions for consistent SSR rendering
   const starPositions = [
@@ -38,7 +39,7 @@ export default function Banner() {
 
       {/* Content */}
       <div className="relative">
-        <h2 className="text-3xl font-semibold mt-1">Welcome, {userName}</h2>
+        <h2 className="text-3xl font-semibold mt-1">Welcome, {user?.name}</h2>
         <p className="mt-1 text-md text-white/80">
           Experience the luxury, embrace the glow, radiate confidence, redefine
           beauty, feel the elegance, and let your charm shine!
@@ -56,6 +57,7 @@ export default function Banner() {
           </button>
         </Link>
       </div>
+      
     </div>
   );
 }
