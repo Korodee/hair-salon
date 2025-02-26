@@ -72,6 +72,10 @@ export default function CalendarView() {
 
   const handlePaymentSuccess = async () => {
     try {
+      if (!selectedDate || !selectedTime) {
+        toast.error("Please select a date and time.");
+        return;
+      }
       const response = await createBooking({
         date: selectedDate,
         time: selectedTime,
