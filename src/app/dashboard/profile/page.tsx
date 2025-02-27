@@ -3,7 +3,7 @@ import { useApplicationContext } from "@/context/appContext";
 import { useUpdateUser } from "@/queries/authQuery";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { Loader2 } from "lucide-react";
 
@@ -17,6 +17,17 @@ export default function Profile() {
   const router = useRouter();
   const { mutate: updateUser, isLoading } = useUpdateUser();
   const [name, setName] = useState(user?.name);
+
+  const checkAuth = () => {
+    const token = localStorage.getItem("authToken");
+    if (!token) {
+      router.push("/auth/login");
+    }
+  }
+
+  useEffect(() => {
+    checkAuth();
+  }, []);
 
   const handleUpdateUser = () => {
     updateUser({ name }, {

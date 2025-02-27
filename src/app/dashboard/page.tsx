@@ -19,7 +19,7 @@ import {
 import { getAllBookedDates, getAvailableSlots } from "@/services/bookingServices";
 import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
 import { Dialog } from "@headlessui/react";
-
+import { useRouter } from "next/navigation";
 export default function Dashboard() {
   const { user } = useApplicationContext();
   const [currentMonth, setCurrentMonth] = useState(new Date());
@@ -28,6 +28,19 @@ export default function Dashboard() {
   const [availableSlots, setAvailableSlots] = useState<string[]>([]);
   const startDate = startOfWeek(startOfMonth(currentMonth));
   const endDate = endOfWeek(endOfMonth(currentMonth));
+  const router = useRouter();
+
+  
+  const checkAuth = () => {
+    const token = localStorage.getItem("authToken");
+    if (!token) {
+      router.push("/auth/login");
+    }
+  }
+
+  useEffect(() => {
+    checkAuth();
+  }, []);
 
   const handlePrevMonth = () => setCurrentMonth(subMonths(currentMonth, 1));
   const handleNextMonth = () => setCurrentMonth(addMonths(currentMonth, 1));

@@ -24,6 +24,7 @@ import {
 } from "@/services/bookingServices";
 import { getCurrentUser } from "@/services/authService";
 import { useApplicationContext } from "@/context/appContext";
+import { useRouter } from "next/navigation";
 
 export default function CalendarView() {
   const [currentMonth, setCurrentMonth] = useState(new Date());
@@ -38,6 +39,18 @@ export default function CalendarView() {
   const startDate = startOfWeek(startOfMonth(currentMonth));
   const endDate = endOfWeek(endOfMonth(currentMonth));
   const { setUser } = useApplicationContext();
+  const router = useRouter();
+
+  const checkAuth = () => {
+    const token = localStorage.getItem("authToken");
+    if (!token) {
+      router.push("/auth/login");
+    }
+  };
+
+  useEffect(() => {
+    checkAuth();
+  }, []);
 
   const handlePrevMonth = () => setCurrentMonth(subMonths(currentMonth, 1));
   const handleNextMonth = () => setCurrentMonth(addMonths(currentMonth, 1));
