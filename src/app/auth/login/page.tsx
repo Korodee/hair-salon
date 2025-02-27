@@ -11,6 +11,7 @@ import { ErrorResponse, loginWithGmail } from "@/services/authService";
 import { toast } from "react-toastify";
 import { useGoogleLogin } from "@react-oauth/google";
 import axios from "axios";
+import { useApplicationContext } from "@/context/appContext";
 
 export default function LogIn() {
   const router = useRouter();
@@ -19,6 +20,7 @@ export default function LogIn() {
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const { mutate: login, isLoading } = useLogin();
+  const { setUser } = useApplicationContext();
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -31,6 +33,7 @@ export default function LogIn() {
             if (response.user && response.token) {
               localStorage.setItem("authToken", response.token);
               router.push("/dashboard");
+              setUser(response.user);
             }
           },
           onError: (error: ErrorResponse) => {

@@ -1,9 +1,9 @@
 "use client";
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Dialog } from "@headlessui/react";
 import { useGetGallery } from "@/queries/galleryQuery";
-
+import { useRouter } from "next/navigation";
 interface ImageData {
   url: string;
   caption: string;
@@ -12,6 +12,18 @@ interface ImageData {
 export default function Gallery() {
   const [selectedImage, setSelectedImage] = useState<ImageData | null>(null);
   const {data: gallery, isLoading} = useGetGallery()
+  const router = useRouter();
+
+  const checkAuth = () => {
+    const token = localStorage.getItem("authToken");
+    if (!token) {
+      router.push("/auth/login");
+    }
+  }
+
+  useEffect(() => {
+    checkAuth();
+  }, []);
 
   return (
     <div className="">
