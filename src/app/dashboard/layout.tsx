@@ -30,7 +30,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       <div className="flex-1  flex flex-col overflow-hidden">
         <Navbar activePage={activePage} />
         <main
-          className="flex-1 bg-[#E2E8F0] pb-20 md:pb-4 
+          className="flex-1 bg-[#E2E8F0] pb-20 md:pb-0 
     p-4 overflow-y-auto"
         >
           {children}
