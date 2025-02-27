@@ -33,7 +33,7 @@ export default function RootLayout({
       >
         <QueryProvider>
           <ApplicationProvider>
-            <GoogleOAuthProvider clientId="">
+            <GoogleOAuthProvider clientId="whdqdhqj">
               <main>
                 <Suspense fallback={<div>Loading...</div>}>{children}</Suspense>
               </main>

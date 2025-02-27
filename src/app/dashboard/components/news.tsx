@@ -1,31 +1,16 @@
+import { useGetNews } from "@/queries/newsQuery";
 import { FC } from "react";
 import { BsBell } from "react-icons/bs";
 
-const newsList = [
-  {
-    title: "Upcoming Discount Event!",
-    description:
-      "Enjoy a $200 discount on selected items. Event takes place on 12th of Feb from 10:00am to 2:00pm.",
-    date: "Feb 10, 2025",
-    highlight: true,
-  },
-  {
-    title: "New Hair Treatment Available",
-    description:
-      "Introducing our latest deep-conditioning hair treatment. Book your appointment today!",
-    date: "Jan 28, 2025",
-    highlight: false,
-  },
-  {
-    title: "New Hair Treatment Available",
-    description:
-      "Introducing our latest deep-conditioning hair treatment. Book your appointment today!",
-    date: "Jan 28, 2025",
-    highlight: false,
-  },
-];
-
+type News = {
+  title: string;
+  content: string;
+  createdAt: string;
+  highlight: boolean;
+}
 const NewsListCard: FC = () => {
+  const { data: newsList } = useGetNews();
+
   return (
     <div className="bg-gradient-to-br from-[#3d5d8f] via-[#27374D] to-[#275eac] text-white rounded-3xl p-6 shadow-xl space-y-4 border border-[#334155] backdrop-blur-lg">
       {/* Header */}
@@ -40,7 +25,7 @@ const NewsListCard: FC = () => {
 
       {/* News List */}
       <div className="space-y-3">
-        {newsList.map((news, index) => (
+        {newsList?.map((news: News, index: number) => (
           <div
             key={index}
             className={`p-3 rounded-lg ${
@@ -50,8 +35,8 @@ const NewsListCard: FC = () => {
             }`}
           >
             <h4 className="text-[#E0E7FF] font-semibold">{news.title}</h4>
-            <p className="text-sm text-[#CBD5E1]">{news.description}</p>
-            <span className="text-xs text-gray-400">{news.date}</span>
+            <p className="text-sm text-[#CBD5E1]">{news.content}</p>
+            <span className="text-xs text-gray-400">{new Date(news.createdAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}</span>
           </div>
         ))}
       </div>
