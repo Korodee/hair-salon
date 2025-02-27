@@ -170,7 +170,7 @@ export default function Dashboard() {
             <Dialog
               open={!!selectedDate}
               onClose={() => setSelectedDate(null)}
-              className="fixed inset-0 flex items-center justify-center p-4"
+              className="fixed inset-0 flex items-center backdrop-blur-[2px] justify-center p-4"
             >
               <div className="bg-white p-5 rounded-3xl shadow-lg w-80">
                 <h2 className="text-lg text-center font-semibold text-gray-800 border-b pb-2">

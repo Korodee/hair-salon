@@ -39,7 +39,16 @@ export default function Banner() {
 
       {/* Content */}
       <div className="relative">
-        <h2 className="text-3xl font-semibold mt-1">Welcome, {user?.name}</h2>
+        <h2 className="text-3xl font-semibold mt-1">
+          Welcome,{" "}
+          <span className="sm:hidden">
+            {user?.name?.split(" ")[0]} {/* First name only for mobile */}
+          </span>
+          <span className="hidden sm:inline">
+            {user?.name} {/* Full name for larger screens */}
+          </span>
+        </h2>
+
         <p className="mt-1 text-md text-white/80">
           Experience the luxury, embrace the glow, radiate confidence, redefine
           beauty, feel the elegance, and let your charm shine!

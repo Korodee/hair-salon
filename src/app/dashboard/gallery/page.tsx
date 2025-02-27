@@ -11,7 +11,7 @@ interface ImageData {
 
 export default function Gallery() {
   const [selectedImage, setSelectedImage] = useState<ImageData | null>(null);
-  const {data: gallery, isLoading} = useGetGallery()
+  const { data: gallery, isLoading } = useGetGallery();
   const router = useRouter();
 
   const checkAuth = () => {
@@ -19,7 +19,7 @@ export default function Gallery() {
     if (!token) {
       router.push("/auth/login");
     }
-  }
+  };
 
   useEffect(() => {
     checkAuth();
@@ -78,7 +78,7 @@ export default function Gallery() {
             <Dialog
               open={true}
               onClose={() => setSelectedImage(null)}
-              className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-75"
+              className="fixed inset-0 flex items-center backdrop-blur-[2px] justify-center bg-black bg-opacity-75"
             >
               <div className="relative max-w-2xl w-full p-6 md:p-4">
                 <Image

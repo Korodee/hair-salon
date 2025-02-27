@@ -27,7 +27,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       </div>
 
       {/* Main Content - Scrollable */}
-      <div className="flex-1  flex flex-col overflow-hidden">
+      <div className="flex-1 flex flex-col overflow-hidden min-h-[100svh]">
         <Navbar activePage={activePage} />
         <main
           className="flex-1 bg-[#E2E8F0] pb-20 md:pb-0 
