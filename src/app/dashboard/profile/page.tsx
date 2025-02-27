@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import { useApplicationContext } from "@/context/appContext";
 import { useUpdateUser } from "@/queries/authQuery";
 import Link from "next/link";
@@ -13,7 +13,7 @@ export default function Profile() {
   const pointsLeft = totalPoints - user?.rewardPoints;
   const totalPointsEarned = totalPoints - pointsLeft;
   const progress = ((totalPoints - pointsLeft) / totalPoints) * 100;
-  
+
   const router = useRouter();
   const { mutate: updateUser, isLoading } = useUpdateUser();
   const [name, setName] = useState(user?.name);
@@ -23,23 +23,25 @@ export default function Profile() {
     if (!token) {
       router.push("/auth/login");
     }
-  }
+  };
 
   useEffect(() => {
     checkAuth();
   }, []);
 
   const handleUpdateUser = () => {
-    updateUser({ name }, {
-      onSuccess: () => {
-        toast.success("User updated successfully");
-      },
-      onError: () => {
-        toast.error("Failed to update user");
+    updateUser(
+      { name },
+      {
+        onSuccess: () => {
+          toast.success("User updated successfully");
+        },
+        onError: () => {
+          toast.error("Failed to update user");
+        },
       }
-    });
+    );
   };
-
 
   return (
     <div className="flex flex-col">
@@ -51,12 +53,17 @@ export default function Profile() {
         <div className="bg-black/40 p-2 md:p-4 h-full w-full flex flex-col justify-center ">
           {/* Profile Header */}
           <div className="flex items-center space-x-4">
-            <div className="w-24 h-24 bg-black text-4xl font-bold flex items-center justify-center rounded-full">
+            <div className="w-20 h-20 md:w-24 md:h-24 bg-black text-4xl font-bold flex items-center justify-center rounded-full">
               {user?.name?.charAt(0)}
             </div>
             <div>
               <h1 className="text-3xl text-left text-white font-semibold">
-                {user?.name}
+                <span className="sm:hidden">
+                  {user?.name?.split(" ")[0]} {/* First name only for mobile */}
+                </span>
+                <span className="hidden sm:inline">
+                  {user?.name} {/* Full name for larger screens */}
+                </span>
               </h1>
               <p className="text-gray-300 text-left">{user?.email}</p>
             </div>
@@ -76,8 +83,16 @@ export default function Profile() {
                   Update your personal info
                 </p>
               </div>
-              <button className="flex w-fit items-center gap-2 px-5 py-2 bg-black text-white rounded-md text-sm font-medium transition-all duration-300 transform hover:bg-white hover:text-black hover:scale-105 group" onClick={handleUpdateUser} disabled={isLoading}>
-                {isLoading ? <Loader2 className="w-4 h-4 animate-spin" /> : "Edit"}
+              <button
+                className="flex w-fit items-center gap-2 px-5 py-2 bg-black text-white rounded-md text-sm font-medium transition-all duration-300 transform hover:bg-white hover:text-black hover:scale-105 group"
+                onClick={handleUpdateUser}
+                disabled={isLoading}
+              >
+                {isLoading ? (
+                  <Loader2 className="w-4 h-4 animate-spin" />
+                ) : (
+                  "Edit"
+                )}
               </button>
             </div>
 
@@ -117,8 +132,10 @@ export default function Profile() {
               </h3>
               <p className="text-gray-700 text-sm">
                 You&apos;ve made{" "}
-                <span className="font-bold text-gray-700">{user?.bookings?.length}</span> bookings so
-                far.
+                <span className="font-bold text-gray-700">
+                  {user?.bookings?.length}
+                </span>{" "}
+                bookings so far.
               </p>
             </div>
           </div>
@@ -223,7 +240,10 @@ export default function Profile() {
             </div>
           </div>
 
-          <button className="flex mt-2 md:mt-0 w-fit items-center gap-2 px-5 py-2 bg-black text-white rounded-md text-sm font-medium transition-all duration-300 transform hover:bg-white hover:text-black hover:scale-105 group" onClick={() => router.push("/auth/login/recover-password")}>
+          <button
+            className="flex mt-2 md:mt-0 w-fit items-center gap-2 px-5 py-2 bg-black text-white rounded-md text-sm font-medium transition-all duration-300 transform hover:bg-white hover:text-black hover:scale-105 group"
+            onClick={() => router.push("/auth/login/recover-password")}
+          >
             Change Password
           </button>
         </div>
