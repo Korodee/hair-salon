@@ -4,6 +4,7 @@ import News from "./components/news";
 import Banner from "./components/banner";
 import { useApplicationContext } from "@/context/appContext";
 import { useState, useEffect } from "react";
+import Spinner from "./components/spinner";
 import {
   format,
   addMonths,
@@ -33,13 +34,12 @@ export default function Dashboard() {
   const endDate = endOfWeek(endOfMonth(currentMonth));
   const router = useRouter();
 
-  
   const checkAuth = () => {
     const token = localStorage.getItem("authToken");
     if (!token) {
       router.push("/auth/login");
     }
-  }
+  };
 
   useEffect(() => {
     checkAuth();
@@ -57,6 +57,8 @@ export default function Dashboard() {
     }
   };
 
+  const [loading, setLoading] = useState(false);
+
   const handleDateSelect = async (dateKey: string) => {
     const selectedDate = new Date(dateKey);
     const today = new Date();
@@ -64,11 +66,15 @@ export default function Dashboard() {
 
     if (selectedDate >= today) {
       setSelectedDate(dateKey);
+      setLoading(true); // Start loading
+
       try {
         const response = await getAvailableSlots(dateKey);
         setAvailableSlots(response.availableSlots);
       } catch (error) {
         console.error("Failed to fetch available slots:", error);
+      } finally {
+        setLoading(false); // Stop loading
       }
     }
   };
@@ -167,21 +173,30 @@ export default function Dashboard() {
               className="fixed inset-0 flex items-center justify-center p-4"
             >
               <div className="bg-white p-5 rounded-3xl shadow-lg w-80">
-                <h2 className="text-lg font-semibold text-gray-800 border-b pb-2">
+                <h2 className="text-lg text-center font-semibold text-gray-800 border-b pb-2">
                   Available Times on{" "}
                   {selectedDate &&
                     format(new Date(selectedDate), "MMMM d, yyyy")}
                 </h2>
+
                 <div className="mt-3 grid grid-cols-2 gap-3">
-                  {selectedDate &&
-                    availableSlots.map((slot, idx) => (
-                      <p
-                        key={idx}
-                        className="text-center text-gray-700 bg-gray-100 px-3 py-2 rounded-md"
-                      >
-                        {slot}
-                      </p>
-                    ))}
+                  {loading ? (
+                    <div className="col-span-2">
+                      <Spinner />
+                    </div>
+                  ) : (
+                    <>
+                      {selectedDate &&
+                        availableSlots.map((slot, idx) => (
+                          <p
+                            key={idx}
+                            className="text-center text-gray-700 bg-gray-100 px-3 py-2 rounded-md"
+                          >
+                            {slot}
+                          </p>
+                        ))}
+                    </>
+                  )}
                 </div>
 
                 <button
