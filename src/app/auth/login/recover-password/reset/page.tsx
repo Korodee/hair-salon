@@ -33,15 +33,18 @@ export default function RecoverPassword() {
       return;
     }
 
-    resetPassword({ token, password }, {
-      onSuccess: () => {
-        toast.success("Password reset successfully");
-        router.push("/auth/login");
-      },
-      onError: (error: ErrorResponse) => {
-        toast.error(error.response?.data?.message || "An error occurred");
-      },
-    });
+    resetPassword(
+      { token, password },
+      {
+        onSuccess: () => {
+          toast.success("Password reset successfully");
+          router.push("/auth/login");
+        },
+        onError: (error: ErrorResponse) => {
+          toast.error(error.response?.data?.message || "An error occurred");
+        },
+      }
+    );
   };
 
   return (
@@ -127,10 +130,11 @@ export default function RecoverPassword() {
                 disabled={isLoading}
                 onClick={handleSubmit}
               >
-                {isLoading && (
+                {isLoading ? (
                   <AiOutlineLoading3Quarters className="animate-spin text-xl" />
+                ) : (
+                  "Reset Password"
                 )}
-                Reset Password
               </button>
             </form>
 
