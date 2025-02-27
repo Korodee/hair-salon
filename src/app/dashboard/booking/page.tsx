@@ -265,11 +265,11 @@ export default function CalendarView() {
           <Dialog
             open={isPaymentModalOpen}
             onClose={() => setIsPaymentModalOpen(false)}
-            className="fixed inset-0 z-50 flex items-center justify-center"
+            className="fixed inset-0 z-50 flex items-center backdrop-blur-[2px] justify-center"
           >
             <div className="fixed inset-0 bg-gray-500 opacity-50" />
-            <div className="relative bg-white p-8 rounded-lg shadow-lg w-96">
-              <Dialog.Title className="text-xl font-semibold text-gray-800 mb-4 text-center">
+            <div className="relative bg-white  p-8 rounded-lg shadow-lg w-96">
+              <Dialog.Title className="text-xl font-semibold  text-gray-800 mb-4 text-center">
                 Confirm Booking for {selectedTime} on{" "}
                 {selectedDate && format(new Date(selectedDate), "MMMM d, yyyy")}
               </Dialog.Title>
