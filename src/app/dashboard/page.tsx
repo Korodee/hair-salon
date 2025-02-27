@@ -17,6 +17,8 @@ import {
   isToday,
 } from "date-fns";
 import { getAllBookedDates, getAvailableSlots } from "@/services/bookingServices";
+import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
+import { Dialog } from "@headlessui/react";
 
 export default function Dashboard() {
   const { user } = useApplicationContext();
@@ -24,7 +26,6 @@ export default function Dashboard() {
   const [allBookedDates, setAllBookedDates] = useState<string[]>([]);
   const [selectedDate, setSelectedDate] = useState<string | null>(null);
   const [availableSlots, setAvailableSlots] = useState<string[]>([]);
-  const [bookedSlots, setBookedSlots] = useState<{ date: string; time: string }[]>([]);
   const startDate = startOfWeek(startOfMonth(currentMonth));
   const endDate = endOfWeek(endOfMonth(currentMonth));
 
@@ -50,7 +51,6 @@ export default function Dashboard() {
       try {
         const response = await getAvailableSlots(dateKey);
         setAvailableSlots(response.availableSlots);
-        setBookedSlots(response.bookedSlots || []);
       } catch (error) {
         console.error("Failed to fetch available slots:", error);
       }
@@ -78,13 +78,18 @@ export default function Dashboard() {
       </div>
       <div className="md:flex md:space-x-2 my-3 space-y-4 md:space-y-0 justify-between">
         <div className="md:w-2/3">
-          <div className="rounded-2xl bg-white p-4">
+        <h1 className="text-2xl font-bold pt-3 text-black">Calendar</h1>
+      <p className="text-gray-500 pb-4">
+        This calendar shows available dates and times for appointments.
+      </p>
+          <div className="rounded-2xl  p-4">
+            
             <div className="flex justify-between w-full my-4">
               <button
                 onClick={handlePrevMonth}
                 className="p-2 bg-gray-100 rounded-full hover:bg-gray-300"
               >
-                {/* Left arrow icon */}
+                <FiChevronLeft size={20} color="black" />
               </button>
               <h2 className="text-xl text-black font-semibold">
                 {format(currentMonth, "MMMM yyyy")}
@@ -93,7 +98,7 @@ export default function Dashboard() {
                 onClick={handleNextMonth}
                 className="p-2 bg-gray-100 rounded-full hover:bg-gray-300"
               >
-                {/* Right arrow icon */}
+                <FiChevronRight size={20} color="black" />
               </button>
             </div>
 
@@ -140,44 +145,33 @@ export default function Dashboard() {
               })}
             </div>
 
-            {/* Time Slots for Selected Date */}
-            {selectedDate && (
-              <div className="mt-4 p-6 bg-gradient-to-r from-indigo-100 via-purple-100 to-pink-100 rounded-lg shadow-lg">
-                <h3 className="font-semibold text-gray-800 mb-4 text-center text-2xl">
-                  Available times on{" "}
-                  {selectedDate
-                    ? format(new Date(selectedDate), "MMMM d, yyyy")
-                    : ""}
-                </h3>
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-                  {availableSlots
-                    .concat(
-                      bookedSlots
-                        .filter((booking) => booking.date === selectedDate)
-                        .map((booking) => booking.time)
-                    )
-                    .map((slot, idx) => {
-                      const isBookedTime = bookedSlots.some(
-                        (booking) =>
-                          booking.date === selectedDate && booking.time === slot
-                      );
-
-                      return (
-                        <div
-                          key={idx}
-                          className={`p-3 rounded-lg text-center ${
-                            isBookedTime
-                              ? "bg-blue-500 text-white"
-                              : "bg-green-200 text-green-900"
-                          }`}
-                        >
-                          {slot} {isBookedTime && "(Booked)"}
-                        </div>
-                      );
-                    })}
+            <Dialog
+              open={!!selectedDate}
+              onClose={() => setSelectedDate(null)}
+              className="fixed inset-0 flex items-center justify-center p-4"
+            >
+              <div className="bg-white p-5 rounded-3xl shadow-lg w-80">
+                <h2 className="text-lg font-semibold text-gray-800 border-b pb-2">
+                  Available Times on {selectedDate && format(new Date(selectedDate), "MMMM d, yyyy")}
+                </h2>
+                <div className="mt-3 space-y-2">
+                  {selectedDate && availableSlots.map((slot, idx) => (
+                    <p
+                      key={idx}
+                      className="text-center text-gray-700 bg-gray-100 px-3 py-1 rounded-md"
+                    >
+                      {slot}
+                    </p>
+                  ))}
                 </div>
+                <button
+                  onClick={() => setSelectedDate(null)}
+                  className="mt-4 w-full bg-red-500 text-white py-2 rounded-lg hover:bg-red-600"
+                >
+                  Close
+                </button>
               </div>
-            )}
+            </Dialog>
           </div>
         </div>
         <div className="md:w-1/3">
