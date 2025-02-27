@@ -12,7 +12,10 @@ export default function RecoverPassword() {
 
   const { mutate: requestPasswordReset, isLoading } = useRequestPasswordReset();
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = (
+    e: React.FormEvent,
+    successMessage: string = "Password reset link sent to email"
+  ) => {
     e.preventDefault();
     if (!email) {
       toast.error("Please enter your email");
@@ -22,7 +25,7 @@ export default function RecoverPassword() {
       { email },
       {
         onSuccess: () => {
-          toast.success("Password reset link sent to email");
+          toast.success(successMessage);
         },
         onError: (error: ErrorResponse) => {
           toast.error(error.response?.data?.message || "An error occurred");
@@ -75,21 +78,26 @@ export default function RecoverPassword() {
                 className="w-full bg-black text-white py-3 rounded-lg hover:bg-gray-900 transition flex items-center justify-center space-x-5"
                 disabled={isLoading}
               >
-                {isLoading && (
+                {isLoading ? (
                   <AiOutlineLoading3Quarters className="animate-spin text-xl" />
+                ) : (
+                  "Recover Password"
                 )}
-                Send Verification Link
               </button>
             </form>
 
             <p className="text-[#313957] mt-6 text-center text-sm">
               Didn&apos;t see any email?{" "}
-              <a
-                href="/auth/resend-link"
+              <button
+                type="button"
+                onClick={(e) =>
+                  handleSubmit(e, "Password reset link resent to email")
+                }
                 className="text-[#103FC1] font-medium"
+                disabled={isLoading}
               >
                 Resend link
-              </a>
+              </button>
             </p>
 
             <p className="text-gray-400 text-xs text-center mt-6">
