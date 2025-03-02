@@ -5,34 +5,34 @@ import { FaChevronDown, FaChevronUp } from "react-icons/fa";
 
 const faqs = [
   {
-    question: "What services does BraidzWorld offer?",
+    question: "Quels services propose BraidzWorld ?",
     answer:
-      "We specialize in high-quality braiding services, including box braids, knotless braids, cornrows, and more. Custom styles available on request.",
+      "Nous sommes spécialisés dans les services de tressage de haute qualité, y compris les box braids, les tresses sans nœuds, les cornrows, et bien plus encore. Des styles personnalisés sont disponibles sur demande.",
   },
   {
-    question: "Do I need to book an appointment?",
+    question: "Dois-je prendre un rendez-vous ?",
     answer:
-      "Yes, appointments are recommended to ensure we can give you the best service possible. A $25 deposit is required to secure your session. Walk-ins are accepted based on availability.",
+      "Oui, il est recommandé de prendre rendez-vous pour garantir un service optimal. Un acompte de 25 $ est requis pour réserver votre séance. Les visites sans rendez-vous sont acceptées selon la disponibilité.",
   },
   {
-    question: "How does the rewards system work?",
+    question: "Comment fonctionne le programme de récompenses ?",
     answer:
-      "With every booking you make as a user, you earn 40 points. To redeem a reward, you need to accumulate at least 200 points.",
+      "À chaque réservation, vous gagnez 40 points. Pour utiliser une récompense, vous devez accumuler au moins 200 points.",
   },
   {
-    question: "Where is BraidzWorld located?",
+    question: "Où se trouve BraidzWorld ?",
     answer:
-      "We're located at QC | 1999, 24e rue. You can also reach us through our Instagram and TikTok for directions.",
+      "Nous sommes situés à QC | 1999, 24e rue. Vous pouvez également nous contacter sur Instagram et TikTok pour obtenir des indications.",
   },
   {
-    question: "What hair products do you use?",
+    question: "Quels produits capillaires utilisez-vous ?",
     answer:
-      "We use premium products that protect your hair and scalp. We’re also happy to accommodate product preferences if you bring your own.",
+      "Nous utilisons des produits de qualité supérieure qui protègent vos cheveux et votre cuir chevelu. Nous pouvons également utiliser vos propres produits si vous le souhaitez.",
   },
   {
-    question: "How can I contact BraidzWorld?",
+    question: "Comment puis-je contacter BraidzWorld ?",
     answer:
-      "You can contact us via email at doukagag@outlook.com, or DM us directly on Instagram and TikTok.",
+      "Vous pouvez nous contacter par e-mail à doukagag@outlook.com, ou nous envoyer un message directement sur Instagram et TikTok.",
   },
 ];
 
@@ -46,7 +46,7 @@ const FAQ = () => {
   return (
     <section id="faq" className="w-full max-w-3xl mx-auto px-6 py-16">
       <h2 className="text-3xl font-extrabold text-center text-gray-900 mb-12">
-        Frequently Asked Questions
+        Questions Fréquemment Posées
       </h2>
 
       <div className="space-y-6">

@@ -8,9 +8,9 @@ import AOS from "aos";
 import "aos/dist/aos.css";
 
 const staffData = [
-  { name: "Mara Olsen", experience: "10 years experience", image: staff1 },
-  { name: "Jess Nunez", experience: "8 years experience", image: staff2 },
-  { name: "Dana Welch", experience: "15 years experience", image: staff3 },
+  { name: "Mara Olsen", experience: "10 ans d'expérience", image: staff1 },
+  { name: "Jess Nunez", experience: "8 ans d'expérience", image: staff2 },
+  { name: "Dana Welch", experience: "15 ans d'expérience", image: staff3 },
 ];
 
 const StaffSection = () => {
@@ -27,7 +27,7 @@ const StaffSection = () => {
       data-aos="fade-up"
     >
       <h3 className="text-3xl font-extrabold text-gray-900">
-        Meet With Our Professional Staff
+        Rencontrez Notre Équipe de Professionnels
       </h3>
 
       {/* Staff Grid */}

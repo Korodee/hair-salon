@@ -55,9 +55,6 @@ const PricingSection = () => {
     >
       <div data-aos="flip-left">
         <h3 className="text-3xl font-extrabold text-white">Pricing</h3>
-        {/* <h2 className="text-3xl sm:text-4xl font-extrabold text-gray-900 mt-2">
-        Simple, transparent pricing
-      </h2> */}
         <p className="text-gray-200 mt-3 max-w-xl mx-auto">
           We believe great hair should be accessible to everyone, no matter the
           budget.

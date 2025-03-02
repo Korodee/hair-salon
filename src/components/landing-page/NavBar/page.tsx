@@ -49,11 +49,11 @@ const NavBar = () => {
       </div>
 
       {/* Nav Links - Desktop */}
-      <div className="hidden md:flex gap-10 text-white font-medium">
-        {["Home", "Services", "FAQ", "Contact"].map((item) => (
+      <div className="hidden md:flex gap-10 ml-16 text-white font-medium">
+        {["Accueil", "Services", "FAQ", "Contact"].map((item, index) => (
           <a
             key={item}
-            href={`#${item.toLowerCase()}`}
+            href={`#${["home", "services", "faq", "contact"][index]}`}
             className="relative group text-white tracking-wide"
           >
             {item}
@@ -66,12 +66,12 @@ const NavBar = () => {
       <div className="hidden md:flex items-center gap-3">
         <Link href="/auth/signup">
           <button className="px-5 py-2 text-white font-medium tracking-wide transition-all duration-300 ease-in-out hover:text-gray-400">
-            Get Started
+            Commencer
           </button>
         </Link>
         <Link href="/auth/login">
           <button className="px-5 py-2 bg-white/20 border border-white/30 text-white font-medium rounded-lg transition-all duration-300 ease-in-out hover:bg-white/30 hover:scale-105 hover:shadow-lg">
-            Log in
+            Se connecter
           </button>
         </Link>
       </div>
@@ -95,10 +95,10 @@ const NavBar = () => {
           >
             <FaTimes />
           </button>
-          {["Home", "Services", "Pricing", "Contact"].map((item) => (
+          {["Accueil", "Services", "Tarifs", "Contact"].map((item, index) => (
             <a
               key={item}
-              href={`#${item.toLowerCase()}`}
+              href={`#${["home", "services", "pricing", "contact"][index]}`}
               className="text-xl py-2"
               onClick={toggleMobileMenu}
             >
@@ -108,12 +108,12 @@ const NavBar = () => {
           <div className="flex flex-col items-center gap-4 mt-6">
             <Link href="/auth/signup">
               <button className="px-5 py-2 border border-white rounded-lg">
-                Get Started
+                Commencer
               </button>
             </Link>
             <Link href="/auth/login">
               <button className="px-5 py-2 bg-white text-black rounded-lg">
-                Log in
+                Se connecter
               </button>
             </Link>
           </div>

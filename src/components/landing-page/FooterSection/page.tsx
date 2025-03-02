@@ -1,11 +1,7 @@
 "use client";
 
 import React from "react";
-import {
-  FaInstagram,
-  FaTiktok,
-  FaFacebook,
-} from "react-icons/fa";
+import { FaInstagram, FaTiktok, FaFacebook } from "react-icons/fa";
 
 const socialLinks = [
   { icon: FaInstagram, link: "https://www.instagram.com/braidz_world/" },
@@ -40,16 +36,18 @@ const Footer: React.FC = () => {
             rel="noopener noreferrer"
             className="inline-block mt-2 px-8 py-2 border border-gray-400 rounded-full text-white text-sm font-medium tracking-wide transition transform hover:scale-105 hover:bg-purple-600 hover:border-purple-600"
           >
-            Contact Us
+            Contactez-nous
           </a>
         </div>
 
         {/* Navigation Links */}
         <div className="text-center lg:text-left">
-          <h4 className="text-lg font-semibold text-white mb-4">Quick Links</h4>
+          <h4 className="text-lg font-semibold text-white mb-4">
+            Liens rapides
+          </h4>
           <nav className="flex flex-col space-y-2 text-sm font-medium text-center text-gray-400">
             <a href="#" className="hover:text-white transition">
-              Home
+              Accueil
             </a>
             <a href="#services" className="hover:text-white transition">
               Services
@@ -65,7 +63,7 @@ const Footer: React.FC = () => {
 
         {/* Social Links & Address */}
         <div className="text-center space-y-6">
-          <h4 className="text-lg font-semibold text-white">Connect With Us</h4>
+          <h4 className="text-lg font-semibold text-white">Suivez-nous</h4>
           <div className="flex justify-center space-x-6">
             {socialLinks.map(({ icon: Icon, link }, index) => (
               <a
@@ -96,8 +94,8 @@ const Footer: React.FC = () => {
                   x2="1"
                   y2="1"
                 >
-                  <stop offset="0%" stopColor="#A855F7" /> {/* Purple */}
-                  <stop offset="100%" stopColor="#EC4899" /> {/* Pink */}
+                  <stop offset="0%" stopColor="#A855F7" />
+                  <stop offset="100%" stopColor="#EC4899" />
                 </linearGradient>
               </defs>
               <path
@@ -114,7 +112,7 @@ const Footer: React.FC = () => {
       {/* Bottom Divider & Copyright */}
       <div className="mt-12 border-t border-gray-700 pt-6 text-center text-sm text-gray-500">
         <p>
-          &copy; {new Date().getFullYear()} {logoText}. All rights reserved.
+          &copy; {new Date().getFullYear()} {logoText}. Tous droits réservés.
         </p>
       </div>
 

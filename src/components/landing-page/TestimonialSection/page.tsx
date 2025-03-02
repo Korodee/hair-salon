@@ -20,46 +20,46 @@ const testimonials: Testimonial[] = [
   {
     id: 1,
     name: "Amélie Tremblay",
-    location: "Limoilou, Quebec City",
-    title: "The only place I trust with my braids",
+    location: "Limoilou, Québec",
+    title: "Le seul endroit où je fais confiance pour mes tresses",
     message:
-      "I’m so glad I found BraidzWorld. They treat my hair with so much care and the braids are always flawless — neat, stylish, and they last forever!",
+      "Je suis tellement contente d’avoir trouvé BraidzWorld. Ils prennent soin de mes cheveux et mes tresses sont toujours impeccables — nettes, stylées et elles durent super longtemps !",
     image: "/img/testimonialImage1.png",
   },
   {
     id: 2,
     name: "Sofia Desjardins",
-    location: "Saint-Roch, Quebec City",
-    title: "My hair feels like art every time",
+    location: "Saint-Roch, Québec",
+    title: "Mes cheveux sont une œuvre d’art à chaque fois",
     message:
-      "BraidzWorld doesn’t just braid hair, they create masterpieces. Every visit is a confidence boost — and they make sure you leave happy.",
+      "BraidzWorld ne fait pas que tresser des cheveux, ils créent de véritables chefs-d'œuvre. Chaque visite me donne un boost de confiance — et ils s’assurent toujours que je reparte satisfaite.",
     image: "/img/about1.jpg",
   },
   {
     id: 3,
     name: "Ethan Bélanger",
-    location: "Montcalm, Quebec City",
-    title: "Top-notch service every time",
+    location: "Montcalm, Québec",
+    title: "Un service au top à chaque visite",
     message:
-      "From the friendly staff to the precision in every braid, BraidzWorld is in a league of its own. My hair has never looked better.",
+      "Entre le personnel chaleureux et la précision dans chaque tresse, BraidzWorld est vraiment dans une classe à part. Mes cheveux n’ont jamais été aussi beaux.",
     image: "/img/gal6.jpg",
   },
   {
     id: 4,
     name: "Olivia Bouchard",
-    location: "Charlesbourg, QC",
-    title: "BraidzWorld is a vibe and a half",
+    location: "Charlesbourg, Québec",
+    title: "BraidzWorld, c’est une ambiance incroyable",
     message:
-      "They always get my vision just right — from boho braids to classic cornrows. Plus, the atmosphere is so fun and welcoming!",
+      "Ils captent toujours exactement ce que je veux — des tresses bohèmes aux cornrows classiques. En plus, l’ambiance est super fun et accueillante !",
     image: "/img/about3.jpg",
   },
   {
     id: 5,
     name: "Nathan Gagnon",
-    location: "Beauport, QC",
-    title: "Best braiding experience in Quebec City",
+    location: "Beauport, Québec",
+    title: "La meilleure expérience de tresses à Québec",
     message:
-      "The stylists at BraidzWorld are incredibly skilled. My braids are always clean, even, and comfortable — no tightness or pain. Highly recommend.",
+      "Les stylistes de BraidzWorld sont incroyablement talentueux. Mes tresses sont toujours nettes, bien équilibrées et confortables — sans douleur ni tiraillement. Je recommande vivement.",
     image: "/img/about1.jpg",
   },
 ];
@@ -111,7 +111,7 @@ const TestimonialSection: React.FC = () => {
         className="flex flex-col px-6 md:px-16 py-6 items-center gap-6 relative z-10"
         data-aos="fade-right"
       >
-        <h3 className="text-3xl font-extrabold text-white">Testimonials</h3>
+        <h3 className="text-3xl font-extrabold text-white">Témoignages</h3>
 
         <div className="py-8 lg:py-12 text-white p-8 rounded-xl max-w-4xl w-full flex flex-col md:flex-row h-[600px] md:h-[320px] overflow-hidden relative">
           {/* Background Pops inside card */}

@@ -15,12 +15,12 @@ const GetInTouch: React.FC = () => {
       {/* Heading Section */}
       <div className="text-center mb-12">
         <h2 className="text-3xl font-extrabold text-gray-900 mb-4 leading-tight">
-          Let’s Connect
+          Entrons en contact
         </h2>
         <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-          Whether you’re looking for a consultation or ready to collaborate,
-          we’d love to hear from you. Let us know how we can help bring your
-          vision to life.
+          Que vous cherchiez une consultation ou que vous soyez prêt à
+          collaborer, nous serions ravis de vous entendre. Faites-nous savoir
+          comment nous pouvons vous aider à concrétiser votre vision.
         </p>
       </div>
 
@@ -36,10 +36,10 @@ const GetInTouch: React.FC = () => {
 
             {/* Content */}
             <h3 className="text-4xl font-bold mb-6 relative z-10">
-              Let&rsquo;s Talk!
+              Discutons-en !
             </h3>
             <p className="text-lg opacity-90 mb-8 relative z-10">
-              Reach out to us and let&rsquo;s create something amazing together.
+              Contactez-nous et créons quelque chose d’extraordinaire ensemble.
             </p>
             <div className="space-y-5 relative z-10">
               <div className="flex items-center space-x-4">
@@ -54,7 +54,7 @@ const GetInTouch: React.FC = () => {
           </div>
 
           {/* Right - Form Section */}
-          <form className="p-8 space-y-6 bg-gray-50">
+          <form className="md:p-8 space-y-6 bg-gray-50">
             {/* Input Wrapper */}
             <div className="space-y-4">
               {/* Full Name */}
@@ -64,7 +64,7 @@ const GetInTouch: React.FC = () => {
                 </span>
                 <input
                   type="text"
-                  placeholder="Full Name"
+                  placeholder=" Nom Complet"
                   className="w-full p-4 pl-12 border border-gray-300 rounded-lg text-gray-800 focus:outline-none focus:ring-2 focus:ring-black focus:border-black transition"
                 />
               </div>
@@ -76,7 +76,7 @@ const GetInTouch: React.FC = () => {
                 </span>
                 <input
                   type="email"
-                  placeholder="Email Address"
+                  placeholder="Adresse E-mail"
                   className="w-full p-4 pl-12 border border-gray-300 rounded-lg text-gray-800 focus:outline-none focus:ring-2 focus:ring-black focus:border-black transition"
                 />
               </div>
@@ -88,7 +88,7 @@ const GetInTouch: React.FC = () => {
                 </span>
                 <input
                   type="tel"
-                  placeholder="Phone Number"
+                  placeholder="Numéro de Téléphone"
                   className="w-full p-4 pl-12 border border-gray-300 rounded-lg text-gray-800 focus:outline-none focus:ring-2 focus:ring-black focus:border-black transition"
                 />
               </div>
@@ -100,7 +100,7 @@ const GetInTouch: React.FC = () => {
                 </span>
                 <input
                   type="text"
-                  placeholder="Service You’re Interested In"
+                  placeholder="Service Qui Vous Intéresse"
                   className="w-full p-4 pl-12 border border-gray-300 rounded-lg text-gray-800 focus:outline-none focus:ring-2 focus:ring-black focus:border-black transition"
                 />
               </div>
@@ -111,7 +111,7 @@ const GetInTouch: React.FC = () => {
                   <FaCommentDots size={18} />
                 </span>
                 <textarea
-                  placeholder="Your Message"
+                  placeholder="Votre Message"
                   rows={5}
                   className="w-full p-4 pl-12 border border-gray-300 rounded-lg text-gray-800 focus:outline-none focus:ring-2 focus:ring-black focus:border-black transition"
                 ></textarea>
@@ -123,7 +123,7 @@ const GetInTouch: React.FC = () => {
               type="submit"
               className="w-full py-4 text-white bg-black rounded-lg font-semibold uppercase tracking-wide transition-all duration-300 ease-in-out hover:bg-gray-800 hover:scale-[1.02] shadow-lg"
             >
-              Send Message
+              Envoyer le Message
             </button>
           </form>
         </div>

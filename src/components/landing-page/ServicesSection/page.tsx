@@ -7,21 +7,21 @@ import Image from "next/image";
 const servicesData = [
   {
     icon: "/img/service1.jpg",
-    title: "Makeup & Beauty",
+    title: "Maquillage & Beauté",
     description:
-      "Enhance your natural beauty with expert makeup services tailored to your unique style.",
+      "Sublimez votre beauté naturelle avec des services de maquillage adaptés à votre style unique.",
   },
   {
     icon: "/img/about3.jpg",
-    title: "Haircuts & Styling",
+    title: "Coupes & Coiffures",
     description:
-      "Precision cuts, creative styling, and personalized treatments to make every hair flip fabulous.",
+      "Coupes précises, coiffures créatives et soins personnalisés pour des cheveux sublimes à chaque mouvement.",
   },
   {
     icon: "/img/gal1.jpg",
-    title: "Massage & Spa",
+    title: "Massages & Bien-être",
     description:
-      "Relax, refresh, and recharge with luxurious spa treatments designed to pamper you.",
+      "Détendez-vous, ressourcez-vous et rechargez-vous avec des soins spa luxueux conçus pour vous dorloter.",
   },
 ];
 
@@ -50,15 +50,15 @@ const ServicesSection = () => {
           className="text-3xl font-extrabold text-white leading-tight"
           data-aos="fade-up"
         >
-          Our Services
+          Nos Services
         </h2>
         <p
           className="text-white mt-3 text-lg max-w-2xl mx-auto"
           data-aos="fade-up"
           data-aos-delay="100"
         >
-          Experience professional care designed to bring out the best in you —
-          from head to toe.
+          Découvrez des soins professionnels conçus pour révéler le meilleur de
+          vous-même — de la tête aux pieds.
         </p>
 
         {/* Services Grid */}

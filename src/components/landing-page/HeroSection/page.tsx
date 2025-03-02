@@ -20,7 +20,7 @@ const HeroSection = () => {
       <div className="absolute inset-0 z-0">
         <Image
           src="/img/heroBg.jpg"
-          alt="Hero Background"
+          alt="Image de fond"
           layout="fill"
           objectFit="cover"
           priority
@@ -41,17 +41,17 @@ const HeroSection = () => {
       >
         <h1 className="text-4xl md:text-6xl font-extrabold leading-tight">
           Graceful Braidz <br />
-          <span>Uniquely yours</span>
+          <span>Uniquement pour vous</span>
         </h1>
         <p className="text-gray-100 mt-4 text-base md:text-lg">
-          Every braid tells a story — let’s make yours unforgettable. From
-          classic cornrows to trendy knotless styles, we braid with skill,
-          passion, and creativity.
+          Chaque tresse raconte une histoire — créons ensemble la vôtre. Des
+          cornrows classiques aux styles tendance sans nœuds, nous tressons avec
+          talent, passion et créativité.
         </p>
 
         <Link href="/auth/login">
           <button className="mt-6 px-6 py-3 bg-black text-white rounded-lg transition-all duration-300 ease-in-out hover:bg-gray-800 hover:scale-105 hover:shadow-lg">
-            Book an appointment
+            Prendre un rendez-vous
           </button>
         </Link>
       </div>
