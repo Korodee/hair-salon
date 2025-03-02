@@ -104,7 +104,7 @@ export default function Dashboard() {
           <p className="text-gray-500 pb-4">
             This calendar shows available dates and times for appointments.
           </p>
-          <div className="rounded-2xl  p-4">
+          <div className="rounded-2xl px-4">
             <div className="flex justify-between w-full my-4">
               <button
                 onClick={handlePrevMonth}

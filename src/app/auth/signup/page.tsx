@@ -25,30 +25,34 @@ export default function SignUp() {
 
   const googleSignup = useGoogleLogin({
     onSuccess: async (response) => {
-        try {
-            const res = await axios.get(
-                "https://www.googleapis.com/oauth2/v3/userinfo",
-                {
-                    headers: {
-                        Authorization: `Bearer ${response.access_token}`,
-                    },
-                }
-            );
-            if (res.data.email) {
-                const response = await signupWithGmail({ email: res.data.email, name: res.data.name });
-                if (response.token) {
-                    toast.success("Signup successful");
-                   
-                      localStorage.setItem("authToken", response.token);
-                      router.push("/dashboard");
-                    
-                }
-            }
-        } catch (err) {
-            toast.error(err instanceof Error ? err.message : "An unknown error occurred");
+      try {
+        const res = await axios.get(
+          "https://www.googleapis.com/oauth2/v3/userinfo",
+          {
+            headers: {
+              Authorization: `Bearer ${response.access_token}`,
+            },
+          }
+        );
+        if (res.data.email) {
+          const response = await signupWithGmail({
+            email: res.data.email,
+            name: res.data.name,
+          });
+          if (response.token) {
+            toast.success("Signup successful");
+
+            localStorage.setItem("authToken", response.token);
+            router.push("/dashboard");
+          }
         }
+      } catch (err) {
+        toast.error(
+          err instanceof Error ? err.message : "An unknown error occurred"
+        );
+      }
     },
-});
+  });
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -91,10 +95,12 @@ export default function SignUp() {
           }
         },
         onError: (error: ErrorResponse) => {
-          if (error.response?.data?.message === "Please verify your email first") {
+          if (
+            error.response?.data?.message === "Please verify your email first"
+          ) {
             toast.error("User already exists. Please verify your email first.");
             router.push(`/auth/signup/check-inbox?email=${email}`);
-          } 
+          }
           setErrorMessage(error.response?.data?.message || "An error occurred");
         },
       }
@@ -105,7 +111,7 @@ export default function SignUp() {
     <div className="flex h-screen w-full items-center justify-center bg-gray">
       <div className="w-full h-full bg-gray-100 flex py-2 px-6 md:py-6 md:px-6 rounded-lg shadow-lg">
         <div className="w-full md:w-1/2 flex flex-col md:justify-center md:px-16 relative">
-          <div className="absolute top-8 md:left-6 transform md:-translate-x-1/2 md:transform-none">
+          <div className="absolute top-6 md:left-6">
             <Link href="/">
               <div className="flex items-center gap-2">
                 <div className="w-8 h-8 bg-black rounded-full flex items-center justify-center">
@@ -221,7 +227,10 @@ export default function SignUp() {
               <div className="flex-1 border-t border-gray-300"></div>
             </div>
 
-            <button className="w-full flex items-center justify-center border border-gray-300 py-2 rounded-lg hover:bg-gray-50 transition" onClick={() => googleSignup()}>
+            <button
+              className="w-full flex items-center justify-center border border-gray-300 py-2 rounded-lg hover:bg-gray-50 transition"
+              onClick={() => googleSignup()}
+            >
               <FcGoogle size={25} />
               <span className="ml-2 text-gray-600">Continue with Google</span>
             </button>

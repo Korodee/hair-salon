@@ -40,7 +40,7 @@ export default function RecoverPassword() {
         {/* Left Side (Form) */}
         <div className="w-full md:w-1/2 flex flex-col md:justify-center md:px-16 relative">
           {/* Braidz World Logo */}
-          <div className="absolute top-8 md:left-6 transform md:-translate-x-1/2 md:transform-none">
+          <div className="absolute top-6 md:left-6">
             {/* Logo */}
             <Link href="/">
               <div className="flex items-center gap-2">

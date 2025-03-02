@@ -27,7 +27,8 @@ export default function LogIn() {
     setErrorMessage(""); // Reset error message on each attempt
 
     try {
-      login({ email, password },
+      login(
+        { email, password },
         {
           onSuccess: (response) => {
             if (response.user && response.token) {
@@ -39,19 +40,23 @@ export default function LogIn() {
           onError: (error: ErrorResponse) => {
             if (error.response?.data?.message === "Invalid email or password") {
               setErrorMessage("Invalid email or password");
-            } else if (error.response?.data?.message === "Please verify your email before logging in") {
+            } else if (
+              error.response?.data?.message ===
+              "Please verify your email before logging in"
+            ) {
               toast.error("Please verify your email first");
               router.push(`/auth/signup/check-inbox?email=${email}`);
             }
-            setErrorMessage(error.response?.data?.message || "An error occurred");
+            setErrorMessage(
+              error.response?.data?.message || "An error occurred"
+            );
           },
         }
       );
-
     } catch (error) {
       console.error("Login error:", error);
       setErrorMessage("Something went wrong. Please try again.");
-    } 
+    }
   };
 
   const googleLogin = useGoogleLogin({
@@ -66,18 +71,21 @@ export default function LogIn() {
           }
         );
         if (res.data.email) {
-          const response = await loginWithGmail({ email: res.data.email, name: res.data.name });
+          const response = await loginWithGmail({
+            email: res.data.email,
+            name: res.data.name,
+          });
           if (response.token) {
             toast.success("Login successful");
-          
-              localStorage.setItem("authToken", response.token);
-              router.push("/dashboard");
-          
-           
+
+            localStorage.setItem("authToken", response.token);
+            router.push("/dashboard");
           }
         }
       } catch (err) {
-        toast.error(err instanceof Error ? err.message : "An unknown error occurred");
+        toast.error(
+          err instanceof Error ? err.message : "An unknown error occurred"
+        );
       }
     },
   });
@@ -86,16 +94,14 @@ export default function LogIn() {
     <div className="flex h-screen w-full items-center justify-center bg-gray">
       <div className="w-full h-full bg-gray-100 flex py-2 px-6 md:py-6 md:px-6 rounded-lg shadow-lg">
         <div className="w-full md:w-1/2 flex flex-col md:justify-center md:px-16 relative">
-          <div className="absolute top-8 md:left-6 transform md:-translate-x-1/2 md:transform-none">
-            <Link href="/">
-              <div className="flex items-center gap-2">
-                <div className="w-8 h-8 bg-black rounded-full flex items-center justify-center">
-                  <span className="text-white text-lg font-bold">B</span>
-                </div>
-                <span className="text-lg font-semibold text-black">
-                  Braidzworld
-                </span>
+          <div className="absolute top-6 md:left-6 flex items-center gap-2">
+            <Link href="/" className="flex items-center gap-2">
+              <div className="w-8 h-8 bg-black rounded-full flex items-center justify-center">
+                <span className="text-white text-lg font-bold">B</span>
               </div>
+              <span className="text-lg font-semibold text-black">
+                Braidzworld
+              </span>
             </Link>
           </div>
 
@@ -178,7 +184,10 @@ export default function LogIn() {
             </div>
 
             {/* Google Sign In */}
-            <button className="w-full flex items-center justify-center border border-gray-300 py-2 rounded-lg hover:bg-gray-50 transition" onClick={() => googleLogin()}>
+            <button
+              className="w-full flex items-center justify-center border border-gray-300 py-2 rounded-lg hover:bg-gray-50 transition"
+              onClick={() => googleLogin()}
+            >
               <FcGoogle size={25} />
               <span className="ml-2 text-gray-600">Sign in with Google</span>
             </button>
