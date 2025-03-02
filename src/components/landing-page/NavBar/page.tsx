@@ -1,58 +1,76 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
-import { FaBars, FaTimes } from "react-icons/fa"; // Import hamburger and close icons
+import { FaBars, FaTimes } from "react-icons/fa";
 
 const NavBar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [hidden, setHidden] = useState(false);
+  const [lastScrollY, setLastScrollY] = useState(0);
 
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
   };
 
+  // Handle scroll to show/hide navbar
+  useEffect(() => {
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY;
+
+      if (currentScrollY > lastScrollY && currentScrollY > 100) {
+        // Scrolling down, hide navbar
+        setHidden(true);
+      } else {
+        // Scrolling up, show navbar
+        setHidden(false);
+      }
+
+      setLastScrollY(currentScrollY);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [lastScrollY]);
+
   return (
-    <nav className="fixed top-0 left-0 w-full flex items-center justify-between px-8 md:px-16 py-6 z-20 bg-black/80 backdrop-blur-md">
+    <nav
+      className={`fixed top-0 left-0 w-full flex items-center justify-between px-8 md:px-16 py-5 z-20 bg-gradient-to-r from-black/90 via-black/70 to-black/90 backdrop-blur-lg shadow-md transition-transform duration-300 
+    ${hidden ? "-translate-y-full" : "translate-y-0"}
+  `}
+    >
       {/* Logo */}
-      <div className="flex items-center gap-2">
-        <div className="w-8 h-8 bg-black rounded-full flex items-center justify-center">
+      <div className="flex items-center gap-3">
+        <div className="w-10 h-10 bg-white/10 border border-white/20 rounded-full flex items-center justify-center shadow-md">
           <span className="text-white text-lg font-bold">B</span>
         </div>
-        <span className="text-lg font-semibold text-white">Braidzworld</span>
+        <span className="text-xl font-semibold text-white tracking-wide">
+          Braidzworld
+        </span>
       </div>
 
       {/* Nav Links - Desktop */}
-      <div className="hidden md:flex gap-8 text-white font-medium">
-        <a href="#" className="relative group">
-          Home
-          <span className="absolute left-0 bottom-0 w-0 h-[2px] bg-white transition-all duration-300 group-hover:w-full"></span>
-        </a>
-        <a href="#services" className="relative group">
-          Services
-          <span className="absolute left-0 bottom-0 w-0 h-[2px] bg-white transition-all duration-300 group-hover:w-full"></span>
-        </a>
-        {/* <a href="#pricing" className="relative group">
-          Pricing
-          <span className="absolute left-0 bottom-0 w-0 h-[2px] bg-white transition-all duration-300 group-hover:w-full"></span>
-        </a> */}
-        <a href="#faq" className="relative group">
-          Faq
-          <span className="absolute left-0 bottom-0 w-0 h-[2px] bg-white transition-all duration-300 group-hover:w-full"></span>
-        </a>
-        <a href="#contact" className="relative group">
-          Contact
-          <span className="absolute left-0 bottom-0 w-0 h-[2px] bg-white transition-all duration-300 group-hover:w-full"></span>
-        </a>
+      <div className="hidden md:flex gap-10 text-white font-medium">
+        {["Home", "Services", "FAQ", "Contact"].map((item) => (
+          <a
+            key={item}
+            href={`#${item.toLowerCase()}`}
+            className="relative group text-white tracking-wide"
+          >
+            {item}
+            <span className="absolute left-0 bottom-0 w-0 h-[2px] bg-white transition-all duration-300 group-hover:w-full"></span>
+          </a>
+        ))}
       </div>
 
       {/* CTA Buttons - Desktop */}
-      <div className="hidden md:flex gap-2">
+      <div className="hidden md:flex items-center gap-3">
         <Link href="/auth/signup">
-          <button className="px-5 py-2 text-white transition-all duration-300 ease-in-out hover:text-gray-500 ">
+          <button className="px-5 py-2 text-white font-medium tracking-wide transition-all duration-300 ease-in-out hover:text-gray-400">
             Get Started
           </button>
         </Link>
         <Link href="/auth/login">
-          <button className="px-5 py-2 bg-gray-800 text-white rounded-lg transition-all duration-300 ease-in-out hover:bg-gray-700 hover:scale-105 hover:shadow-lg">
+          <button className="px-5 py-2 bg-white/20 border border-white/30 text-white font-medium rounded-lg transition-all duration-300 ease-in-out hover:bg-white/30 hover:scale-105 hover:shadow-lg">
             Log in
           </button>
         </Link>
@@ -77,30 +95,16 @@ const NavBar = () => {
           >
             <FaTimes />
           </button>
-          <a href="#" className="text-xl py-2" onClick={toggleMobileMenu}>
-            Home
-          </a>
-          <a
-            href="#services"
-            className="text-xl py-2"
-            onClick={toggleMobileMenu}
-          >
-            Services
-          </a>
-          <a
-            href="#pricing"
-            className="text-xl py-2"
-            onClick={toggleMobileMenu}
-          >
-            Pricing
-          </a>
-          <a
-            href="#contact"
-            className="text-xl py-2"
-            onClick={toggleMobileMenu}
-          >
-            Contact
-          </a>
+          {["Home", "Services", "Pricing", "Contact"].map((item) => (
+            <a
+              key={item}
+              href={`#${item.toLowerCase()}`}
+              className="text-xl py-2"
+              onClick={toggleMobileMenu}
+            >
+              {item}
+            </a>
+          ))}
           <div className="flex flex-col items-center gap-4 mt-6">
             <Link href="/auth/signup">
               <button className="px-5 py-2 border border-white rounded-lg">

@@ -22,7 +22,10 @@ const StaffSection = () => {
   }, []);
 
   return (
-    <section className="text-center bg-white py-20 px-6" data-aos="fade-up">
+    <section
+      className="text-center bg-white pt-20 pb-10 px-6"
+      data-aos="fade-up"
+    >
       <h3 className="text-3xl font-extrabold text-gray-900">
         Meet With Our Professional Staff
       </h3>

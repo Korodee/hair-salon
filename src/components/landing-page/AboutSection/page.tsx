@@ -19,10 +19,10 @@ const AboutUsSection: React.FC = () => {
       <div className="lg:w-1/2 text-center lg:text-left" data-aos="fade-up">
         <h2 className="text-4xl font-bold text-gray-900 mb-6">About us</h2>
         <p className="text-lg text-gray-600 mb-6">
-          At Braidzworld, we blend beauty, style, and care to create experiences
-          that leave you feeling confident and refreshed. From flawless
-          makeovers to expert styling, we’re here to help you look and feel your
-          best — every time.
+          At BraidzWorld, we’re all about braids that make a statement. Whether
+          you want bold, trendy styles or timeless classics, we braid with care,
+          creativity, and a touch of magic to leave you looking and feeling
+          amazing — every time.
         </p>
         <div className="flex items-center justify-center lg:justify-start gap-4 bg-white shadow-md rounded-lg p-4 max-w-sm">
           <div className="text-3xl font-bold text-gray-900">5.0</div>
@@ -32,7 +32,7 @@ const AboutUsSection: React.FC = () => {
                 <FaStar key={i} />
               ))}
             </div>
-            <p className="text-sm text-gray-500 mt-1">4700+ Reviews</p>
+            <p className="text-sm text-gray-500 mt-1">500+ Reviews</p>
           </div>
         </div>
       </div>

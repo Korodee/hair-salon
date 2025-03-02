@@ -40,13 +40,15 @@ const HeroSection = () => {
         className="relative z-10 flex flex-col items-center justify-center text-white text-center w-full max-w-2xl"
       >
         <h1 className="text-4xl md:text-6xl font-extrabold leading-tight">
-          Graceful Hair <br />
-          <span>Truly, yours.</span>
+          Graceful Braidz <br />
+          <span>Uniquely yours</span>
         </h1>
         <p className="text-gray-100 mt-4 text-base md:text-lg">
-          Good hair gets you anywhere. We are more than a salon, we are a
-          creative space where we give you a whole new hair experience.
+          Every braid tells a story — let’s make yours unforgettable. From
+          classic cornrows to trendy knotless styles, we braid with skill,
+          passion, and creativity.
         </p>
+
         <Link href="/auth/login">
           <button className="mt-6 px-6 py-3 bg-black text-white rounded-lg transition-all duration-300 ease-in-out hover:bg-gray-800 hover:scale-105 hover:shadow-lg">
             Book an appointment

@@ -30,14 +30,20 @@ const ServicesSection = () => {
     AOS.init({
       duration: 600,
       once: true,
+      offset: 100, // Trigger animation slightly earlier
+      easing: "ease-out",
     });
   }, []);
 
   return (
     <section
       id="services"
-      className="relative py-14 text-center px-6  bg-gray-900"
+      className="relative py-16 text-center px-6 bg-[#171A31]"
     >
+      {/* Pops */}
+      <div className="absolute top-0 left-0 w-32 h-32 bg-[#FB3CB2] rounded-full blur-3xl opacity-30"></div>
+      <div className="absolute top-0 right-0 w-24 h-24 bg-[#FB3CB2] rounded-full blur-3xl opacity-30"></div>
+
       {/* Content Wrapper */}
       <div className="relative z-10">
         <h2
@@ -64,20 +70,18 @@ const ServicesSection = () => {
           {servicesData.map((service, index) => (
             <div
               key={index}
-              className="group relative bg-white bg-opacity-90 backdrop-blur-lg rounded-3xl shadow-2xl overflow-hidden transform hover:-translate-y-3 transition duration-500 ease-in-out"
+              className="group relative bg-white rounded-3xl shadow-2xl overflow-hidden transform hover:-translate-y-3 transition duration-500 ease-in-out"
               data-aos="zoom-in"
               data-aos-delay={index * 150}
             >
-              {/* Optional shimmer overlay */}
-              <div className="absolute inset-0 bg-gradient-to-r from-white/5 via-transparent to-white/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
-
               <div className="relative w-full h-48 overflow-hidden">
                 <Image
                   src={service.icon}
                   alt={service.title}
-                  layout="fill"
-                  objectFit="cover"
-                  className="group-hover:scale-110 transition-transform duration-500"
+                  width={400}
+                  height={192} // 16:9 ratio
+                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                  priority={index < 3} // Prioritize first 3 images
                 />
               </div>
 

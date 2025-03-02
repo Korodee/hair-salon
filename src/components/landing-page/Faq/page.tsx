@@ -12,7 +12,12 @@ const faqs = [
   {
     question: "Do I need to book an appointment?",
     answer:
-      "Yes, appointments are recommended to ensure we can give you the best service possible. Walk-ins are accepted based on availability.",
+      "Yes, appointments are recommended to ensure we can give you the best service possible. A $25 deposit is required to secure your session. Walk-ins are accepted based on availability.",
+  },
+  {
+    question: "How does the rewards system work?",
+    answer:
+      "With every booking you make as a user, you earn 40 points. To redeem a reward, you need to accumulate at least 200 points.",
   },
   {
     question: "Where is BraidzWorld located?",
@@ -50,7 +55,7 @@ const FAQ = () => {
             key={index}
             className={`rounded-2xl overflow-hidden shadow-lg transition-all duration-300 ${
               openIndex === index
-                ? "bg-gradient-to-br from-purple-500 to-indigo-500"
+                ? "bg-gradient-to-br from-purple-500 to-indigo-300"
                 : "bg-white"
             }`}
           >
