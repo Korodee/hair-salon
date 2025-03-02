@@ -113,7 +113,7 @@ const TestimonialSection: React.FC = () => {
       >
         <h3 className="text-3xl font-extrabold text-white">Témoignages</h3>
 
-        <div className="py-8 lg:py-12 text-white p-8 rounded-xl max-w-4xl w-full flex flex-col md:flex-row h-[600px] md:h-[320px] overflow-hidden relative">
+        <div className="py-8 lg:py-12 text-white p-8 rounded-xl max-w-4xl w-full flex flex-col md:flex-row h-[500px] md:h-[320px] overflow-hidden relative">
           {/* Background Pops inside card */}
           <div className="absolute top-0 left-0 w-16 h-16 bg-[#FB3CB2] rounded-full blur-2xl opacity-60 hidden md:block"></div>
           <div className="absolute top-0 right-0 w-16 h-16 bg-[#FB3CB2] rounded-full blur-2xl opacity-60 hidden md:block"></div>
@@ -129,7 +129,7 @@ const TestimonialSection: React.FC = () => {
               animate="center"
               exit="exit"
               transition={{ duration: 0.2, ease: "easeInOut" }}
-              className="flex w-full h-full flex-col md:flex-row items-center"
+              className="flex w-full flex-col md:flex-row items-center"
             >
               <div className="relative w-full md:w-1/3 flex items-center justify-center mb-6 md:mb-0">
                 <div className="absolute z-[-1] bg-[#FB3CB2] w-8 h-[8rem] rounded-full left-[0rem] top-0 hidden md:block"></div>
