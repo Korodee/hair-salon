@@ -1,8 +1,10 @@
 "use client";
+import { useEffect } from "react";
 import Image from "next/image";
 import staff1 from "@/../../public/img/staff1.png";
 import staff2 from "@/../../public/img/staff2.png";
 import staff3 from "@/../../public/img/staff3.png";
+import AOS from "aos";
 import "aos/dist/aos.css";
 
 const staffData = [
@@ -12,8 +14,15 @@ const staffData = [
 ];
 
 const StaffSection = () => {
+  useEffect(() => {
+    AOS.init({
+      duration: 1000, // Animation duration
+      once: true, // Ensures animation only happens once
+    });
+  }, []);
+
   return (
-    <section className="text-center bg-white py-20 px-6">
+    <section className="text-center bg-white py-20 px-6" data-aos="fade-up">
       <h3 className="text-3xl font-extrabold text-gray-900">
         Meet With Our Professional Staff
       </h3>
@@ -21,8 +30,13 @@ const StaffSection = () => {
       {/* Staff Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-10 sm:gap-8 md:gap-4 mt-10 xl:w-[60rem] mx-auto place-items-center">
         {staffData.map((staff, index) => (
-          <div key={index} className="text-center">
-            <div className="w-48  sm:w-56  rounded-3xl overflow-hidden mx-auto">
+          <div
+            key={index}
+            className="text-center"
+            data-aos="fade-in"
+            data-aos-delay={index * 200} // Staggered delay for nicer effect
+          >
+            <div className="w-48 sm:w-56 rounded-3xl overflow-hidden mx-auto">
               <Image
                 src={staff.image}
                 alt={staff.name}

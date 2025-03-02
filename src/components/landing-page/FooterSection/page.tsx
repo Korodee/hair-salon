@@ -1,7 +1,8 @@
 "use client";
 
 import React from "react";
-import { FaInstagram, FaTwitter, FaFacebook } from "react-icons/fa";
+import { FaInstagram, FaMapMarkerAlt, FaTiktok } from "react-icons/fa";
+import { FaFacebook } from "react-icons/fa";
 
 const Footer: React.FC = () => {
   return (
@@ -11,13 +12,18 @@ const Footer: React.FC = () => {
         {/* Left Section */}
         <div className="text-center lg:text-center">
           <h3 className="text-xl font-bold">Braidzworld</h3>
-          <button className="mt-6 px-6 py-2 border-2 border-pink-500 text-pink-500 rounded-lg hover:bg-pink-500 hover:text-white transition">
+          <a
+            href="https://mail.google.com/mail/?view=cm&fs=1&to=doukagag@outlook.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-block mt-6 px-6 py-2 border-2 border-purple-500 text-purple-500 rounded-lg hover:bg-purple-500 hover:text-white transition"
+          >
             Contact Us
-          </button>
+          </a>
         </div>
 
         {/* Divider */}
-        <div className="hidden lg:block h-32 border-l border-pink-500"></div>
+        <div className="hidden lg:block h-32 border-l border-purple-300"></div>
 
         {/* Middle Section (Navigation Links) */}
         <div className="text-center lg:text-left space-y-2">
@@ -28,9 +34,9 @@ const Footer: React.FC = () => {
             <a href="#services" className="hover:text-gray-300">
               SERVICES
             </a>
-            {/* <a href="#pricing" className="hover:text-gray-300">
-              PRICING
-            </a> */}
+            <a href="#faq" className="hover:text-gray-300">
+              FAQ
+            </a>
             <a href="#contact" className="hover:text-gray-300">
               CONTACT
             </a>
@@ -38,13 +44,34 @@ const Footer: React.FC = () => {
         </div>
 
         {/* Divider */}
-        <div className="hidden lg:block h-32 border-l border-pink-500"></div>
+        <div className="hidden lg:block h-32 border-l border-purple-300"></div>
 
-        {/* Right Section (Social Icons) */}
-        <div className="flex justify-center space-x-6 text-xl">
-          <FaInstagram className="hover:text-pink-500 transition cursor-pointer" />
-          <FaTwitter className="hover:text-pink-500 transition cursor-pointer" />
-          <FaFacebook className="hover:text-pink-500 transition cursor-pointer" />
+        {/* Right Section (Social Icons + Address) */}
+        <div className="flex flex-col items-center space-y-4">
+          <div className="flex justify-center space-x-6 text-xl">
+            <a
+              href="https://www.instagram.com/braidz_world/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:text-purple-500 transition"
+            >
+              <FaInstagram />
+            </a>
+            <a
+              href="https://www.tiktok.com/@braidz_world?_t=ZS-8uLUJAZGEAq&_r=1"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:text-purple-500 transition"
+            >
+              <FaTiktok />
+            </a>
+            <FaFacebook className="hover:text-purple-500 transition cursor-pointer" />
+          </div>
+          {/* Address */}
+          <p className="text-sm text-gray-400 text-center flex items-center justify-center space-x-2">
+            <FaMapMarkerAlt className="text-purple-500" />
+            <span>QC | 1999, 24e rue</span>
+          </p>
         </div>
       </div>
     </footer>

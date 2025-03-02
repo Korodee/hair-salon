@@ -34,6 +34,10 @@ const NavBar = () => {
           Pricing
           <span className="absolute left-0 bottom-0 w-0 h-[2px] bg-white transition-all duration-300 group-hover:w-full"></span>
         </a> */}
+        <a href="#faq" className="relative group">
+          Faq
+          <span className="absolute left-0 bottom-0 w-0 h-[2px] bg-white transition-all duration-300 group-hover:w-full"></span>
+        </a>
         <a href="#contact" className="relative group">
           Contact
           <span className="absolute left-0 bottom-0 w-0 h-[2px] bg-white transition-all duration-300 group-hover:w-full"></span>
@@ -43,10 +47,12 @@ const NavBar = () => {
       {/* CTA Buttons - Desktop */}
       <div className="hidden md:flex gap-2">
         <Link href="/auth/signup">
-          <button className="px-5 py-2 text-white ">Get Started</button>
+          <button className="px-5 py-2 text-white transition-all duration-300 ease-in-out hover:text-gray-500 ">
+            Get Started
+          </button>
         </Link>
         <Link href="/auth/login">
-          <button className="px-5 py-2 bg-black text-white rounded-lg transition-all duration-300 ease-in-out hover:bg-gray-800 hover:scale-105 hover:shadow-lg">
+          <button className="px-5 py-2 bg-gray-800 text-white rounded-lg transition-all duration-300 ease-in-out hover:bg-gray-700 hover:scale-105 hover:shadow-lg">
             Log in
           </button>
         </Link>

@@ -19,9 +19,10 @@ const AboutUsSection: React.FC = () => {
       <div className="lg:w-1/2 text-center lg:text-left" data-aos="fade-up">
         <h2 className="text-4xl font-bold text-gray-900 mb-6">About us</h2>
         <p className="text-lg text-gray-600 mb-6">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-          eiusmod tempor incididunt consectetur adipiscing elit, sed do eiusmod
-          tempor incididunt ut labore et dolore magna aliqua. Ut enim ad.
+          At Braidzworld, we blend beauty, style, and care to create experiences
+          that leave you feeling confident and refreshed. From flawless
+          makeovers to expert styling, we’re here to help you look and feel your
+          best — every time.
         </p>
         <div className="flex items-center justify-center lg:justify-start gap-4 bg-white shadow-md rounded-lg p-4 max-w-sm">
           <div className="text-3xl font-bold text-gray-900">5.0</div>
