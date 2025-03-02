@@ -56,7 +56,7 @@ export default function Banner() {
       </div>
 
       {/* Call to Action */}
-      <div className="flex justify-center md:justify-normal items-center mt-2">
+      <div className="flex justify-left md:justify-normal items-center mt-2">
         <Link href="/dashboard/booking">
           <button className="mt-3 flex w-fit items-center gap-2 px-5 py-2 bg-black text-white rounded-full text-sm font-medium transition-all duration-300 transform hover:bg-white hover:text-black hover:scale-105 group">
             Book an Appointment

@@ -28,8 +28,7 @@ export default function Rewards({ points }: { points: number }) {
               className="absolute top-6 left-0 bg-gradient-to-br from-[#5F0A87] to-[#A4508B] text-white text-[13px] p-3 rounded-lg shadow-lg w-[14.5rem]"
             >
               Earn points by engaging, booking, and more! Redeem for rewards
-              plus 10% off your next service. Confirmation email sent
-              instantly!
+              plus 10% off your next service. Confirmation email sent instantly!
             </motion.div>
           )}
         </div>
@@ -61,7 +60,7 @@ export default function Rewards({ points }: { points: number }) {
         <h3 className="text-2xl font-semibold tracking-wide text-[#FB3CB2]">
           Your Rewards
         </h3>
-        <div className="relative inline-block">
+        <div className="relative py-2 inline-block">
           <motion.div
             initial={{ scale: 1 }}
             animate={{ scale: [1, 1.1, 1] }}
