@@ -42,7 +42,7 @@ const testimonials: Testimonial[] = [
     title: "Un service au top à chaque visite",
     message:
       "Entre le personnel chaleureux et la précision dans chaque tresse, BraidzWorld est vraiment dans une classe à part. Mes cheveux n’ont jamais été aussi beaux.",
-    image: "/img/gal6.jpg",
+    image: "/img/testimonial3.jpg",
   },
   {
     id: 4,

@@ -7,21 +7,21 @@ import Image from "next/image";
 const servicesData = [
   {
     icon: "/img/service1.jpg",
-    title: "Maquillage & Beauté",
+    title: "Coiffures Protectrices",
     description:
-      "Sublimez votre beauté naturelle avec des services de maquillage adaptés à votre style unique.",
+      "Prenez soin de vos cheveux tout en restant magnifique. Nos coiffures protectrices aident vos cheveux à s’épanouir, les protégeant de l’usure quotidienne.",
   },
   {
-    icon: "/img/about3.jpg",
-    title: "Coupes & Coiffures",
+    icon: "/img/service2.jpg",
+    title: "Tresses Uniques",
     description:
-      "Coupes précises, coiffures créatives et soins personnalisés pour des cheveux sublimes à chaque mouvement.",
+      "Votre vision, notre savoir-faire. Que vous rêviez de motifs complexes, de mélanges de couleurs audacieux ou de formes de tresses uniques, nous créons un style qui vous ressemble.",
   },
   {
-    icon: "/img/gal1.jpg",
-    title: "Massages & Bien-être",
+    icon: "/img/service3.jpg",
+    title: "Service de Coiffure à Domicile",
     description:
-      "Détendez-vous, ressourcez-vous et rechargez-vous avec des soins spa luxueux conçus pour vous dorloter.",
+      "Profitez d’un service de tresses professionnel dans le confort de votre maison. Que ce soit pour une séance cocooning ou un gain de temps, nous venons à vous avec créativité et savoir-faire.",
   },
 ];
 
@@ -57,8 +57,8 @@ const ServicesSection = () => {
           data-aos="fade-up"
           data-aos-delay="100"
         >
-          Découvrez des soins professionnels conçus pour révéler le meilleur de
-          vous-même — de la tête aux pieds.
+          Des tresses classiques aux créations audacieuses, nous offrons un
+          service expert adapté à votre style et à votre rythme de vie.
         </p>
 
         {/* Services Grid */}

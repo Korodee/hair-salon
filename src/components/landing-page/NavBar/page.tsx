@@ -49,7 +49,7 @@ const NavBar = () => {
       </div>
 
       {/* Nav Links - Desktop */}
-      <div className="hidden md:flex gap-10 ml-16 text-white font-medium">
+      <div className="hidden md:flex gap-10 ml-20 text-white font-medium">
         {["Accueil", "Services", "FAQ", "Contact"].map((item, index) => (
           <a
             key={item}
