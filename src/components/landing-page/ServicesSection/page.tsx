@@ -12,13 +12,13 @@ const servicesData = [
       "Prenez soin de vos cheveux tout en restant magnifique. Nos coiffures protectrices aident vos cheveux à s’épanouir, les protégeant de l’usure quotidienne.",
   },
   {
-    icon: "/img/service2.jpg",
+    icon: "/img/service1.jpg",
     title: "Tresses Uniques",
     description:
       "Votre vision, notre savoir-faire. Que vous rêviez de motifs complexes, de mélanges de couleurs audacieux ou de formes de tresses uniques, nous créons un style qui vous ressemble.",
   },
   {
-    icon: "/img/service3.jpg",
+    icon: "/img/service1.jpg",
     title: "Service de Coiffure à Domicile",
     description:
       "Profitez d’un service de tresses professionnel dans le confort de votre maison. Que ce soit pour une séance cocooning ou un gain de temps, nous venons à vous avec créativité et savoir-faire.",
