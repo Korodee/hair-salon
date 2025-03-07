@@ -26,10 +26,7 @@ const StaffSection = () => {
 
       <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-start gap-10">
         {/* Founder Image */}
-        <div
-          className="relative w-full md:w-[18rem] mx-auto h-[18rem] rounded-3xl overflow-hidden"
-          data-aos="fade-right"
-        >
+        <div className="relative w-full md:w-[18rem] mx-auto h-[18rem] rounded-3xl overflow-hidden">
           <Image
             src={ownerImage}
             alt="Mara Olsen - Fondatrice"
@@ -39,7 +36,7 @@ const StaffSection = () => {
         </div>
 
         {/* Founder Info */}
-        <div className="flex-1 mx-auto" data-aos="fade-left">
+        <div className="flex-1 mx-auto">
           <h4 className="text-3xl font-semibold text-gray-800 mb-2">
             Mara Olsen
           </h4>
