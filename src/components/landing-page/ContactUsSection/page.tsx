@@ -54,7 +54,7 @@ const GetInTouch: React.FC = () => {
           </div>
 
           {/* Right - Form Section */}
-          <form className="md:p-8 space-y-6 bg-gray-50">
+          <form className="md:p-8 space-y-6 md:bg-gray-50">
             {/* Input Wrapper */}
             <div className="space-y-4">
               {/* Full Name */}
