@@ -7,21 +7,35 @@ import Image from "next/image";
 const servicesData = [
   {
     icon: "/img/service1.jpg",
-    title: "Coiffures Protectrices",
-    description:
-      "Prenez soin de vos cheveux tout en restant magnifique. Nos coiffures protectrices aident vos cheveux à s’épanouir, les protégeant de l’usure quotidienne.",
+    title: "Twists",
   },
   {
     icon: "/img/service1.jpg",
-    title: "Tresses Uniques",
-    description:
-      "Votre vision, notre savoir-faire. Que vous rêviez de motifs complexes, de mélanges de couleurs audacieux ou de formes de tresses uniques, nous créons un style qui vous ressemble.",
+    title: "Cornrows",
   },
   {
     icon: "/img/service1.jpg",
-    title: "Service de Coiffure à Domicile",
-    description:
-      "Profitez d’un service de tresses professionnel dans le confort de votre maison. Que ce soit pour une séance cocooning ou un gain de temps, nous venons à vous avec créativité et savoir-faire.",
+    title: "Invicible Locks",
+  },
+  {
+    icon: "/img/service1.jpg",
+    title: "Knotless Braidz",
+  },
+  {
+    icon: "/img/service1.jpg",
+    title: "Senegalese Twist",
+  },
+  {
+    icon: "/img/service1.jpg",
+    title: "Short Fulani Braidz",
+  },
+  {
+    icon: "/img/service1.jpg",
+    title: "Fake Locs",
+  },
+  {
+    icon: "/img/service1.jpg",
+    title: "Short Knotless Braidz",
   },
 ];
 
@@ -57,13 +71,13 @@ const ServicesSection = () => {
           data-aos="fade-up"
           data-aos-delay="100"
         >
-          Des tresses classiques aux créations audacieuses, nous offrons un
-          service expert adapté à votre style et à votre rythme de vie.
+          Des tresses sur mesure, tissées avec soin pour refléter votre
+          personnalité et votre style unique.
         </p>
 
         {/* Services Grid */}
         <div
-          className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 mt-12 max-w-6xl mx-auto"
+          className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 mt-12 max-w-7xl mx-auto"
           data-aos="fade-up"
           data-aos-delay="200"
         >
@@ -74,7 +88,7 @@ const ServicesSection = () => {
               data-aos="zoom-in"
               data-aos-delay={index * 150}
             >
-              <div className="relative w-full h-48 overflow-hidden">
+              <div className="relative w-full h-60 overflow-hidden">
                 <Image
                   src={service.icon}
                   alt={service.title}
@@ -85,13 +99,13 @@ const ServicesSection = () => {
                 />
               </div>
 
-              <div className="p-6 text-center">
+              <div className="p-3 text-center">
                 <h4 className="text-xl font-bold text-gray-900 group-hover:text-pink-600 transition-colors duration-300">
                   {service.title}
                 </h4>
-                <p className="text-gray-600 mt-3 text-sm leading-relaxed">
+                {/* <p className="text-gray-600 mt-3 text-sm leading-relaxed">
                   {service.description}
-                </p>
+                </p> */}
               </div>
 
               {/* Bottom Accent Line */}

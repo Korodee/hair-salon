@@ -11,7 +11,7 @@ import {
 
 const GetInTouch: React.FC = () => {
   return (
-    <div id="contact" className="max-w-4xl mx-auto px-6 py-20">
+    <div id="contact" className="mx-auto max-w-4xl px-2 md:px-6 py-20">
       {/* Heading Section */}
       <div className="text-center mb-12">
         <h2 className="text-3xl font-extrabold text-gray-900 mb-4 leading-tight">
@@ -25,7 +25,7 @@ const GetInTouch: React.FC = () => {
       </div>
 
       {/* Form Card Wrapper */}
-      <div className="bg-white shadow-xl rounded-2xl overflow-hidden">
+      <div className="md:bg-white md:shadow-xl rounded-2xl overflow-hidden">
         <div className="grid grid-cols-1 md:grid-cols-2">
           {/* Left - Contact Info / Graphic Section */}
           <div className="hidden md:flex flex-col justify-center relative bg-[#171A31] text-white px-8 py-12 overflow-hidden rounded-lg shadow-xl">
@@ -56,7 +56,7 @@ const GetInTouch: React.FC = () => {
           {/* Right - Form Section */}
           <form className="md:p-8 space-y-6 md:bg-gray-50">
             {/* Input Wrapper */}
-            <div className="space-y-4">
+            <div className="space-y-4 p-2 md:bg-gray-50">
               {/* Full Name */}
               <div className="relative">
                 <span className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-500">

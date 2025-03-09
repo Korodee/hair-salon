@@ -67,7 +67,9 @@ const FAQ = () => {
               }`}
               onClick={() => toggleFAQ(index)}
             >
-              <span className="font-semibold text-lg">{faq.question}</span>
+              <span className="font-semibold text-lg pr-[0.3rem]">
+                {faq.question}
+              </span>
               <span>
                 {openIndex === index ? (
                   <FaChevronUp className="text-white" />

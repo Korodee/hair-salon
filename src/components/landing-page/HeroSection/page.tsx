@@ -44,9 +44,8 @@ const HeroSection = () => {
           <span>Uniquement pour vous</span>
         </h1>
         <p className="text-gray-100 mt-4 text-base md:text-lg">
-          Chaque tresse raconte une histoire — créons ensemble la vôtre. Des
-          cornrows classiques aux styles tendance sans nœuds, nous tressons avec
-          talent, passion et créativité.
+          Osez l&apos;élégance avec votre couronne, où la tradition rencontre la
+          modernité.
         </p>
 
         <Link href="/auth/login">

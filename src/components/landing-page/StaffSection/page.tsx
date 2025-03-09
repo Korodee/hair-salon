@@ -46,17 +46,15 @@ const StaffSection = () => {
           </p>
 
           <p className="text-gray-700 leading-relaxed text-[15px]">
-            Avec plus de 10 ans d&apos;expertise exclusivement
-            d&eacute;di&eacute;e &agrave; l&apos;art des tresses, Mara met sa
-            passion et son savoir-faire au service de chaque cliente. Chaque
-            tresse est r&eacute;alis&eacute;e avec pr&eacute;cision,
-            cr&eacute;ativit&eacute; et soin, pour s&apos;adapter &agrave; votre
-            style et &agrave; votre personnalit&eacute;. Son approche sur-mesure
-            repose sur l&apos;&eacute;coute, la ma&icirc;trise des techniques
-            traditionnelles et modernes, et une attention particuli&egrave;re
-            aux d&eacute;tails. Dans une ambiance chaleureuse et conviviale,
-            Mara sublime chaque chevelure, faisant de chaque tresse bien plus
-            qu&apos;une coiffure : une v&eacute;ritable signature.
+            Depuis toute petite, cette passion grandissante pour l&apos;art de
+            la coiffure ne cesse d&apos;évoluer. À la recherche constante de
+            nouvelles connaissances, vous êtes devenus ma source
+            d&apos;inspiration. Vos échanges, vos opinions, vos rires et parfois
+            même vos pleurs sont tout ce qui crée cet univers appelé Braidz
+            World, un monde dans lequel j&apos;ai la chance de créer avec vous
+            une expérience de confiance. Venez alors partager avec moi ce
+            parcours évolutif dont le but est de{" "}
+            <span className="font-semibold italic">«toucher le monde»</span>.
           </p>
 
           {/* Optional personal touch - signature or quote */}
@@ -65,7 +63,7 @@ const StaffSection = () => {
               &ldquo;La beaut&eacute; est une lumi&egrave;re qui vient de
               l&apos;int&eacute;rieur.&rdquo;
             </p>
-            <p className="mt-2 font-bold text-gray-800">- Mara Olsen</p>
+            <p className="mt-1 font-bold text-gray-800">- Mara Olsen</p>
           </div>
         </div>
       </div>
