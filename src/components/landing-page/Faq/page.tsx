@@ -80,7 +80,7 @@ const FAQ = () => {
             </button>
             <div
               className={`overflow-hidden transition-all duration-300 ${
-                openIndex === index ? "max-h-40" : "max-h-0"
+                openIndex === index ? "max-h-45" : "max-h-0"
               }`}
             >
               <div

@@ -11,7 +11,7 @@ import {
 
 const GetInTouch: React.FC = () => {
   return (
-    <div id="contact" className="mx-auto max-w-4xl px-2 md:px-6 py-20">
+    <div id="contact" className="mx-auto max-w-4xl px-4 md:px-6 py-20">
       {/* Heading Section */}
       <div className="text-center mb-12">
         <h2 className="text-3xl font-extrabold text-gray-900 mb-4 leading-tight">
