@@ -217,37 +217,37 @@ const servicesData: Service[] = [
     icon: "/img/service1.jpg",
     title: "Men's Hair",
     details: [
-      { style: "Small Vanilles", duration: "2 heures", price: "70,00 $CA" },
+      { style: "Small Vanilles", duration: "2 heures", price: "70.00 $CA" },
       {
         style: "Medium Vanilles",
         duration: "1 heure 45 minutes",
-        price: "60,00 $CA",
+        price: "60.00 $CA",
       },
       { style: "Large Vanilles", duration: "1 heure", price: "50,00 $CA" },
       {
         style: "Small Tresses",
         duration: "2 heures 30 minutes",
-        price: "70,00 $CA",
+        price: "70.00 $CA",
       },
       {
         style: "Medium Tresses",
         duration: "1 heure 45 minutes",
-        price: "60,00 $CA",
+        price: "60.00 $CA",
       },
-      { style: "Large Tresses", duration: "1 heure", price: "50,00 $CA" },
+      { style: "Large Tresses", duration: "1 heure", price: "50.00 $CA" },
       {
         style: "2-12 Nattes",
         duration: "1 heure 45 minutes",
-        price: "50,00 $CA",
+        price: "50.00 $CA",
       },
-      { style: "14-20 Nattes", duration: "2 heures", price: "60,00 $CA" },
-      { style: "Retwist au peigne", duration: "2 heures", price: "75,00 $CA" },
-      { style: "Retwist interlock", duration: "2 heures", price: "95,00 $CA" },
-      { style: "Retwist Freeform", duration: "2 heures", price: "190,00 $CA" },
+      { style: "14-20 Nattes", duration: "2 heures", price: "60.00 $CA" },
+      { style: "Retwist au peigne", duration: "2 heures", price: "75.00 $CA" },
+      { style: "Retwist interlock", duration: "2 heures", price: "95.00 $CA" },
+      { style: "Retwist Freeform", duration: "2 heures", price: "190.00 $CA" },
       {
         style: "Starter Locs (Comb coils)",
         duration: "3 heures 30 minutes",
-        price: "85,00 $CA",
+        price: "85.00 $CA",
       },
     ],
   },
@@ -300,7 +300,7 @@ const ServicesSection = () => {
           className="text-3xl font-extrabold text-white leading-tight"
           data-aos="fade-up"
         >
-          Nos Services
+          Services et Tarifs.
         </h2>
         <p
           className="text-white mt-3 text-lg max-w-2xl mx-auto"
