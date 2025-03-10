@@ -47,7 +47,7 @@ const AboutUsSection: React.FC = () => {
         <div className="flex flex-col gap-6">
           <div className="relative w-40 h-60">
             <Image
-              src="/img/about-new1.jpg"
+              src="/img/new-about1.png"
               alt="Stylist 1"
               layout="fill"
               objectFit="cover"
@@ -56,7 +56,7 @@ const AboutUsSection: React.FC = () => {
           </div>
           <div className="relative w-40 h-60">
             <Image
-              src="/img/about-new2.jpg"
+              src="/img/new-about2.png"
               alt="Salon"
               layout="fill"
               objectFit="cover"
@@ -66,7 +66,7 @@ const AboutUsSection: React.FC = () => {
         </div>
         <div className="relative w-40 h-60">
           <Image
-            src="/img/about-new3.jpg"
+            src="/img/new-about3.png"
             alt="Stylist 2"
             layout="fill"
             objectFit="cover"

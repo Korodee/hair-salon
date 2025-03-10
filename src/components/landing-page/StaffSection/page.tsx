@@ -1,7 +1,7 @@
 "use client";
 import { useEffect } from "react";
 import Image from "next/image";
-import ownerImage from "@/../../public/img/about3.jpg"; // Replace with your actual image
+import ownerImage from "@/../../public/img/owner-img.png";
 import AOS from "aos";
 import "aos/dist/aos.css";
 
@@ -29,7 +29,7 @@ const StaffSection = () => {
         <div className="relative w-full md:w-[18rem] mx-auto h-[18rem] rounded-3xl overflow-hidden">
           <Image
             src={ownerImage}
-            alt="Mara Olsen - Fondatrice"
+            alt="Grace Doukaga - Fondatrice"
             fill
             className="object-cover"
           />
@@ -38,7 +38,7 @@ const StaffSection = () => {
         {/* Founder Info */}
         <div className="flex-1 mx-auto">
           <h4 className="text-3xl font-semibold text-gray-800 mb-2">
-            Mara Olsen
+            Grace Doukaga
           </h4>
           <p className="text-[#444] text-lg font-medium mb-4">
             Fondatrice &amp; Experte Beaut&eacute; | 10 ans
@@ -63,7 +63,7 @@ const StaffSection = () => {
               &ldquo;La beaut&eacute; est une lumi&egrave;re qui vient de
               l&apos;int&eacute;rieur.&rdquo;
             </p>
-            <p className="mt-1 font-bold text-gray-800">- Mara Olsen</p>
+            <p className="mt-1 font-bold text-gray-800">- Grace Doukaga</p>
           </div>
         </div>
       </div>

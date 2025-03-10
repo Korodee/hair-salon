@@ -19,7 +19,7 @@ const HeroSection = () => {
       {/* Background Image */}
       <div className="absolute inset-0 z-0">
         <Image
-          src="/img/heroBg.jpg"
+          src="/img/new-hero-bg.png"
           alt="Image de fond"
           layout="fill"
           objectFit="cover"
