@@ -24,7 +24,7 @@ const testimonials: Testimonial[] = [
     title: "Le seul endroit où je fais confiance pour mes tresses",
     message:
       "Je suis tellement contente d’avoir trouvé BraidzWorld. Ils prennent soin de mes cheveux et mes tresses sont toujours impeccables — nettes, stylées et elles durent super longtemps !",
-    image: "/img/testimonialImage1.png",
+    image: "/img/test-1.png",
   },
   {
     id: 2,
@@ -33,7 +33,7 @@ const testimonials: Testimonial[] = [
     title: "Mes cheveux sont une œuvre d’art à chaque fois",
     message:
       "BraidzWorld ne fait pas que tresser des cheveux, ils créent de véritables chefs-d'œuvre. Chaque visite me donne un boost de confiance — et ils s’assurent toujours que je reparte satisfaite.",
-    image: "/img/about1.jpg",
+    image: "/img/test-2.png",
   },
   {
     id: 3,
@@ -42,7 +42,7 @@ const testimonials: Testimonial[] = [
     title: "Un service au top à chaque visite",
     message:
       "Entre le personnel chaleureux et la précision dans chaque tresse, BraidzWorld est vraiment dans une classe à part. Mes cheveux n’ont jamais été aussi beaux.",
-    image: "/img/testimonial3.jpg",
+    image: "/img/test-3.png",
   },
   {
     id: 4,
@@ -51,7 +51,7 @@ const testimonials: Testimonial[] = [
     title: "BraidzWorld, c’est une ambiance incroyable",
     message:
       "Ils captent toujours exactement ce que je veux — des tresses bohèmes aux cornrows classiques. En plus, l’ambiance est super fun et accueillante !",
-    image: "/img/about3.jpg",
+    image: "/img/test-1.png",
   },
   {
     id: 5,
@@ -60,7 +60,7 @@ const testimonials: Testimonial[] = [
     title: "La meilleure expérience de tresses à Québec",
     message:
       "Les stylistes de BraidzWorld sont incroyablement talentueux. Mes tresses sont toujours nettes, bien équilibrées et confortables — sans douleur ni tiraillement. Je recommande vivement.",
-    image: "/img/about1.jpg",
+    image: "/img/test-2.png",
   },
 ];
 
