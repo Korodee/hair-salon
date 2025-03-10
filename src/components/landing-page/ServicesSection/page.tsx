@@ -300,7 +300,7 @@ const ServicesSection = () => {
           className="text-3xl font-extrabold text-white leading-tight"
           data-aos="fade-up"
         >
-          Services et Tarifs.
+          Services et Tarifs
         </h2>
         <p
           className="text-white mt-3 text-lg max-w-2xl mx-auto"
