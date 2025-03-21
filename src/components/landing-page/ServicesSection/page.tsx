@@ -35,7 +35,7 @@ const servicesData: Service[] = [
       },
       {
         style: "Freestyle Cornrows",
-        duration: "4 heures 30 minutes",
+        duration: "6 heures 30 minutes",
         price: "$200.00 CAD",
       },
     ],
@@ -44,6 +44,11 @@ const servicesData: Service[] = [
     icon: "/img/invicible-locs.png",
     title: "Invisible Locs",
     details: [
+      {
+        style: "Small Locs",
+        duration: "6 heures 30 minutes",
+        price: "$225.00 CAD",
+      },
       {
         style: "Smedium Locs",
         duration: "5 heures 30 minutes",
@@ -85,7 +90,7 @@ const servicesData: Service[] = [
       long: [
         {
           style: "X Small knotless",
-          duration: "12 heures",
+          duration: "15 heures",
           price: "$450.00 CAD",
         },
         {
@@ -108,11 +113,6 @@ const servicesData: Service[] = [
           duration: "4 heures 30 minutes",
           price: "$160.00 CAD",
         },
-        {
-          style: "Small Locks",
-          duration: "6 heures 30 minutes",
-          price: "$225.00 CAD",
-        },
       ],
     },
   },
@@ -122,7 +122,7 @@ const servicesData: Service[] = [
     variations: {
       short: [
         {
-          style: "Short Senegalese Twist",
+          style: "Short Twist",
           duration: "7 heures 30 minutes",
           price: "$200.00 CAD",
         },
@@ -138,7 +138,7 @@ const servicesData: Service[] = [
         },
         {
           style: "Large Twist",
-          duration: "7 heures 30 minutes",
+          duration: "4 heures 30 minutes",
           price: "$100.00 CAD",
         },
       ],
@@ -156,7 +156,7 @@ const servicesData: Service[] = [
         },
         {
           style: "Large Twist",
-          duration: "3 heures 50 minutes",
+          duration: "4 heures 30 minutes",
           price: "$140.00 CAD",
         },
       ],
@@ -169,18 +169,18 @@ const servicesData: Service[] = [
       short: [
         {
           style: "Flip Over Braids",
-          duration: "6 heures 30 minutes",
+          duration: "7 heures",
           price: "$200.00 CAD",
         },
         {
           style: "Freestyle Braids",
           duration: "6 heures",
-          price: "$180.00 CAD",
+          price: "$190.00 CAD",
         },
         {
           style: "Basic Fulani Style",
           duration: "6 heures",
-          price: "$160.00 CAD",
+          price: "$150.00 CAD",
         },
       ],
       long: [
@@ -217,33 +217,33 @@ const servicesData: Service[] = [
     icon: "/img/service1.jpg",
     title: "Men's Hair",
     details: [
-      { style: "Small Vanilles", duration: "2 heures", price: "70.00 $CA" },
+      { style: "Small Twist", duration: "2 heures", price: "70.00 $CA" },
       {
-        style: "Medium Vanilles",
+        style: "Medium Twist",
         duration: "1 heure 45 minutes",
         price: "60.00 $CA",
       },
-      { style: "Large Vanilles", duration: "1 heure", price: "50,00 $CA" },
+      { style: "Large Twist", duration: "1 heure", price: "50,00 $CA" },
       {
         style: "Small Tresses",
         duration: "2 heures 30 minutes",
         price: "70.00 $CA",
       },
       {
-        style: "Medium Tresses",
+        style: "Medium Braidz",
         duration: "1 heure 45 minutes",
         price: "60.00 $CA",
       },
-      { style: "Large Tresses", duration: "1 heure", price: "50.00 $CA" },
+      { style: "Large Braidz", duration: "1 heure", price: "50.00 $CA" },
       {
         style: "2-12 Nattes",
         duration: "1 heure 45 minutes",
         price: "50.00 $CA",
       },
       { style: "14-20 Nattes", duration: "2 heures", price: "60.00 $CA" },
-      { style: "Retwist au peigne", duration: "2 heures", price: "75.00 $CA" },
-      { style: "Retwist interlock", duration: "2 heures", price: "95.00 $CA" },
-      { style: "Retwist Freeform", duration: "2 heures", price: "190.00 $CA" },
+      { style: "Retwist au peigne", duration: "Varie", price: "75.00 $CA" },
+      { style: "Retwist interlock", duration: "Varie", price: "95.00 $CA" },
+      { style: "Retwist Freeform", duration: "Varie", price: "190.00 $CA" },
       {
         style: "Starter Locs (Comb coils)",
         duration: "3 heures 30 minutes",
