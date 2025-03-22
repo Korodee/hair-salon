@@ -1,7 +1,12 @@
 import api from "./api";
 import { ErrorResponse } from "./authService";
 
-export const createBooking = async (data: { date: string; time: string }) => {
+export const createBooking = async (data: { 
+  date: string; 
+  time: string; 
+  service: string;
+  duration: number;
+}) => {
   try {
     const response = await api.post("/bookings/create", data);
     return response.data;

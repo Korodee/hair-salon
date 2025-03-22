@@ -28,6 +28,7 @@ export default function Dashboard() {
   const { user } = useApplicationContext();
   const [currentMonth, setCurrentMonth] = useState(new Date());
   const [allBookedDates, setAllBookedDates] = useState<string[]>([]);
+  const [userBookedDates, setUserBookedDates] = useState<string[]>([]);
   const [selectedDate, setSelectedDate] = useState<string | null>(null);
   const [availableSlots, setAvailableSlots] = useState<string[]>([]);
   const startDate = startOfWeek(startOfMonth(currentMonth));
@@ -52,6 +53,7 @@ export default function Dashboard() {
     try {
       const response = await getAllBookedDates();
       setAllBookedDates(response.bookedDates);
+      setUserBookedDates(response.userBookedDates || []);
     } catch (error) {
       console.error("Failed to fetch booked dates:", error);
     }
@@ -108,6 +110,7 @@ export default function Dashboard() {
             <div className="flex justify-between w-full my-4">
               <button
                 onClick={handlePrevMonth}
+                title="Previous Month"
                 className="p-2 bg-gray-100 rounded-full hover:bg-gray-300"
               >
                 <FiChevronLeft size={20} color="black" />
@@ -117,6 +120,7 @@ export default function Dashboard() {
               </h2>
               <button
                 onClick={handleNextMonth}
+                title="Next Month"
                 className="p-2 bg-gray-100 rounded-full hover:bg-gray-300"
               >
                 <FiChevronRight size={20} color="black" />
@@ -140,20 +144,23 @@ export default function Dashboard() {
                 const dateKey = format(day, "yyyy-MM-dd");
                 const today = new Date();
                 today.setHours(0, 0, 0, 0);
-                const isBookedDate = allBookedDates.includes(dateKey);
+                
+                // Check if the date has any bookings by this user
+                const isUserBookedDate = userBookedDates.includes(dateKey);
 
                 return (
                   <button
                     key={dateKey}
                     onClick={() => handleDateSelect(dateKey)}
                     disabled={day < today}
+                    title={`${format(day, "MMMM d, yyyy")}`}
                     className={`p-3 rounded-lg transition ${
                       !isSameMonth(day, currentMonth)
                         ? "text-gray-400"
                         : isToday(day)
                         ? "bg-blue-500 text-white"
-                        : isBookedDate
-                        ? "bg-green-500 text-white"
+                        : isUserBookedDate
+                        ? "bg-green-500 text-white" // Green ONLY for current user's bookings
                         : "bg-white text-gray-500"
                     } ${
                       day < today

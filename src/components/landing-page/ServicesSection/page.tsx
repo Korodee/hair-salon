@@ -427,6 +427,7 @@ const ServicesSection = () => {
             <button
               onClick={closeModal}
               className="absolute top-6 right-4 p-2 rounded-full bg-gray-800 text-white hover:bg-gray-900 transition duration-200 shadow-md flex items-center justify-center w-8 h-8"
+              title="Close services dialog"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -435,6 +436,7 @@ const ServicesSection = () => {
                 viewBox="0 0 24 24"
                 stroke="currentColor"
                 strokeWidth={2}
+                aria-hidden="true"
               >
                 <path
                   strokeLinecap="round"
@@ -442,6 +444,7 @@ const ServicesSection = () => {
                   d="M6 18L18 6M6 6l12 12"
                 />
               </svg>
+              <span className="sr-only">Close</span>
             </button>
           </div>
         </div>
