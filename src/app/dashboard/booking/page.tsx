@@ -1,514 +1,1143 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import {
-  format,
-  addMonths,
-  subMonths,
-  startOfMonth,
-  endOfMonth,
-  startOfWeek,
-  endOfWeek,
-  addDays,
-  isSameMonth,
-  isToday,
+    format,
+    addMonths,
+    subMonths,
+    startOfMonth,
+    startOfWeek,
+    addDays,
+    isSameMonth,
+    isToday,
+    isSameDay,
 } from "date-fns";
 import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
-import StripeCheckout from "react-stripe-checkout";
-import { Dialog } from "@headlessui/react";
-import { toast } from "react-toastify";
-import {
-  createBooking,
-  getAvailableSlots,
-  getAllBookedDates,
-} from "@/services/bookingServices";
-import { getCurrentUser } from "@/services/authService";
-import { useApplicationContext } from "@/context/appContext";
-import { useRouter } from "next/navigation";
+import { loadStripe } from "@stripe/stripe-js";
+import { motion } from "framer-motion";
+import Image from "next/image";
+import { createBooking, getAllBookedDates } from "@/utils/bookingApi";
+import { useSession } from "next-auth/react";
+import { toast } from "react-hot-toast";
 
-// Service data structure with durations
-interface ServiceOption {
-  id: string;
-  name: string;
-  duration: number; // Duration in hours
-  category: string;
-  price: string;
+// Service interfaces
+interface ServiceStyle {
+    style: string;
+    duration: string;
+    price: string;
 }
 
-// Service options
-const serviceOptions: ServiceOption[] = [
-  { id: "small-knotless", name: "Small Knotless", duration: 8.5, category: "Knotless Braids", price: "$225.00" },
-  { id: "medium-knotless", name: "Medium Knotless", duration: 5.5, category: "Knotless Braids", price: "$140.00" },
-  { id: "large-knotless", name: "Large Knotless", duration: 3.5, category: "Knotless Braids", price: "$100.00" },
-  { id: "cornrows-2-10", name: "2-10 Straight Cornrows", duration: 4.5, category: "Cornrows", price: "$130.00" },
-  { id: "cornrows-12-16", name: "12-16 Straight Cornrows", duration: 4.5, category: "Cornrows", price: "$170.00" },
-  { id: "cornrows-freestyle", name: "Freestyle Cornrows", duration: 6.5, category: "Cornrows", price: "$200.00" },
-  { id: "small-locs", name: "Small Locs", duration: 6.5, category: "Invisible Locs", price: "$225.00" },
-  { id: "smedium-locs", name: "Smedium Locs", duration: 5.5, category: "Invisible Locs", price: "$180.00" },
-  { id: "short-twist", name: "Short Twist", duration: 7.5, category: "Senegalese Twists", price: "$200.00" },
-  { id: "medium-twist", name: "Medium Twist", duration: 6, category: "Senegalese Twists", price: "$140.00" }
+interface Service {
+    icon: string;
+    title: string;
+    details?: ServiceStyle[];
+    variations?: {
+        short: ServiceStyle[];
+        long: ServiceStyle[];
+    };
+}
+
+interface BookingStep {
+    id: "service" | "style" | "variation" | "date" | "time" | "payment";
+    title: string;
+}
+
+interface SelectedServiceDetails {
+    title: string;
+    style?: string;
+    variation?: "short" | "long";
+    duration: number;
+    price: string;
+}
+
+interface SessionUser {
+    name?: string | null;
+    email?: string | null;
+    image?: string | null;
+    token?: string;
+}
+
+const bookingSteps: BookingStep[] = [
+    { id: "service", title: "Choose Service" },
+    { id: "style", title: "Choose Style" },
+    { id: "variation", title: "Choose Length" },
+    { id: "date", title: "Select Date" },
+    { id: "time", title: "Select Time" },
+    { id: "payment", title: "Payment" },
 ];
 
-// Group services by category
-const groupedServices = serviceOptions.reduce((acc, service) => {
-  if (!acc[service.category]) {
-    acc[service.category] = [];
-  }
-  acc[service.category].push(service);
-  return acc;
-}, {} as Record<string, ServiceOption[]>);
+const stripePromise = loadStripe(
+    process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!
+);
 
-export default function CalendarView() {
-  const [currentMonth, setCurrentMonth] = useState(new Date());
-  const [selectedDate, setSelectedDate] = useState<string | null>(null);
-  const [selectedTime, setSelectedTime] = useState<string | null>(null);
-  const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false);
-  const [availableSlots, setAvailableSlots] = useState<string[]>([]);
-  const [bookedSlots, setBookedSlots] = useState<
-    { date: string; time: string; userId: string; service?: string; duration?: number; occupiedHours?: string[] }[]
-  >([]);
-  const [currentUserId, setCurrentUserId] = useState<string | null>(null);
-  const [userBookedDates, setUserBookedDates] = useState<string[]>([]);
-  const [selectedService, setSelectedService] = useState<ServiceOption | null>(null);
-  const startDate = startOfWeek(startOfMonth(currentMonth));
-  const endDate = endOfWeek(endOfMonth(currentMonth));
-  const { setUser } = useApplicationContext();
-  const router = useRouter();
+// Services data
+const servicesData: Service[] = [
+    {
+        icon: "/img/twists.png",
+        title: "Twists",
+        details: [
+            {
+                style: "Small Twists",
+                duration: "8 heures",
+                price: "$250.00 CAD",
+            },
+            {
+                style: "Medium Twists",
+                duration: "6 heures",
+                price: "$200.00 CAD",
+            },
+            {
+                style: "Large Twists",
+                duration: "4 heures",
+                price: "$150.00 CAD",
+            },
+        ],
+    },
+    {
+        icon: "/img/cornrows.png",
+        title: "Cornrows",
+        details: [
+            {
+                style: "2-10 Straight Cornrows",
+                duration: "4 heures 30 minutes",
+                price: "$130.00 CAD",
+            },
+            {
+                style: "12-16 Straight Cornrows",
+                duration: "4 heures 30 minutes",
+                price: "$170.00 CAD",
+            },
+            {
+                style: "Freestyle Cornrows",
+                duration: "6 heures 30 minutes",
+                price: "$200.00 CAD",
+            },
+        ],
+    },
+    {
+        icon: "/img/invicible-locs.png",
+        title: "Invisible Locs",
+        details: [
+            {
+                style: "Small Locs",
+                duration: "6 heures 30 minutes",
+                price: "$225.00 CAD",
+            },
+            {
+                style: "Smedium Locs",
+                duration: "5 heures 30 minutes",
+                price: "$180.00 CAD",
+            },
+        ],
+    },
+    {
+        icon: "/img/knotless-braids.png",
+        title: "Knotless Braids",
+        variations: {
+            short: [
+                {
+                    style: "X Small Knotless",
+                    duration: "12 heures",
+                    price: "$350.00 CAD",
+                },
+                {
+                    style: "Small Knotless",
+                    duration: "8 heures 30 minutes",
+                    price: "$225.00 CAD",
+                },
+                {
+                    style: "SMedium Knotless",
+                    duration: "6 heures 30 minutes",
+                    price: "$180.00 CAD",
+                },
+                {
+                    style: "Medium Knotless",
+                    duration: "5 heures 30 minutes",
+                    price: "$140.00 CAD",
+                },
+                {
+                    style: "Large Knotless",
+                    duration: "3 heures 30 minutes",
+                    price: "$100.00 CAD",
+                },
+            ],
+            long: [
+                {
+                    style: "X Small knotless",
+                    duration: "15 heures",
+                    price: "$450.00 CAD",
+                },
+                {
+                    style: "Small Knotless",
+                    duration: "10 heures",
+                    price: "$350.00 CAD",
+                },
+                {
+                    style: "SMedium Knotless",
+                    duration: "7 heures 30 minutes",
+                    price: "$230.00 CAD",
+                },
+                {
+                    style: "Medium Knotless",
+                    duration: "6 heures 30 minutes",
+                    price: "$190.00 CAD",
+                },
+                {
+                    style: "Large Knotless",
+                    duration: "4 heures 30 minutes",
+                    price: "$160.00 CAD",
+                },
+            ],
+        },
+    },
+    {
+        icon: "/img/sen-twists.png",
+        title: "Senegalese Twists",
+        variations: {
+            short: [
+                {
+                    style: "Short Twist",
+                    duration: "7 heures 30 minutes",
+                    price: "$200.00 CAD",
+                },
+                {
+                    style: "Smedium Twist",
+                    duration: "6 heures 30 minutes",
+                    price: "$180.00 CAD",
+                },
+                {
+                    style: "Medium Twist",
+                    duration: "6 heures",
+                    price: "$140.00 CAD",
+                },
+                {
+                    style: "Large Twist",
+                    duration: "4 heures 30 minutes",
+                    price: "$100.00 CAD",
+                },
+            ],
+            long: [
+                {
+                    style: "Small Twist",
+                    duration: "9 heures",
+                    price: "$300.00 CAD",
+                },
+                {
+                    style: "Smedium Twist",
+                    duration: "7 heures 30 minutes",
+                    price: "$225.00 CAD",
+                },
+                {
+                    style: "Medium Twist",
+                    duration: "5 heures 30 minutes",
+                    price: "$190.00 CAD",
+                },
+                {
+                    style: "Large Twist",
+                    duration: "4 heures 30 minutes",
+                    price: "$140.00 CAD",
+                },
+            ],
+        },
+    },
+    {
+        icon: "/img/fulani-braids.png",
+        title: "Fulani Braids",
+        variations: {
+            short: [
+                {
+                    style: "Flip Over Braids",
+                    duration: "7 heures",
+                    price: "$200.00 CAD",
+                },
+                {
+                    style: "Freestyle Braids",
+                    duration: "6 heures",
+                    price: "$190.00 CAD",
+                },
+                {
+                    style: "Basic Fulani Style",
+                    duration: "6 heures",
+                    price: "$150.00 CAD",
+                },
+            ],
+            long: [
+                {
+                    style: "Flip Over Braids",
+                    duration: "8 heures 30 minutes",
+                    price: "$250.00 CAD",
+                },
+                {
+                    style: "Freestyle Braids",
+                    duration: "7 heures 30 minutes",
+                    price: "$230.00 CAD",
+                },
+                {
+                    style: "Basic Fulani Style",
+                    duration: "7 heures 30 minutes",
+                    price: "$200.00 CAD",
+                },
+            ],
+        },
+    },
+    {
+        icon: "/img/fake-locs.png",
+        title: "Faux Locs",
+        details: [
+            {
+                style: "Smedium Locs",
+                duration: "4 heures 30 minutes",
+                price: "$180.00 CAD",
+            },
+            {
+                style: "Medium Locs",
+                duration: "4 heures",
+                price: "$160.00 CAD",
+            },
+            {
+                style: "Large Locs",
+                duration: "3 heures 30 minutes",
+                price: "$140.00 CAD",
+            },
+        ],
+    },
+    {
+        icon: "/img/service1.jpg",
+        title: "Men's Hair",
+        details: [
+            {
+                style: "Small Twist",
+                duration: "2 heures",
+                price: "70.00 CAD",
+            },
+            {
+                style: "Medium Twist",
+                duration: "1 heure 45 minutes",
+                price: "60.00 CAD",
+            },
+            {
+                style: "Large Twist",
+                duration: "1 heure",
+                price: "50.00 CAD",
+            },
+            {
+                style: "Small Braids",
+                duration: "2 heures 30 minutes",
+                price: "70.00 CAD",
+            },
+            {
+                style: "Medium Braids",
+                duration: "1 heure 45 minutes",
+                price: "60.00 CAD",
+            },
+            {
+                style: "Large Braids",
+                duration: "1 heure",
+                price: "50.00 CAD",
+            },
+            {
+                style: "2-12 Cornrows",
+                duration: "1 heure 45 minutes",
+                price: "50.00 CAD",
+            },
+            {
+                style: "14-20 Cornrows",
+                duration: "2 heures",
+                price: "60.00 CAD",
+            },
+            {
+                style: "Retwist Comb",
+                duration: "2 heures",
+                price: "75.00 CAD",
+            },
+            {
+                style: "Retwist Interlock",
+                duration: "2 heures 30 minutes",
+                price: "95.00 CAD",
+            },
+            {
+                style: "Retwist Freeform",
+                duration: "3 heures",
+                price: "190.00 CAD",
+            },
+            {
+                style: "Starter Locs",
+                duration: "3 heures 30 minutes",
+                price: "85.00 CAD",
+            },
+        ],
+    },
+];
 
-  const checkAuth = () => {
-    const token = localStorage.getItem("authToken");
-    if (!token) {
-      router.push("/auth/login");
-    }
-  };
+export default function BookingPage() {
+    const { data: session } = useSession() as {
+        data: { user: SessionUser } | null;
+    };
+    const [currentStep, setCurrentStep] =
+        useState<BookingStep["id"]>("service");
+    const [selectedService, setSelectedService] = useState<Service | null>(
+        null
+    );
+    const [selectedStyle, setSelectedStyle] = useState<string | null>(null);
+    const [selectedVariation, setSelectedVariation] = useState<
+        "short" | "long" | undefined
+    >(undefined);
+    const [selectedDate, setSelectedDate] = useState<Date | null>(null);
+    const [selectedTime, setSelectedTime] = useState<string | null>(null);
+    const [isLoading, setIsLoading] = useState(false);
+    const [currentMonth, setCurrentMonth] = useState(new Date());
+    const [finalServiceDetails, setFinalServiceDetails] =
+        useState<SelectedServiceDetails | null>(null);
+    const [bookedDates, setBookedDates] = useState<string[]>([]);
 
-  useEffect(() => {
-    checkAuth();
-  }, []);
+    // Hardcoded time slots from 9 AM to 6 PM in 30-minute intervals
+    const hardcodedTimeSlots = useMemo(
+        () => [
+            "09:00",
+            "09:30",
+            "10:00",
+            "10:30",
+            "11:00",
+            "11:30",
+            "12:00",
+            "12:30",
+            "13:00",
+            "13:30",
+            "14:00",
+            "14:30",
+            "15:00",
+            "15:30",
+            "16:00",
+            "16:30",
+            "17:00",
+            "17:30",
+            "18:00",
+        ],
+        []
+    );
 
-  const handlePrevMonth = () => setCurrentMonth(subMonths(currentMonth, 1));
-  const handleNextMonth = () => setCurrentMonth(addMonths(currentMonth, 1));
+    useEffect(() => {
+        // logic using hardcodedTimeSlots
+    }, [hardcodedTimeSlots]);
 
-  const handleSelectTime = (time: string) => {
-    if (!selectedService) {
-      toast.error("Please select a service first");
-      return;
-    }
-    
-    // Check if this time slot can accommodate the service duration
-    const [hour] = time.split(':').map(Number);
-    const endHour = hour + selectedService.duration;
-    
-    // Make sure the booking doesn't go beyond operating hours (9am-6pm)
-    if (endHour > 18) {
-      toast.error(`This service requires ${selectedService.duration} hours and would extend beyond our operating hours (6pm)`);
-      return;
-    }
-    
-    // Create an array of all hours this booking would occupy
-    const requiredHours = [];
-    for (let h = hour; h < endHour; h++) {
-      requiredHours.push(`${Math.floor(h)}:00`);
-    }
-    
-    // Check if all required hours are available
-    const unavailableHours = requiredHours.filter(h => !availableSlots.includes(h));
-    
-    if (unavailableHours.length > 0) {
-      toast.error(`This service requires ${selectedService.duration} hours, but some of these hours are already booked`);
-      return;
-    }
-    
-    setSelectedTime(time);
-    setIsPaymentModalOpen(true);
-  };
+    // Generate available dates for the next 30 days, excluding booked dates
+    const availableDates = useMemo(() => {
+        return Array.from({ length: 30 }, (_, i) => {
+            const date = addDays(new Date(), i);
+            return format(date, "yyyy-MM-dd");
+        }).filter((date) => !bookedDates.includes(date));
+    }, [bookedDates]);
 
-  const fetchAvailableSlots = async (date: string) => {
-    try {
-      const response = await getAvailableSlots(date);
-      setAvailableSlots(response.availableSlots);
-      setBookedSlots(response.bookedSlots || []);
-      setCurrentUserId(response.currentUserId);
-    } catch (error) {
-      console.error("Failed to fetch available slots:", error);
-    }
-  };
-
-  const handleDateSelect = (dateKey: string) => {
-    const selectedDate = new Date(dateKey);
-    const today = new Date();
-    // Clear time part for accurate date comparison
-    today.setHours(0, 0, 0, 0);
-
-    // Only proceed if the selected date is today or in the future
-    if (selectedDate >= today) {
-      setSelectedDate(dateKey);
-      fetchAvailableSlots(dateKey);
-    }
-  };
-
-  const handlePaymentSuccess = async () => {
-    try {
-      if (!selectedDate || !selectedTime || !selectedService) {
-        toast.error("Please select a date, time, and service.");
-        return;
-      }
-      
-      const response = await createBooking({
-        date: selectedDate,
-        time: selectedTime,
-        service: selectedService.name,
-        duration: selectedService.duration
-      });
-
-      if (response.booking) {
-        toast.success("Booking confirmed successfully!");
-        setIsPaymentModalOpen(false);
-        fetchAllBookedDates();
-
-        const response = await getCurrentUser();
-        if (response) {
-          setUser(response);
-        }
-        
-        // Reset selections
-        setSelectedDate(null);
-        setSelectedTime(null);
-        setSelectedService(null);
-      } else {
-        toast.error("Failed to confirm booking. Please try again.");
-      }
-    } catch (error) {
-      console.error("Booking creation failed:", error);
-      toast.error("Failed to confirm booking. Please try again.");
-    }
-  };
-  
-  const fetchAllBookedDates = async () => {
-    try {
-      const response = await getAllBookedDates();
-      setUserBookedDates(response.userBookedDates || []);
-    } catch (error) {
-      console.error("Failed to fetch booked dates:", error);
-    }
-  };
-  
-  // Add useEffect to fetch all booked dates on component mount
-  useEffect(() => {
-    fetchAllBookedDates();
-  }, []);
-
-  useEffect(() => {
-    // When a booking is successfully created, refresh the booked dates
-    if (selectedDate === null && selectedTime === null) {
-      fetchAllBookedDates();
-    }
-  }, [selectedDate, selectedTime]);
-
-  return (
-    <div className="rounded-2xl">
-      <div>
-        <div
-          className="relative bg-gray-900 text-white rounded-md overflow-hidden h-28 shadow-lg bg-cover bg-center"
-          style={{ backgroundImage: "url('/img/bookingImg.jpg')" }}
-        >
-          {/* Overlay (Optional, for contrast) */}
-          <div className="bg-black/70 p-4 h-full w-full flex flex-col justify-center items-start">
-            {/* Date Display */}
-            <h2 className="text-2xl pb-1 font-semibold relative z-10">
-              {format(new Date(), "EEE, d MMM yyyy")}
-            </h2>
-
-            {/* Subtitle */}
-            <p className="relative z-10 text-gray-300">
-              Check availability and book appointments in just a few clicks.
-            </p>
-          </div>
-        </div>
-
-        {/* Service Selection Section */}
-        <div className="mt-6 mb-8">
-          <h2 className="text-xl font-semibold mb-4">Select a Service</h2>
-          
-          <div className="grid grid-cols-1 gap-4">
-            {Object.entries(groupedServices).map(([category, services]) => (
-              <div key={category} className="mb-4">
-                <h3 className="text-lg font-medium mb-2 text-gray-700">{category}</h3>
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
-                  {services.map((service) => (
-                    <button
-                      key={service.id}
-                      onClick={() => setSelectedService(service)}
-                      className={`p-3 border rounded-lg text-left transition ${
-                        selectedService?.id === service.id
-                          ? "border-purple-500 bg-purple-50 ring-2 ring-purple-500 shadow-md"
-                          : "border-gray-200 hover:border-purple-300 hover:bg-purple-50"
-                      }`}
-                    >
-                      <div className="font-medium text-black">{service.name}</div>
-                      <div className="text-sm text-gray-500">
-                        {service.duration < 1 
-                          ? `${Math.round(service.duration * 60)} min` 
-                          : `${Math.floor(service.duration)} hr ${service.duration % 1 > 0 
-                              ? `${Math.round((service.duration % 1) * 60)} min` 
-                              : ""}`}
-                      </div>
-                      <div className="text-purple-700 font-semibold mt-1">{service.price}</div>
-                    </button>
-                  ))}
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        <div>
-          <div className="flex justify-between w-full my-4">
-            <button
-              onClick={handlePrevMonth}
-              title="Previous Month"
-              className="p-2 bg-gray-100 rounded-full hover:bg-gray-300"
-            >
-              <FiChevronLeft size={20} color="black" />
-            </button>
-            <h2 className="text-xl text-black font-semibold">
-              {format(currentMonth, "MMMM yyyy")}
-            </h2>
-            <button
-              onClick={handleNextMonth}
-              title="Next Month"
-              className="p-2 bg-gray-100 rounded-full hover:bg-gray-300"
-            >
-              <FiChevronRight size={20} color="black" />
-            </button>
-          </div>
-
-          {/* Calendar Grid */}
-          <div className="grid grid-cols-7 gap-2 text-center text-gray-700 font-semibold">
-            {["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"].map((day) => (
-              <div key={day} className="py-2">
-                {day}
-              </div>
-            ))}
-          </div>
-
-          <div className="grid grid-cols-7 gap-2">
-            {Array.from({
-              length: (endDate.getTime() - startDate.getTime()) / 86400000 + 1,
-            }).map((_, index) => {
-              const day = addDays(startDate, index);
-              const dateKey = format(day, "yyyy-MM-dd");
-              const today = new Date();
-              today.setHours(0, 0, 0, 0);
-
-              // Check if the date has any bookings by this user
-              const isUserBookedDate = userBookedDates.includes(dateKey);
-              
-              return (
-                <button
-                  key={dateKey}
-                  onClick={() => handleDateSelect(dateKey)}
-                  disabled={day < today}
-                  title={`${format(day, "MMMM d, yyyy")}`}
-                  className={`p-3 rounded-lg transition ${
-                    !isSameMonth(day, currentMonth)
-                      ? "text-gray-400"
-                      : isToday(day)
-                      ? "bg-blue-500 text-white"
-                      : isUserBookedDate
-                      ? "bg-green-500 text-white" // Green ONLY for current user's bookings
-                      : "bg-white text-gray-500 hover:bg-gray-200" // No special color for dates with bookings by others
-                  } ${
-                    day < today
-                      ? "cursor-not-allowed opacity-50"
-                      : "cursor-pointer"
-                  }`}
-                >
-                  {format(day, "d")}
-                </button>
-              );
-            })}
-          </div>
-
-          {/* Time Slots for Selected Date */}
-          {selectedDate && (
-            <div className="mt-4 p-6 bg-gradient-to-r from-indigo-100 via-purple-100 to-pink-100 rounded-lg shadow-lg">
-              <h3 className="font-semibold text-gray-800 mb-4 text-center text-2xl">
-                {selectedService 
-                  ? `Available times for ${selectedService.name} on ${format(new Date(selectedDate), "MMMM d, yyyy")}`
-                  : `Select a service before choosing a time on ${format(new Date(selectedDate), "MMMM d, yyyy")}`
+    // Fetch booked dates on component mount
+    useEffect(() => {
+        const fetchBookedDates = async () => {
+            if (session?.user?.token) {
+                try {
+                    const data = await getAllBookedDates(session.user.token);
+                    setBookedDates(data.bookedDates);
+                } catch (error) {
+                    console.error("Error fetching booked dates:", error);
+                    toast.error("Failed to load booked dates");
                 }
-              </h3>
-              
-              {!selectedService && (
-                <p className="text-center text-red-500 mb-4">
-                  Please select a service from the options above
-                </p>
-              )}
-              
-              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-                {availableSlots
-                  .concat(
-                    bookedSlots
-                      .filter((booking) => booking.date === selectedDate)
-                      .map((booking) => booking.time)
-                  )
-                  .map((slot, idx) => {
-                    const bookedSlot = bookedSlots.find(
-                      (booking) =>
-                        booking.date === selectedDate && booking.time === slot
-                    );
-                    
-                    const isBookedTime = !!bookedSlot;
-                    const isBookedByCurrentUser = isBookedTime && bookedSlot?.userId === currentUserId;
-                    
-                    // Disable button if service is selected and the duration would go beyond business hours
-                    let isDisabledDueToHours = false;
-                    let durationWarning = '';
-                    
-                    if (selectedService) {
-                      const [hour] = slot.split(':').map(Number);
-                      const endHour = hour + selectedService.duration;
-                      
-                      // Check if booking would go beyond operating hours
-                      if (endHour > 18) {
-                        isDisabledDueToHours = true;
-                        durationWarning = 'Service would exceed operating hours';
-                      } else {
-                        // Check if all required hours are available
-                        const requiredHours = [];
-                        for (let h = hour; h < endHour; h++) {
-                          requiredHours.push(`${Math.floor(h)}:00`);
-                        }
-                        
-                        // Check for conflicts with existing bookings
-                        const unavailableHours = requiredHours.filter(h => {
-                          return !availableSlots.includes(h) && h !== slot;
-                        });
-                        
-                        if (unavailableHours.length > 0) {
-                          isDisabledDueToHours = true;
-                          durationWarning = 'Overlaps with existing bookings';
-                        }
-                      }
-                    }
+            }
+        };
+        fetchBookedDates();
+    }, [session]);
 
-                    return (
-                      <button
-                        key={idx}
-                        onClick={() =>
-                          isBookedTime || isDisabledDueToHours ? null : handleSelectTime(slot)
-                        }
-                        title={`${slot} ${isBookedTime ? (isBookedByCurrentUser
-                          ? "- You booked this slot" 
-                          : "- Already booked") : isDisabledDueToHours 
-                            ? `- ${durationWarning}` 
-                            : "- Available"}`}
-                        className={`transition-all duration-200 transform ${
-                          isBookedTime
-                            ? isBookedByCurrentUser
-                              ? "bg-blue-500 text-white cursor-not-allowed" // Blue for current user's bookings
-                              : "bg-gray-500 text-white cursor-not-allowed" // Gray for others' bookings
-                            : isDisabledDueToHours
-                              ? "bg-yellow-100 text-yellow-800 cursor-not-allowed" // Yellow for duration issues
-                              : "bg-gradient-to-r from-green-200 to-green-300 text-black"
-                        } py-3 px-6 rounded-lg shadow-lg text-lg font-medium ${
-                          isBookedTime || isDisabledDueToHours
-                            ? ""
-                            : "hover:scale-105 hover:shadow-xl hover:from-green-500 hover:to-green-600"
-                        } focus:outline-none focus:ring-2 focus:ring-green-600 focus:ring-opacity-50`}
-                      >
-                        {slot} 
-                        {isBookedTime 
-                          ? (isBookedByCurrentUser ? " (BOOKED)" : " (Unavailable)")
-                          : isDisabledDueToHours
-                            ? ` (${durationWarning})`
-                            : ""
-                        }
-                      </button>
-                    );
-                  })}
-              </div>
-            </div>
-          )}
+    useEffect(() => {
+        if (selectedDate) {
+            setSelectedTime(hardcodedTimeSlots[0]);
+            setIsLoading(false);
+        }
+    }, [selectedDate, hardcodedTimeSlots]); // Add 'hardcodedTimeSlots' as a dependency
 
-          {/* Payment Modal */}
-          <Dialog
-            open={isPaymentModalOpen}
-            onClose={() => setIsPaymentModalOpen(false)}
-            className="fixed inset-0 z-50 flex items-center backdrop-blur-[2px] justify-center"
-          >
-            <div className="fixed inset-0 bg-gray-500 opacity-50" />
-            <div className="relative bg-white p-8 rounded-lg shadow-lg w-96">
-              <Dialog.Title className="text-xl font-semibold text-gray-800 mb-4 text-center">
-                Confirm Booking
-              </Dialog.Title>
-              
-              {selectedService && (
-                <div className="mb-6 bg-purple-50 p-4 rounded-lg">
-                  <h3 className="font-semibold text-purple-800">{selectedService.name}</h3>
-                  <p className="text-sm text-gray-600">
-                    Duration: {selectedService.duration < 1 
-                      ? `${Math.round(selectedService.duration * 60)} minutes` 
-                      : `${Math.floor(selectedService.duration)} hour${Math.floor(selectedService.duration) > 1 ? 's' : ''}${
-                          selectedService.duration % 1 > 0 
-                            ? ` ${Math.round((selectedService.duration % 1) * 60)} minutes` 
-                            : ""
-                        }`}
-                  </p>
-                  <p className="text-purple-700 font-semibold">{selectedService.price}</p>
-                  <p className="mt-2 text-sm text-gray-700">
-                    Time: {selectedTime} - {
-                      selectedTime && (() => {
-                        const [hour] = selectedTime.split(':').map(Number);
-                        const endHour = Math.floor(hour + selectedService.duration);
-                        const endMinutes = Math.round((selectedService.duration % 1) * 60);
-                        return `${endHour}:${endMinutes > 0 ? endMinutes : '00'}`;
-                      })()
-                    }
-                  </p>
-                  <p className="text-sm text-gray-700">
-                    Date: {selectedDate && format(new Date(selectedDate), "MMMM d, yyyy")}
-                  </p>
+    const handleServiceSelect = (service: Service) => {
+        setSelectedService(service);
+        if (service.variations) {
+            setCurrentStep("variation");
+        } else if (service.details) {
+            setCurrentStep("style");
+        } else {
+            setCurrentStep("date");
+        }
+    };
+
+    const handleVariationSelect = (type: "short" | "long") => {
+        setSelectedVariation(type);
+        setCurrentStep("style");
+    };
+
+    const handleStyleSelect = (styleDetails: ServiceStyle) => {
+        setSelectedStyle(styleDetails.style);
+        const durationInMinutes = parseDuration(styleDetails.duration);
+        setFinalServiceDetails({
+            title: selectedService!.title,
+            style: styleDetails.style,
+            variation: selectedVariation,
+            duration: durationInMinutes,
+            price: styleDetails.price,
+        });
+        setCurrentStep("date");
+    };
+
+    const handleDateSelect = (date: Date) => {
+        setSelectedDate(date);
+        setCurrentStep("time");
+    };
+
+    const nextMonth = () => {
+        setCurrentMonth(addMonths(currentMonth, 1));
+    };
+
+    const prevMonth = () => {
+        setCurrentMonth(subMonths(currentMonth, 1));
+    };
+
+    // Helper function to parse duration string to minutes
+    const parseDuration = (durationStr: string): number => {
+        const hours = durationStr.match(/(\d+)\s*heures?/);
+        const minutes = durationStr.match(/(\d+)\s*minutes?/);
+        return (
+            (hours ? parseInt(hours[1]) * 60 : 0) +
+            (minutes ? parseInt(minutes[1]) : 0)
+        );
+    };
+
+    const handlePayment = async () => {
+        if (!session?.user?.token) {
+            toast.error("Please sign in to make a booking");
+            return;
+        }
+
+        if (!selectedDate || !selectedTime || !finalServiceDetails) {
+            toast.error("Please complete all booking details");
+            return;
+        }
+
+        setIsLoading(true);
+        try {
+            // Create the booking first
+            const { bookingId } = await createBooking(
+                {
+                    date: format(selectedDate, "yyyy-MM-dd"),
+                    time: selectedTime,
+                    service: finalServiceDetails.title,
+                    duration: finalServiceDetails.duration / 60, // Convert to hours
+                    style: finalServiceDetails.style,
+                    variation: selectedVariation,
+                },
+                session.user.token
+            );
+
+            // Then proceed with Stripe payment
+            const stripe = await stripePromise;
+            const response = await fetch("/api/create-checkout-session", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    service: finalServiceDetails.title,
+                    date: format(selectedDate, "yyyy-MM-dd"),
+                    time: selectedTime,
+                    deposit: 2500, // $25.00 in cents
+                    bookingId,
+                }),
+            });
+
+            const stripeSession = await response.json();
+
+            if (stripeSession.error) {
+                throw new Error(stripeSession.error);
+            }
+
+            const result = await stripe?.redirectToCheckout({
+                sessionId: stripeSession.id,
+            });
+
+            if (result?.error) {
+                throw new Error(result.error.message);
+            }
+        } catch (error) {
+            console.error("Error:", error);
+            toast.error("Failed to process booking. Please try again.");
+        } finally {
+            setIsLoading(false);
+        }
+    };
+
+    const handleBack = () => {
+        switch (currentStep) {
+            case "style":
+                if (selectedService?.variations) {
+                    setCurrentStep("variation");
+                } else {
+                    setCurrentStep("service");
+                }
+                break;
+            case "variation":
+                setCurrentStep("service");
+                break;
+            case "date":
+                if (selectedService?.variations) {
+                    setCurrentStep("style");
+                } else if (selectedService?.details) {
+                    setCurrentStep("style");
+                } else {
+                    setCurrentStep("service");
+                }
+                break;
+            case "time":
+                setCurrentStep("date");
+                break;
+            case "payment":
+                setCurrentStep("time");
+                break;
+            default:
+                break;
+        }
+    };
+
+    return (
+        <div className="py-12 px-4 sm:px-6 lg:px-8">
+            <div className="max-w-5xl mx-auto">
+                <motion.div
+                    initial={{ opacity: 0, y: -20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className="text-center mb-12"
+                >
+                    <h1 className="text-4xl font-bold bg-gradient-to-r from-purple-600 to-indigo-600 bg-clip-text text-transparent">
+                        Book Your Appointment
+                    </h1>
+                    <p className="mt-3 text-lg text-gray-600">
+                        Choose your preferred service and time
+                    </p>
+                </motion.div>
+
+                {/* Progress Steps */}
+                <div className="mb-12">
+                    <div className="flex items-center justify-between">
+                        {bookingSteps
+                            .filter(
+                                (step) =>
+                                    (selectedService?.variations ||
+                                        step.id !== "variation") &&
+                                    (selectedService?.details ||
+                                        selectedService?.variations ||
+                                        step.id !== "style")
+                            )
+                            .map((step, index) => (
+                                <motion.div
+                                    key={step.id}
+                                    className={`flex items-center ${
+                                        index !== 0 ? "flex-1" : ""
+                                    }`}
+                                    initial={{ opacity: 0, y: 20 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    transition={{ delay: index * 0.1 }}
+                                >
+                                    <div
+                                        className={`w-12 h-12 rounded-full flex items-center justify-center transition-all duration-300 ${
+                                            currentStep === step.id
+                                                ? "bg-gradient-to-r from-purple-600 to-indigo-600 text-white shadow-lg"
+                                                : "bg-white text-gray-400 shadow-sm"
+                                        }`}
+                                    >
+                                        {index + 1}
+                                    </div>
+                                    <div
+                                        className={`ml-3 text-sm font-medium ${
+                                            currentStep === step.id
+                                                ? "text-gray-900"
+                                                : "text-gray-500"
+                                        }`}
+                                    >
+                                        {step.title}
+                                    </div>
+                                    {index < bookingSteps.length - 1 && (
+                                        <div
+                                            className={`flex-1 h-1 mx-4 transition-all duration-300 ${
+                                                currentStep === step.id
+                                                    ? "bg-gradient-to-r from-purple-600 to-indigo-600"
+                                                    : "bg-gray-200"
+                                            }`}
+                                        ></div>
+                                    )}
+                                </motion.div>
+                            ))}
+                    </div>
                 </div>
-              )}
-              
-              <p className="text-gray-700 mb-6 text-center">
-                A $25 deposit is required to confirm your appointment.
-              </p>
-              <div className="flex justify-center mb-4">
-                <StripeCheckout
-                  stripeKey="your-public-key"
-                  token={handlePaymentSuccess}
-                  amount={2500}
-                  currency="USD"
-                  name="Appointment Booking"
-                  description="Deposit for your appointment"
-                />
-              </div>
-              <div className="flex justify-center flex-col gap-4">
-                <button
-                  onClick={() => {
-                    setIsPaymentModalOpen(false);
-                  }}
-                  className="p-2 bg-red-500 text-white rounded-lg w-full"
-                >
-                  Cancel
-                </button>
-                <button
-                  onClick={() => {
-                    setIsPaymentModalOpen(false);
-                    handlePaymentSuccess();
-                  }}
-                  className="p-2 bg-green-500 text-white rounded-lg w-full"
-                >
-                  Pay
-                </button>
-              </div>
+
+                {/* Back Button */}
+                {currentStep !== "service" && (
+                    <motion.button
+                        initial={{ opacity: 0, x: -20 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        whileHover={{ scale: 1.05, x: -2 }}
+                        whileTap={{ scale: 0.95 }}
+                        onClick={handleBack}
+                        className="mb-8 flex items-center space-x-2 px-4 py-2 rounded-xl bg-white shadow-sm hover:shadow-md transition-all duration-300 text-gray-600 hover:text-gray-900 border border-gray-100 hover:border-gray-200"
+                    >
+                        <FiChevronLeft className="w-5 h-5" />
+                        <span className="font-medium">Back</span>
+                    </motion.button>
+                )}
+
+                {/* Service Selection */}
+                {currentStep === "service" && (
+                    <motion.div
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+                    >
+                        {servicesData.map((service) => (
+                            <motion.div
+                                key={service.title}
+                                whileHover={{ scale: 1.02, y: -5 }}
+                                whileTap={{ scale: 0.98 }}
+                                className={`bg-white rounded-2xl p-6 cursor-pointer transition-all duration-300 shadow-sm hover:shadow-xl ${
+                                    selectedService?.title === service.title
+                                        ? "ring-2 ring-purple-500 shadow-lg"
+                                        : "hover:shadow-md"
+                                }`}
+                                onClick={() => handleServiceSelect(service)}
+                            >
+                                <div className="flex items-center space-x-4">
+                                    <div className="relative w-16 h-16 rounded-xl overflow-hidden bg-gray-100 shadow-inner">
+                                        <Image
+                                            src={service.icon}
+                                            alt={service.title}
+                                            fill
+                                            className="object-cover"
+                                        />
+                                    </div>
+                                    <div>
+                                        <h3 className="text-xl font-semibold text-gray-900">
+                                            {service.title}
+                                        </h3>
+                                        <p className="text-sm text-gray-500 mt-1">
+                                            {service.variations
+                                                ? "Multiple lengths available"
+                                                : service.details
+                                                ? `${service.details.length} styles available`
+                                                : "Basic service"}
+                                        </p>
+                                    </div>
+                                </div>
+                            </motion.div>
+                        ))}
+                    </motion.div>
+                )}
+
+                {/* Variation Selection */}
+                {currentStep === "variation" && selectedService?.variations && (
+                    <motion.div
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        className="grid grid-cols-1 md:grid-cols-2 gap-8"
+                    >
+                        {["short", "long"].map((type) => (
+                            <motion.div
+                                key={type}
+                                whileHover={{ scale: 1.02, y: -5 }}
+                                whileTap={{ scale: 0.98 }}
+                                className={`bg-white rounded-2xl p-8 cursor-pointer transition-all duration-300 shadow-sm hover:shadow-xl ${
+                                    selectedVariation === type
+                                        ? "ring-2 ring-purple-500 shadow-lg"
+                                        : "hover:shadow-md"
+                                }`}
+                                onClick={() =>
+                                    handleVariationSelect(
+                                        type as "short" | "long"
+                                    )
+                                }
+                            >
+                                <h3 className="text-2xl font-bold text-gray-900 capitalize mb-3">
+                                    {type} Length
+                                </h3>
+                                <p className="text-gray-600 text-lg">
+                                    {type === "short"
+                                        ? "Shoulder length or above"
+                                        : "Below shoulder length"}
+                                </p>
+                            </motion.div>
+                        ))}
+                    </motion.div>
+                )}
+
+                {/* Style Selection */}
+                {currentStep === "style" && selectedService && (
+                    <motion.div
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        className="grid grid-cols-1 md:grid-cols-2 gap-6"
+                    >
+                        {(selectedService.variations
+                            ? selectedService.variations[selectedVariation!]
+                            : selectedService.details
+                        )?.map((style, index) => (
+                            <motion.div
+                                key={index}
+                                whileHover={{ scale: 1.02, y: -5 }}
+                                whileTap={{ scale: 0.98 }}
+                                className={`bg-white rounded-2xl p-6 cursor-pointer transition-all duration-300 shadow-sm hover:shadow-xl ${
+                                    selectedStyle === style.style
+                                        ? "ring-2 ring-purple-500 shadow-lg"
+                                        : "hover:shadow-md"
+                                }`}
+                                onClick={() => handleStyleSelect(style)}
+                            >
+                                <div className="flex justify-between items-center">
+                                    <div>
+                                        <h3 className="text-xl font-semibold text-gray-900">
+                                            {style.style}
+                                        </h3>
+                                        <p className="text-sm text-gray-500 mt-1">
+                                            {style.duration}
+                                        </p>
+                                    </div>
+                                    <span className="text-xl font-bold text-purple-600">
+                                        {style.price}
+                                    </span>
+                                </div>
+                            </motion.div>
+                        ))}
+                    </motion.div>
+                )}
+
+                {/* Date Selection */}
+                {currentStep === "date" && (
+                    <motion.div
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        className="bg-white rounded-2xl shadow-xl p-8"
+                    >
+                        <div className="flex items-center justify-between mb-8">
+                            <h3 className="text-2xl font-bold text-gray-900">
+                                Select a Date
+                            </h3>
+                            <div className="flex items-center space-x-4">
+                                <motion.button
+                                    whileHover={{ scale: 1.05 }}
+                                    whileTap={{ scale: 0.95 }}
+                                    onClick={prevMonth}
+                                    className="p-2 rounded-full hover:bg-gray-100 transition-colors"
+                                >
+                                    <FiChevronLeft className="w-6 h-6 text-gray-600" />
+                                </motion.button>
+                                <span className="text-xl font-semibold text-gray-900">
+                                    {format(currentMonth, "MMMM yyyy")}
+                                </span>
+                                <motion.button
+                                    whileHover={{ scale: 1.05 }}
+                                    whileTap={{ scale: 0.95 }}
+                                    onClick={nextMonth}
+                                    className="p-2 rounded-full hover:bg-gray-100 transition-colors"
+                                >
+                                    <FiChevronRight className="w-6 h-6 text-gray-600" />
+                                </motion.button>
+                            </div>
+                        </div>
+
+                        <div className="grid grid-cols-7 gap-2 mb-4">
+                            {[
+                                "Sun",
+                                "Mon",
+                                "Tue",
+                                "Wed",
+                                "Thu",
+                                "Fri",
+                                "Sat",
+                            ].map((day) => (
+                                <div
+                                    key={day}
+                                    className="text-center text-sm font-medium text-gray-500 py-2"
+                                >
+                                    {day}
+                                </div>
+                            ))}
+                        </div>
+
+                        <div className="grid grid-cols-7 gap-2">
+                            {Array.from({ length: 42 }, (_, i) => {
+                                const startOfMonthDate =
+                                    startOfMonth(currentMonth);
+                                const startWeek = startOfWeek(startOfMonthDate);
+                                const day = addDays(startWeek, i);
+                                const isCurrentMonth = isSameMonth(
+                                    day,
+                                    currentMonth
+                                );
+                                const isSelected = selectedDate
+                                    ? isSameDay(day, selectedDate)
+                                    : false;
+                                const isTodays = isToday(day);
+                                const isAvailable = availableDates.some(
+                                    (date) => isSameDay(date, day)
+                                );
+
+                                return (
+                                    <motion.div
+                                        key={day.toISOString()}
+                                        whileHover={{
+                                            scale:
+                                                isAvailable && isCurrentMonth
+                                                    ? 1.1
+                                                    : 1,
+                                        }}
+                                        whileTap={{
+                                            scale:
+                                                isAvailable && isCurrentMonth
+                                                    ? 0.95
+                                                    : 1,
+                                        }}
+                                        className={`
+                      p-3 text-center rounded-xl cursor-pointer transition-all duration-300
+                      ${!isCurrentMonth ? "text-gray-300" : "text-gray-900"}
+                      ${
+                          isSelected
+                              ? "bg-gradient-to-r from-purple-600 to-indigo-600 text-white shadow-lg"
+                              : ""
+                      }
+                      ${isTodays ? "ring-2 ring-purple-500" : ""}
+                      ${
+                          isAvailable && isCurrentMonth
+                              ? "hover:bg-purple-50"
+                              : "cursor-not-allowed opacity-50"
+                      }
+                    `}
+                                        onClick={() =>
+                                            isAvailable &&
+                                            isCurrentMonth &&
+                                            handleDateSelect(day)
+                                        }
+                                    >
+                                        <span className="text-sm font-medium">
+                                            {format(day, "d")}
+                                        </span>
+                                    </motion.div>
+                                );
+                            })}
+                        </div>
+
+                        <div className="mt-8 flex items-center justify-between text-sm text-gray-500">
+                            <div className="flex items-center space-x-2">
+                                <div className="w-3 h-3 rounded-full bg-purple-600"></div>
+                                <span>Available</span>
+                            </div>
+                            <div className="flex items-center space-x-2">
+                                <div className="w-3 h-3 rounded-full bg-gray-200"></div>
+                                <span>Unavailable</span>
+                            </div>
+                            <div className="flex items-center space-x-2">
+                                <div className="w-3 h-3 ring-2 ring-purple-500 rounded-full"></div>
+                                <span>Today</span>
+                            </div>
+                        </div>
+                    </motion.div>
+                )}
+
+                {/* Time Selection */}
+                {currentStep === "time" && (
+                    <motion.div
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        className="bg-white rounded-2xl shadow-xl p-8"
+                    >
+                        <div className="mb-8">
+                            <h3 className="text-2xl font-bold text-gray-900">
+                                Select a Time
+                            </h3>
+                            <p className="mt-2 text-lg text-gray-600">
+                                {selectedDate &&
+                                    `Selected date: ${format(
+                                        selectedDate,
+                                        "EEEE, MMMM d, yyyy"
+                                    )}`}
+                            </p>
+                            {finalServiceDetails && (
+                                <p className="text-sm text-gray-500 mt-1">
+                                    Duration:{" "}
+                                    {Math.floor(
+                                        finalServiceDetails.duration / 60
+                                    )}
+                                    h {finalServiceDetails.duration % 60}min
+                                </p>
+                            )}
+                        </div>
+
+                        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                            {hardcodedTimeSlots.map((time) => (
+                                <motion.div
+                                    key={time}
+                                    whileHover={{ scale: 1.05 }}
+                                    whileTap={{ scale: 0.95 }}
+                                    className={`p-4 text-center rounded-xl cursor-pointer transition-all duration-300 ${
+                                        selectedTime === time
+                                            ? "bg-gradient-to-r from-purple-600 to-indigo-600 text-white shadow-lg"
+                                            : "bg-white hover:bg-gray-50 text-gray-900 border border-gray-100"
+                                    }`}
+                                    onClick={() => setSelectedTime(time)}
+                                >
+                                    <span className="text-lg font-medium">
+                                        {time}
+                                    </span>
+                                </motion.div>
+                            ))}
+                        </div>
+
+                        <div className="mt-8 flex justify-end">
+                            <motion.button
+                                whileHover={{ scale: 1.05 }}
+                                whileTap={{ scale: 0.95 }}
+                                className={`px-6 py-3 rounded-xl text-lg font-medium ${
+                                    selectedTime
+                                        ? "bg-gradient-to-r from-purple-600 to-indigo-600 text-white shadow-lg"
+                                        : "bg-gray-200 text-gray-400 cursor-not-allowed"
+                                }`}
+                                onClick={() =>
+                                    selectedTime && setCurrentStep("payment")
+                                }
+                                disabled={!selectedTime}
+                            >
+                                Continue to Payment
+                            </motion.button>
+                        </div>
+                    </motion.div>
+                )}
+
+                {/* Payment Step */}
+                {currentStep === "payment" && (
+                    <motion.div
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        className="bg-white rounded-2xl shadow-xl p-8"
+                    >
+                        <div className="mb-8">
+                            <h3 className="text-2xl font-bold text-gray-900">
+                                Booking Summary
+                            </h3>
+                            <p className="mt-2 text-lg text-gray-600">
+                                Please review your booking details
+                            </p>
+                        </div>
+
+                        <div className="space-y-4 mb-8">
+                            <div className="bg-gray-50 rounded-xl p-6">
+                                <div className="flex justify-between items-center">
+                                    <span className="text-gray-600 text-lg">
+                                        Service:
+                                    </span>
+                                    <span className="font-semibold text-gray-900 text-lg">
+                                        {finalServiceDetails?.title}
+                                        {finalServiceDetails?.style &&
+                                            ` - ${finalServiceDetails.style}`}
+                                    </span>
+                                </div>
+                            </div>
+
+                            <div className="bg-gray-50 rounded-xl p-6">
+                                <div className="flex justify-between items-center">
+                                    <span className="text-gray-600 text-lg">
+                                        Date & Time:
+                                    </span>
+                                    <span className="font-semibold text-gray-900 text-lg">
+                                        {selectedDate &&
+                                            format(
+                                                selectedDate,
+                                                "EEEE, MMMM d, yyyy"
+                                            )}{" "}
+                                        at {selectedTime}
+                                    </span>
+                                </div>
+                            </div>
+
+                            <div className="bg-gray-50 rounded-xl p-6">
+                                <div className="flex justify-between items-center">
+                                    <span className="text-gray-600 text-lg">
+                                        Duration:
+                                    </span>
+                                    <span className="font-semibold text-gray-900 text-lg">
+                                        {finalServiceDetails &&
+                                            `${Math.floor(
+                                                finalServiceDetails.duration /
+                                                    60
+                                            )}h ${
+                                                finalServiceDetails.duration %
+                                                60
+                                            }min`}
+                                    </span>
+                                </div>
+                            </div>
+
+                            <div className="bg-gray-50 rounded-xl p-6">
+                                <div className="flex justify-between items-center">
+                                    <span className="text-gray-600 text-lg">
+                                        Total Price:
+                                    </span>
+                                    <span className="font-semibold text-gray-900 text-lg">
+                                        {finalServiceDetails?.price}
+                                    </span>
+                                </div>
+                            </div>
+
+                            <div className="bg-gradient-to-r from-purple-50 to-indigo-50 rounded-xl p-6">
+                                <div className="flex justify-between items-center">
+                                    <span className="text-purple-600 text-lg">
+                                        Deposit Required:
+                                    </span>
+                                    <span className="font-semibold text-purple-600 text-lg">
+                                        $25.00 CAD
+                                    </span>
+                                </div>
+                                <p className="text-sm text-purple-500 mt-2">
+                                    A deposit is required to secure your
+                                    booking. The remaining balance will be paid
+                                    at the appointment.
+                                </p>
+                            </div>
+                        </div>
+
+                        <div className="flex justify-end">
+                            <motion.button
+                                whileHover={{ scale: 1.05 }}
+                                whileTap={{ scale: 0.95 }}
+                                onClick={handlePayment}
+                                disabled={isLoading}
+                                className="px-8 py-4 rounded-xl text-lg font-medium bg-gradient-to-r from-purple-600 to-indigo-600 text-white shadow-lg hover:shadow-xl transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+                            >
+                                {isLoading ? (
+                                    <span className="flex items-center">
+                                        Processing...
+                                        <svg
+                                            className="animate-spin ml-2 h-5 w-5 text-white"
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            fill="none"
+                                            viewBox="0 0 24 24"
+                                        >
+                                            <circle
+                                                className="opacity-25"
+                                                cx="12"
+                                                cy="12"
+                                                r="10"
+                                                stroke="currentColor"
+                                                strokeWidth="4"
+                                            ></circle>
+                                            <path
+                                                className="opacity-75"
+                                                fill="currentColor"
+                                                d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                                            ></path>
+                                        </svg>
+                                    </span>
+                                ) : (
+                                    "Pay Deposit ($25.00 CAD)"
+                                )}
+                            </motion.button>
+                        </div>
+                    </motion.div>
+                )}
             </div>
-          </Dialog>
         </div>
-      </div>
-    </div>
-  );
+    );
 }

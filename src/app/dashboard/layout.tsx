@@ -1,6 +1,7 @@
 "use client";
 
 import { usePathname } from "next/navigation";
+import { SessionProvider } from "next-auth/react"; // ✅ Import this
 import Sidebar from "./components/sidebar";
 import Navbar from "./components/navbar";
 import BottomNav from "./components/bottomNav";
@@ -21,22 +22,24 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     navItems.find((item) => item.href === pathname)?.name || "Dashboard";
 
   return (
-    <div className="flex h-screen bg-white">
-      <div className="md:w-64">
-        <Sidebar />
-      </div>
+    <SessionProvider> {/* ✅ Wrap entire layout in SessionProvider */}
+      <div className="flex h-screen bg-white">
+        <div className="md:w-64">
+          <Sidebar />
+        </div>
 
-      {/* Main Content - Scrollable */}
-      <div className="flex-1 flex flex-col overflow-hidden min-h-[100svh]">
-        <Navbar activePage={activePage} />
-        <main
-          className="flex-1 bg-[#E2E8F0] pb-20 md:pb-0 
+        {/* Main Content - Scrollable */}
+        <div className="flex-1 flex flex-col overflow-hidden min-h-[100svh]">
+          <Navbar activePage={activePage} />
+           <main
+          className="flex-1 bg-gradient-to-br from-purple-50 via-indigo-50 to-pink-50  pb-20 md:pb-0 
     p-4 overflow-y-auto"
         >
-          {children}
-        </main>
-        <BottomNav />
+            {children}
+          </main>
+          <BottomNav />
+        </div>
       </div>
-    </div>
+    </SessionProvider>
   );
 }
