@@ -25,7 +25,15 @@ export class AuthController {
   }
 
   static async getProfile(req: Request, res: Response) {
-    const userId = req.user?.id; // This will be set by the auth middleware
+    const userId = req.user?.id;
+    
+    if (!userId) {
+      return res.status(401).json({
+        success: false,
+        error: 'User not authenticated'
+      });
+    }
+    
     const result = await AuthService.getProfile(userId);
     
     if (!result.success) {

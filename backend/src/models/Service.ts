@@ -1,15 +1,6 @@
-import mongoose, { Schema, Document } from 'mongoose';
+import mongoose from 'mongoose';
 
-export interface IService extends Document {
-  name: string;
-  description: string;
-  price: number;
-  duration: number;
-  category: string;
-  image?: string;
-}
-
-const serviceSchema = new Schema({
+const serviceSchema = new mongoose.Schema({
   name: {
     type: String,
     required: true,
@@ -27,18 +18,23 @@ const serviceSchema = new Schema({
   duration: {
     type: Number,
     required: true,
-    min: 15 // minimum 15 minutes
+    min: 0
   },
   category: {
     type: String,
     required: true,
-    trim: true
+    enum: ['haircut', 'coloring', 'styling', 'treatment', 'other']
   },
-  image: {
-    type: String
+  imageUrl: {
+    type: String,
+    required: false
+  },
+  isActive: {
+    type: Boolean,
+    default: true
   }
 }, {
   timestamps: true
 });
 
-export const Service = mongoose.model<IService>('Service', serviceSchema); 
+export const Service = mongoose.model('Service', serviceSchema); 

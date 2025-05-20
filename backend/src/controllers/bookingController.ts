@@ -4,6 +4,13 @@ import { BookingService } from '../services/bookingService';
 export class BookingController {
   static async createBooking(req: Request, res: Response) {
     const userId = req.user?.id;
+    if (!userId) {
+      return res.status(401).json({
+        success: false,
+        error: 'User not authenticated'
+      });
+    }
+    
     const result = await BookingService.createBooking({
       ...req.body,
       userId
@@ -18,6 +25,13 @@ export class BookingController {
 
   static async getUserBookings(req: Request, res: Response) {
     const userId = req.user?.id;
+    if (!userId) {
+      return res.status(401).json({
+        success: false,
+        error: 'User not authenticated'
+      });
+    }
+    
     const result = await BookingService.getUserBookings(userId);
     
     if (!result.success) {
