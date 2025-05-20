@@ -45,6 +45,9 @@ export const useSignup = () => {
 export const useUpdateUser = () => {
   return useMutation<UpdateUserResponse, ErrorResponse, UpdateUserData>({
     mutationFn: updateProfile,
+    onSuccess: () => {
+      // Invalidate and refetch user data
+    }
   });
 };
 

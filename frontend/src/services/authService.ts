@@ -112,12 +112,8 @@ export const resendVerificationToken = async (email: string) => {
 }
 
 export const loginWithGmail = async (data: { email: string; name: string }) => {
-    try {
-        const response = await axios.post(`${API_URL}/auth/google`, data);
-        return response.data;
-    } catch (error) {
-        throw error;
-    }
+    const response = await axios.post(`${API_URL}/auth/google`, data);
+    return response.data;
 }
 
 export const signupWithGmail = async (data: object) => {
@@ -130,15 +126,11 @@ export const signupWithGmail = async (data: object) => {
 }
 
 export const updateProfile = async (data: { name?: string; email?: string }) => {
-    try {
-        const token = localStorage.getItem("authToken");
-        const response = await axios.put(`${API_URL}/users/profile`, data, {
-            headers: {
-                Authorization: `Bearer ${token}`,
-            },
-        });
-        return response.data;
-    } catch (error) {
-        throw error;
-    }
+    const token = localStorage.getItem("authToken");
+    const response = await axios.put(`${API_URL}/users/profile`, data, {
+        headers: {
+            Authorization: `Bearer ${token}`,
+        },
+    });
+    return response.data;
 }

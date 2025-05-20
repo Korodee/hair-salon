@@ -1,6 +1,8 @@
 import { useQuery } from "@tanstack/react-query";
-import api from "../services/api";
-import { Service } from "../types";
+import axios from "axios";
+import type { Service } from "../types";
+
+const API_URL = import.meta.env.VITE_API_URL || "http://localhost:3000/api";
 
 export default function Home() {
   const {
@@ -10,7 +12,7 @@ export default function Home() {
   } = useQuery<Service[]>({
     queryKey: ["services"],
     queryFn: async () => {
-      const response = await api.get("/services");
+      const response = await axios.get(`${API_URL}/services`);
       return response.data;
     },
   });
@@ -37,12 +39,12 @@ export default function Home() {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {services?.map((service) => (
           <div
-            key={service._id}
+            key={service.id}
             className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow"
           >
-            {service.imageUrl && (
+            {service.image && (
               <img
-                src={service.imageUrl}
+                src={service.image}
                 alt={service.name}
                 className="w-full h-48 object-cover"
               />

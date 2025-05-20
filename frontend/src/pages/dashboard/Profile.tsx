@@ -1,5 +1,5 @@
 "use client";
-import { useApplicationContext } from "../../context/appContext.jsx";
+import { useApplicationContext } from "../../context/appContext";
 import { useUpdateUser } from "../../queries/authQuery";
 import { Link, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
@@ -9,12 +9,12 @@ import { Loader2 } from "lucide-react";
 export default function Profile() {
   const { user } = useApplicationContext();
   const totalPoints = 200;
-  const pointsLeft = totalPoints - user?.rewardPoints;
+  const pointsLeft = totalPoints - (user?.rewardPoints ?? 0);
   const totalPointsEarned = totalPoints - pointsLeft;
   const progress = ((totalPoints - pointsLeft) / totalPoints) * 100;
 
   const navigate = useNavigate();
-  const { mutate: updateUser, isLoading } = useUpdateUser();
+  const { mutate: updateUser, isPending } = useUpdateUser();
   const [name, setName] = useState(user?.name);
 
   useEffect(() => {
@@ -85,9 +85,9 @@ export default function Profile() {
               <button
                 className="flex w-fit items-center gap-2 px-5 py-2 bg-black text-white rounded-md text-sm font-medium transition-all duration-300 transform hover:bg-white hover:text-black hover:scale-105 group"
                 onClick={handleUpdateUser}
-                disabled={isLoading}
+                disabled={isPending}
               >
-                {isLoading ? (
+                {isPending ? (
                   <Loader2 className="w-4 h-4 animate-spin" />
                 ) : (
                   "Edit"
@@ -105,7 +105,7 @@ export default function Profile() {
                   defaultValue={user?.name}
                   className="w-full p-2 bg-transparent border border-gray-600 rounded-lg text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-500"
                   onChange={(e) => setName(e.target.value)}
-                  disabled={isLoading}
+                  disabled={isPending}
                 />
               </div>
               <div className="w-full pt-3 md:pt-0">

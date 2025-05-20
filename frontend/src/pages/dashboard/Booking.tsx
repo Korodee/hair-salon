@@ -2,13 +2,9 @@
 
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useApplicationContext } from "../../context/appContext.jsx";
 import { toast } from "react-hot-toast";
 import { motion } from "framer-motion";
-import { loadStripe } from "@stripe/stripe-js";
 import { createBooking } from "../../services/bookingServices";
-
-const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLIC_KEY);
 
 const servicesData = [
   { title: "Haircut", price: "$30" },
@@ -27,7 +23,6 @@ const timeSlots = [
 
 export default function Booking() {
   const navigate = useNavigate();
-  const { user } = useApplicationContext();
   const [selectedService, setSelectedService] = useState("");
   const [selectedDate, setSelectedDate] = useState("");
   const [selectedTime, setSelectedTime] = useState("");
@@ -44,7 +39,7 @@ export default function Booking() {
         toast.success("Booking created successfully!");
         navigate("/dashboard/history");
       }
-    } catch (error) {
+    } catch {
       toast.error("Failed to create booking");
     }
   };

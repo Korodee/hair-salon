@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -25,59 +25,57 @@ function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <AppProvider>
-        <Router>
-          <Routes>
-            {/* Public routes */}
-            <Route path="/" element={<Home />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/signup" element={<Signup />} />
-            <Route path="/verify-email" element={<VerifyEmail />} />
-            <Route path="/check-inbox" element={<CheckInbox />} />
-            <Route path="/reset-password" element={<ResetPassword />} />
+        <Routes>
+          {/* Public routes */}
+          <Route path="/" element={<Home />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<Signup />} />
+          <Route path="/verify-email" element={<VerifyEmail />} />
+          <Route path="/check-inbox" element={<CheckInbox />} />
+          <Route path="/reset-password" element={<ResetPassword />} />
 
-            {/* Protected routes */}
-            <Route
-              path="/dashboard"
-              element={
-                <DashboardLayout>
-                  <Dashboard />
-                </DashboardLayout>
-              }
-            />
-            <Route
-              path="/dashboard/booking"
-              element={
-                <DashboardLayout>
-                  <Booking />
-                </DashboardLayout>
-              }
-            />
-            <Route
-              path="/dashboard/history"
-              element={
-                <DashboardLayout>
-                  <History />
-                </DashboardLayout>
-              }
-            />
-            <Route
-              path="/dashboard/gallery"
-              element={
-                <DashboardLayout>
-                  <Gallery />
-                </DashboardLayout>
-              }
-            />
-            <Route
-              path="/dashboard/profile"
-              element={
-                <DashboardLayout>
-                  <Profile />
-                </DashboardLayout>
-              }
-            />
-          </Routes>
-        </Router>
+          {/* Protected routes */}
+          <Route
+            path="/dashboard"
+            element={
+              <DashboardLayout>
+                <Dashboard />
+              </DashboardLayout>
+            }
+          />
+          <Route
+            path="/dashboard/booking"
+            element={
+              <DashboardLayout>
+                <Booking />
+              </DashboardLayout>
+            }
+          />
+          <Route
+            path="/dashboard/history"
+            element={
+              <DashboardLayout>
+                <History />
+              </DashboardLayout>
+            }
+          />
+          <Route
+            path="/dashboard/gallery"
+            element={
+              <DashboardLayout>
+                <Gallery />
+              </DashboardLayout>
+            }
+          />
+          <Route
+            path="/dashboard/profile"
+            element={
+              <DashboardLayout>
+                <Profile />
+              </DashboardLayout>
+            }
+          />
+        </Routes>
         <ToastContainer />
       </AppProvider>
     </QueryClientProvider>
