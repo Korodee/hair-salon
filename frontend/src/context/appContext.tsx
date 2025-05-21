@@ -1,14 +1,18 @@
-import React, { createContext, useContext, useEffect, useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
-import { getCurrentUser } from "../services/authServices";
+import { createContext, useContext, useState, useEffect } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
+import { getCurrentUser } from "../services/authService";
+
+const TOKEN_KEY = "authToken";
 
 interface User {
-  id: string;
-  name: string;
+  _id: string;
   email: string;
+  firstName: string;
+  lastName: string;
+  role: string;
   rewardPoints?: number;
   bookings?: Array<{
-    id: string;
+    _id: string;
     service: string;
     date: string;
     time: string;
@@ -19,57 +23,72 @@ interface User {
 interface AppContextType {
   user: User | null;
   setUser: (user: User | null) => void;
-  loading: boolean;
-  setLoading: (loading: boolean) => void;
-  location: ReturnType<typeof useLocation>;
-  navigate: ReturnType<typeof useNavigate>;
+  isLoading: boolean;
 }
 
-const AppContext = createContext<AppContextType | null>(null);
+const AppContext = createContext<AppContextType | undefined>(undefined);
 
-export function AppProvider({ children }: { children: React.ReactNode }) {
+// List of public routes that don't require authentication
+const publicRoutes = [
+  "/",
+  "/auth/login",
+  "/auth/signup",
+  "/auth/verify-email",
+  "/auth/check-inbox",
+  "/auth/reset-password",
+];
+
+export const AppProvider = ({ children }: { children: React.ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
-  const [loading, setLoading] = useState(true);
-  const location = useLocation();
+  const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
-    const fetchUser = async () => {
+    const isPublicRoute = publicRoutes.includes(location.pathname);
+
+    // For public routes, immediately set loading to false and return
+    if (isPublicRoute) {
+      setIsLoading(false);
+      return;
+    }
+
+    // Only check authentication for protected routes
+    const checkAuth = async () => {
+      const token = localStorage.getItem(TOKEN_KEY);
+      if (!token) {
+        setUser(null);
+        setIsLoading(false);
+        navigate("/auth/login");
+        return;
+      }
+
       try {
-        const userData = await getCurrentUser();
-        setUser(userData);
-      } catch (error) {
-        console.error("Error fetching user:", error);
+        const currentUser = await getCurrentUser();
+        setUser(currentUser);
+      } catch {
+        setUser(null);
+        localStorage.removeItem(TOKEN_KEY);
+        navigate("/auth/login");
       } finally {
-        setLoading(false);
+        setIsLoading(false);
       }
     };
 
-    fetchUser();
-  }, []);
+    checkAuth();
+  }, [location.pathname, navigate]);
 
-  useEffect(() => {
-    if (!loading && !user && !location.pathname.startsWith("/auth")) {
-      navigate("/auth/login");
-    }
-  }, [user, loading, location.pathname, navigate]);
+  return (
+    <AppContext.Provider value={{ user, setUser, isLoading }}>
+      {children}
+    </AppContext.Provider>
+  );
+};
 
-  const value = {
-    user,
-    setUser,
-    loading,
-    setLoading,
-    location,
-    navigate,
-  };
-
-  return <AppContext.Provider value={value}>{children}</AppContext.Provider>;
-}
-
-export function useApplicationContext() {
+export const useApplicationContext = () => {
   const context = useContext(AppContext);
-  if (!context) {
+  if (context === undefined) {
     throw new Error("useApplicationContext must be used within an AppProvider");
   }
   return context;
-}
+};
